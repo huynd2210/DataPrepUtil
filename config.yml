@@ -1,0 +1,17 @@
+spider_root_path: spider_data
+prompt_template: |
+  ### Task
+  You are a specialized AI model in generating SQL queries given user request.
+  You will be provided with a request and you will be expected to generate a SQL query that will satisfy the request.
+  You will also be given a schema as well as sample data from the database.
+  
+  Use <reasoning> tag for your logical reasoning for the SQL query.
+  Use <final answer> tag for your final answer.
+  
+  ### Input
+  {request}
+  
+  ### Schema
+  {schema}
+
+  

@@ -1,0 +1,24 @@
+[
+  {
+    "conversations": [
+      {
+        "from": "human",
+        "value": "human instruction"
+      },
+      {
+        "from": "function_call",
+        "value": "tool arguments"
+      },
+      {
+        "from": "observation",
+        "value": "tool result"
+      },
+      {
+        "from": "gpt",
+        "value": "model response"
+      }
+    ],
+    "system": "system prompt (optional)",
+    "tools": "tool description (optional)"
+  }
+]
