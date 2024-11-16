@@ -1,5 +1,7 @@
 import json
 import warnings
+from collections import Counter
+
 import yaml
 with open('config.yml', 'r') as file:
     config = yaml.safe_load(file)
@@ -105,7 +107,7 @@ def suppress_prints(func):
 def cleanLLMResponse(response):
     finalAnswerOpenTag = "<final answer>"
     finalAnswerCloseTag = "</final answer>"
-    response = response.replace("```", "").replace("sql", "").strip()
+    response = response.replace("```", "").replace("sql", "").replace("\n", " ").strip()
 
     if finalAnswerOpenTag in response:
         response = response.split(finalAnswerOpenTag)[1].strip()
@@ -114,6 +116,132 @@ def cleanLLMResponse(response):
         response = response.split(finalAnswerCloseTag)[0].strip()
 
     return response
+
+def compareCountersWithDiff(count1, count2):
+    if count1 == count2:
+        return {
+            "equal": True,
+            "diff_in_list1": {},
+            "diff_in_list2": {}
+        }
+    else:
+        # Find extra elements in list1
+        diff1 = count1 - count2
+        # Find extra elements in list2
+        diff2 = count2 - count1
+
+        return {
+            "equal": False,
+            "diff_in_list1": dict(diff1),
+            "diff_in_list2": dict(diff2)
+        }
+
+# @suppress_prints
+def isDataFrameEqual(df1, df2):
+    df1 = df1.copy()
+    df2 = df2.copy()
+    df1Dict = df1.to_dict(orient='index')
+    df2Dict = df2.to_dict(orient='index')
+
+    df1Values = [list(row.values()) for row in df1Dict.values()]
+    df2Values = [list(row.values()) for row in df2Dict.values()]
+
+    for i in range(len(df1Values)):
+        counter1 = Counter(df1Values[i])
+        counter2 = Counter(df2Values[i])
+        comparison = compareCountersWithDiff(counter1, counter2)
+
+        if not comparison["equal"]:
+            print("-----Differences in row " + str(i) + "-----")
+            print(comparison)
+            return False
+    return True
+
+
+def compare_dataframes(df1, df2, ignore_index=True, ignore_column_order=True):
+    """
+    Compare two DataFrames while ignoring row order and optionally column order.
+
+    Parameters:
+    -----------
+    df1, df2 : pandas.DataFrame
+        The DataFrames to compare
+    ignore_index : bool, default=True
+        Whether to ignore index values during comparison
+    ignore_column_order : bool, default=True
+        Whether to ignore column order during comparison
+
+    Returns:
+    --------
+    bool
+        True if DataFrames are equal (ignoring specified ordering), False otherwise
+    dict
+        Dictionary containing detailed comparison results
+    """
+    # Make copies to avoid modifying original DataFrames
+    df1 = df1.copy()
+    df2 = df2.copy()
+
+    results = {
+        'are_equal': False,
+        'shape_match': False,
+        # 'column_match': False,
+        'data_match': False,
+        'differences': []
+    }
+
+    # Check shapes
+    if df1.shape != df2.shape:
+        results['differences'].append(f"Shape mismatch: {df1.shape} vs {df2.shape}")
+        return False, results
+    results['shape_match'] = True
+
+    # # Check columns
+    # if set(df1.columns) != set(df2.columns):
+    #     results['differences'].append("Column names don't match")
+    #     return False, results
+    # results['column_match'] = True
+
+    # Sort columns if ignore_column_order is True
+    if ignore_column_order:
+        df1 = df1.reindex(sorted(df1.columns), axis=1)
+        df2 = df2.reindex(sorted(df2.columns), axis=1)
+
+    # Reset index if ignore_index is True
+    if ignore_index:
+        df1 = df1.reset_index(drop=True)
+        df2 = df2.reset_index(drop=True)
+
+    # Sort values by all columns to ignore row order
+    df1 = df1.sort_values(by=list(df1.columns)).reset_index(drop=True)
+    df2 = df2.sort_values(by=list(df2.columns)).reset_index(drop=True)
+
+    # Compare data
+    if df1.equals(df2):
+        results['are_equal'] = True
+        results['data_match'] = True
+        return True, results
+
+    return False, results
+
+
+def print_comparison_results(comparison_results):
+    """
+    Print the comparison results in a readable format.
+
+    Parameters:
+    -----------
+    comparison_results : tuple
+        Tuple containing (bool, dict) returned by compare_dataframes
+    """
+    is_equal, results = comparison_results
+
+    print("DataFrame Comparison Results:")
+    print("-" * 30)
+    print(f"Overall Equal: {is_equal}")
+    print(f"Shape Match: {results['shape_match']}")
+    # print(f"Column Match: {results['column_match']}")
+    print(f"Data Match: {results['data_match']}")
 
 # instances = load_json_to_class('train_spider_clean.json', SpiderDataset)
 # for instance in instances:

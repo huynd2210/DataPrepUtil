@@ -2,7 +2,7 @@ import sqlite3
 
 from models.DatabaseSchema import DatabaseSchema, Column, Table
 
-def inspect_database(db_path: str, include_sample_data: bool = False, sample_size: int = 5) -> DatabaseSchema:
+def retrieveDatabaseSchema(db_path: str, include_sample_data: bool = False, sample_size: int = 5) -> DatabaseSchema:
     """
     Retrieve schema information from a SQLite database using dataclasses.
 
@@ -88,7 +88,7 @@ def print_schema(schema: DatabaseSchema):
             if col.sample_value is not None:
                 print(f"   Sample: {col.sample_value}")
 
-def formatSchemaForPrompt(schema: DatabaseSchema) -> str:
+def formatSchemaForPrompt(schema: DatabaseSchema, simple=True) -> str:
     """
     Format DatabaseSchema in a YAML-like structure.
 
@@ -107,20 +107,11 @@ def formatSchemaForPrompt(schema: DatabaseSchema) -> str:
         # Add columns for this table
         for col in table.columns:
             # Format column with type
-            lines.append(f"  - Column: {col.name} ({col.type})")
-
-            # Add description based on constraints
-            constraints = []
-            if col.primary_key:
-                constraints.append("Primary Key")
-            if not col.nullable:
-                constraints.append("NOT NULL")
-            if col.default is not None:
-                constraints.append(f"Default: {col.default}")
-
-            if constraints:
-                description = ", ".join(constraints)
-                lines.append(f"    - Description: {description}")
+            if simple:
+                lines.append(f"  - Column: {col.name}")
+            else:
+                lines.append(f"  - Column: {col.name} ({col.type})")
+                appendColumnDescriptions(col, lines)
 
             # Add sample values if they exist
             if col.sample_value is not None:
@@ -132,6 +123,21 @@ def formatSchemaForPrompt(schema: DatabaseSchema) -> str:
 
     return "\n".join(lines)
 
+
+def appendColumnDescriptions(col, lines):
+    # Add description based on constraints
+    constraints = []
+    if col.primary_key:
+        constraints.append("Primary Key")
+    if not col.nullable:
+        constraints.append("NOT NULL")
+    if col.default is not None:
+        constraints.append(f"Default: {col.default}")
+    if constraints:
+        description = ", ".join(constraints)
+        lines.append(f"    - Description: {description}")
+
+
 def getDatabaseSchemaForPrompt(db_path: str, include_sample_data=True) -> str:
     """
     Get a formatted string representing the schema of a database for use in a prompt.
@@ -142,7 +148,7 @@ def getDatabaseSchemaForPrompt(db_path: str, include_sample_data=True) -> str:
     Returns:
         str: Formatted string representing the schema
     """
-    schema = inspect_database(db_path, include_sample_data)
+    schema = retrieveDatabaseSchema(db_path, include_sample_data)
     return formatSchemaForPrompt(schema)
 
 

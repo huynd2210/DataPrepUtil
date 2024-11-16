@@ -6,7 +6,28 @@ prompt_template: |
   Schema:
   {schema}
   
-  Use <final answer> tag for your final answer. There should only be SQL query in the final answer.
+  Use <final answer> tag for your final answer. Do not include natural language in the final answer.
+#  Hint: the table head already contains age. Therefore, dont use join from other tables
+
+knowledge_distillation_generation_template: |
+  Given sql problem, schema and solution. Come up with logical steps that could have been taken to reach the solution.
+  
+  SQL problem: {problem}
+  Schema: {schema}
+  Solution: {solution}
+
+  Formulate the reasoning steps as if you were coming up to the steps yourself.
+  Use <reasoning> tag for your logical reasoning for the SQL query.
+
+knowledge_distillation_verification_template: |
+  Given a sql problem, the schema and the logical reasoning steps that would lead to the correct solution, find the solution.
+
+  SQL problem: {problem}
+  Schema: {schema}
+
+  Logical reasoning steps: {reasoning}
+
+  Solution: <your answer here>
 
 
 prompt_template_no_reasoning: |
