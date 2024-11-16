@@ -1,8 +1,6 @@
 import sqlite3
 
-from main import config
 from models.DatabaseSchema import DatabaseSchema, Column, Table
-
 
 def inspect_database(db_path: str, include_sample_data: bool = False, sample_size: int = 5) -> DatabaseSchema:
     """
@@ -134,7 +132,7 @@ def formatSchemaForPrompt(schema: DatabaseSchema) -> str:
 
     return "\n".join(lines)
 
-def getDatabaseSchemaForPrompt(db_path: str) -> str:
+def getDatabaseSchemaForPrompt(db_path: str, include_sample_data=True) -> str:
     """
     Get a formatted string representing the schema of a database for use in a prompt.
 
@@ -144,7 +142,7 @@ def getDatabaseSchemaForPrompt(db_path: str) -> str:
     Returns:
         str: Formatted string representing the schema
     """
-    schema = inspect_database(db_path)
+    schema = inspect_database(db_path, include_sample_data)
     return formatSchemaForPrompt(schema)
 
 

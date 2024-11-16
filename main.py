@@ -1,10 +1,4 @@
-import yaml
-
-from core.data_loader import load_spider, get_spider_db_path
 from core.sql_tools import getDatabaseSchemaForPrompt
-
-with open('config.yml', 'r') as file:
-    config = yaml.safe_load(file)
 
 import sqlite3
 import pandas as pd
@@ -12,25 +6,33 @@ import ollama
 
 from models.SpiderDataset import SpiderDataset
 from models.SQLEvaluationEntry import SQLEvaluationEntry
-from core.utils import suppress_prints, objects_to_dataframe, load_json_to_class
+from core.utils import suppress_prints, objects_to_dataframe, load_json_to_class, config, cleanLLMResponse
+
 
 def prompt(model_name, promptTemplate=config["prompt_template"], **kwargs):
-    return ollama.generate(model=model_name, prompt=promptTemplate.format(**kwargs))
+    return ollama.generate(model=model_name, prompt=promptTemplate.format(**kwargs))['response']
 
 def generateSQL(model_name, promptTemplate=config["prompt_template"], db_path="", **kwargs):
     # kwargs should include arguments for the prompt template
     kwargs["db_path"] = db_path
+    print("--" * 50)
+    print(promptTemplate.format(**kwargs))
+    print("--" * 50)
+
     return prompt(model_name, promptTemplate=promptTemplate, **kwargs)
+
+from core.data_loader import load_spider, get_spider_db_path
 
 def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderDataset):
     request = spider_dataset_entry.question
     schema = getDatabaseSchemaForPrompt(get_spider_db_path(spider_dataset_entry.db_id))
 
-    generated_sql = generateSQL(model_name=model_name,
+    response = generateSQL(model_name=model_name,
                                 db_path=get_spider_db_path(spider_dataset_entry.db_id),
                                 request=request,
-                                schema=schema
-                                )
+                                schema=schema)
+
+    generated_sql = cleanLLMResponse(response)
 
     return SQLEvaluationEntry(
         get_spider_db_path(spider_dataset_entry.db_id),
@@ -101,17 +103,18 @@ def evaluateModel(model_name: str, dataset="spider", split="train"):
     return pd
 
 def analyseEvaluation(evaluationResultDf: pd.DataFrame):
-    # Extract the 'isCorrect' attribute from each SQLEvaluationEntry instance
-    evaluationResultDf['isCorrect'] = evaluationResultDf[0].apply(lambda entry: entry.isCorrect)
+    counter = 0
+    for index, row in evaluationResultDf.iterrows():
+        if row["isCorrect"]:
+            counter += 1
 
-    # Calculate the percentage of correct entries (isCorrect == True)
-    percentage_correct = evaluationResultDf['isCorrect'].sum() / len(evaluationResultDf) * 100
-
-    print(f"Percentage of correct entries: {percentage_correct:.2f}%")
+    print("Accuracy: " + str(counter / len(evaluationResultDf)))
 
 
 # print(response)
 
 # load_spider("train")
-result = evaluateModel("llama3.1:latest")
-analyseEvaluation(result)
+
+if __name__ == '__main__':
+    result = evaluateModel("qwen2.5-coder:latest")
+    analyseEvaluation(result)

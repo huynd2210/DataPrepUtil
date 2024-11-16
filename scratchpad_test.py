@@ -1,3 +1,5 @@
+import ollama
+
 from main import load_spider, generateSQLEvaluationEntry, evaluateSQLGenerationEntry, config
 from core.sql_tools import inspect_database, formatSchemaForPrompt
 
@@ -21,8 +23,10 @@ def testSchemaRetrieval():
 
     print(formatSchemaForPrompt(db_info))
 
+testSchemaRetrieval()
 # test()
-print(config['prompt_template'])
+# print(config['prompt_template'])
+# print(ollama.generate(model="llama3.1:latest", prompt="what is the answer to life, the universe, and everything?")['response'])
 
 
 

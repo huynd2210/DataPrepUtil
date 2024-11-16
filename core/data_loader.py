@@ -1,5 +1,4 @@
-from core.utils import load_json_to_class, suppress_prints
-from main import config
+from core.utils import load_json_to_class, suppress_prints, config
 from models.SpiderDataset import SpiderDataset
 
 

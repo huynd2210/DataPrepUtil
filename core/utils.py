@@ -1,6 +1,8 @@
 import json
 import warnings
-
+import yaml
+with open('config.yml', 'r') as file:
+    config = yaml.safe_load(file)
 import pandas as pd
 import functools
 import sys
@@ -100,7 +102,18 @@ def suppress_prints(func):
             return func(*args, **kwargs)
     return wrapper
 
+def cleanLLMResponse(response):
+    finalAnswerOpenTag = "<final answer>"
+    finalAnswerCloseTag = "</final answer>"
+    response = response.replace("```", "").replace("sql", "").strip()
 
+    if finalAnswerOpenTag in response:
+        response = response.split(finalAnswerOpenTag)[1].strip()
+
+    if finalAnswerCloseTag in response:
+        response = response.split(finalAnswerCloseTag)[0].strip()
+
+    return response
 
 # instances = load_json_to_class('train_spider_clean.json', SpiderDataset)
 # for instance in instances:
