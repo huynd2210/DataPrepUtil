@@ -12,4 +12,4 @@ class SQLEvaluationEntry:
     gold_sql: str
     question: str
     #Result is set after this entry is evaluated
-    result: Optional[bool] = None
+    isCorrect: Optional[bool] = None

@@ -1,5 +1,5 @@
 from main import load_spider, generateSQLEvaluationEntry, evaluateSQLGenerationEntry, config
-from sql_tools import inspect_database, formatSchemaForPrompt
+from core.sql_tools import inspect_database, formatSchemaForPrompt
 
 
 def test():
