@@ -7,7 +7,12 @@ from models.SQLEvaluationEntry import SQLEvaluationEntry
 from models.SpiderDataset import SpiderDataset
 
 
+#TODO: API models
 def prompt(model_name, promptTemplate=config["prompt_template"], **kwargs):
+    apiModels = ['gpt-4o-mini']
+    if model_name in apiModels:
+        pass
+
     return ollama.generate(model=model_name, prompt=promptTemplate.format(**kwargs))['response']
 
 # @suppress_prints

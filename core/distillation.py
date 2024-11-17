@@ -1,5 +1,6 @@
 from typing import Optional
 
+import pandas as pd
 from tqdm import tqdm
 
 from core.data_loader import load_spider, get_spider_db_path
@@ -9,29 +10,35 @@ from core.sql_tools import getDatabaseSchemaForPrompt
 from core.utils import cleanLLMResponse, config, objects_to_dataframe
 from models.DistillationEntry import DistillationEntry
 from models.SQLEvaluationEntry import SQLEvaluationEntry
+from pathlib import Path
 
+
+def loadDistillationCache(cachePath: Path) -> Optional[pd.DataFrame]:
+    if cachePath.exists():
+        return pd.read_csv(cachePath)
 
 def generateDistillationEntry(
-        model_name: str,
+        modelName: str,
         question: str,
-        gold_solution: str,
+        goldSolution: str,
         schema: str,
-        promptTemplate: str = config["knowledge_distillation_generation_template"]
+        promptTemplate: str = config["knowledge_distillation_generation_template"],
 ):
+
     model_response = prompt(
-        model_name,
+        modelName,
         promptTemplate=promptTemplate,
         problem=question,
-        solution=gold_solution,
+        solution=goldSolution,
         schema=schema
     )
 
     reasoning = cleanLLMResponse(model_response, openTag="<reasoning>", closeTag="</reasoning>")
     distillationEntry = DistillationEntry(
-        teacher_model_name=model_name,
+        teacher_model_name=modelName,
         question=question,
         schema=schema,
-        gold_solution=gold_solution,
+        gold_solution=goldSolution,
         reasoning=reasoning,
         verification_solution="",
         isVerified=None
@@ -61,14 +68,21 @@ def verifyDistillationEntry(
     )
     sqlEvaluationEntry = evaluateSQLGenerationEntry(sqlEvaluationEntry)
 
-    if sqlEvaluationEntry.isCorrect:
-        distillationEntry.isVerified = True
-    else:
-        distillationEntry.isVerified = False
+    distillationEntry.isVerified = sqlEvaluationEntry.isCorrect
 
     return distillationEntry
 
-def distillKnowledge(teacher_model_name: str, student_model_name: Optional[str] = None, dataset="spider", split="train"):
+def distillKnowledge(
+        teacher_model_name: str,
+        student_model_name: Optional[str] = None,
+        dataset="spider",
+        split="train",
+        useCache=True,
+):
+    cachePath = Path(f'{config["cache_path"]}/distillation/{teacher_model_name}_{dataset}_{split}.csv')
+    if useCache:
+        return loadDistillationCache(cachePath)
+
     result = []
     if dataset == "spider":
         spider_instances = load_spider(split)
@@ -76,10 +90,10 @@ def distillKnowledge(teacher_model_name: str, student_model_name: Optional[str] 
             db_path = get_spider_db_path(instance.db_id)
             schema = getDatabaseSchemaForPrompt(db_path)
             distillationEntry = generateDistillationEntry(
-                model_name=teacher_model_name,
+                modelName=teacher_model_name,
                 question=instance.question,
-                gold_solution=instance.query,
-                schema=schema
+                goldSolution=instance.query,
+                schema=schema,
             )
             student_model_name = teacher_model_name if student_model_name is None else student_model_name
             distillationEntry = verifyDistillationEntry(
@@ -91,5 +105,8 @@ def distillKnowledge(teacher_model_name: str, student_model_name: Optional[str] 
             break
 
     pd = objects_to_dataframe(result)
+    if useCache:
+        pd.to_csv(cachePath)
+
     return pd
 
