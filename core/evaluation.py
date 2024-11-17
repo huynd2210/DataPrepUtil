@@ -70,7 +70,6 @@ def evaluateModel(model_name: str, dataset="spider", split="train"):
     if dataset == "spider":
         spider_instances = load_spider(split)
         for instance in spider_instances:
-
             evaluation_entry = generateSQLEvaluationEntry(model_name, instance)
             result.append(evaluateSQLGenerationEntry(evaluation_entry))
             break

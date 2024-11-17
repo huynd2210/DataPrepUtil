@@ -1,6 +1,8 @@
 import ollama
 
-from main import load_spider, generateSQLEvaluationEntry, evaluateSQLGenerationEntry, config
+from core.evaluation import evaluateSQLGenerationEntry
+from core.generation import generateSQLEvaluationEntry
+from main import load_spider, config
 from core.sql_tools import retrieveDatabaseSchema, formatSchemaForPrompt
 
 
@@ -23,7 +25,7 @@ def testSchemaRetrieval():
 
     print(formatSchemaForPrompt(db_info))
 
-testSchemaRetrieval()
+# testSchemaRetrieval()
 # load_spider("train")
 # test()
 # print(config['prompt_template'])

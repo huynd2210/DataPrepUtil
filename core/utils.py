@@ -104,16 +104,14 @@ def suppress_prints(func):
             return func(*args, **kwargs)
     return wrapper
 
-def cleanLLMResponse(response):
-    finalAnswerOpenTag = "<final answer>"
-    finalAnswerCloseTag = "</final answer>"
-    response = response.replace("```", "").replace("sql", "").replace("\n", " ").strip()
+def cleanLLMResponse(response, openTag="<final answer>", closeTag="</final answer>"):
+    response = response.replace("```sql", "").replace("\n", " ").strip()
 
-    if finalAnswerOpenTag in response:
-        response = response.split(finalAnswerOpenTag)[1].strip()
+    if openTag in response:
+        response = response.split(openTag)[1].strip()
 
-    if finalAnswerCloseTag in response:
-        response = response.split(finalAnswerCloseTag)[0].strip()
+    if closeTag in response:
+        response = response.split(closeTag)[0].strip()
 
     return response
 

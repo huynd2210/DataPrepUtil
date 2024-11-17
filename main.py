@@ -1,3 +1,4 @@
+from core.distillation import distillKnowledge
 from core.evaluation import evaluateModel
 from core.sql_tools import getDatabaseSchemaForPrompt
 
@@ -25,15 +26,24 @@ def analyseEvaluation(evaluationResultDf: pd.DataFrame):
 
 if __name__ == '__main__':
     # model_name = "qwen2.5-coder:latest"
+
     model_name = "qwen2.5-coder:7b-instruct"
-    datasetName = "spider"
-    result = evaluateModel(model_name, datasetName)
-    analyseEvaluation(result)
-    print("----RESULT----")
-    print(result)
-    outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
+    # datasetName = "spider"
+    # result = evaluateModel(model_name, datasetName)
+    # analyseEvaluation(result)
+    # print("----RESULT----")
+    # print(result)
+    # outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
     # print(f"Output saved to {outputName}")
     # result.to_csv(outputName)
+
+    data = distillKnowledge(model_name)
+    outputName = f"{model_name.replace(':', '-')}_distilled_data.csv"
+    print(f"Output saved to {outputName}")
+    data.to_csv(outputName)
+
+
+
 
     # generatedSQL = """
     # SELECT COUNT(*)

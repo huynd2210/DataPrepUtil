@@ -27,8 +27,7 @@ knowledge_distillation_verification_template: |
 
   Logical reasoning steps: {reasoning}
 
-  Solution: <your answer here>
-
+  Use <final answer> tag for your final answer. Do not include natural language in the final answer.
 
 prompt_template_no_reasoning: |
   ### Task
