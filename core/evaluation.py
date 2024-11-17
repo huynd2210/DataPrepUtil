@@ -73,7 +73,6 @@ def evaluateModel(model_name: str, dataset="spider", split="train"):
         for instance in tqdm(spider_instances):
             evaluation_entry = generateSQLEvaluationEntry(model_name, instance)
             result.append(evaluateSQLGenerationEntry(evaluation_entry))
-
     # Convert result to pandas dataframe
     pd = objects_to_dataframe(result)
     return pd

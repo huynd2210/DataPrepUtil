@@ -25,9 +25,9 @@ def analyseEvaluation(evaluationResultDf: pd.DataFrame):
     print("Accuracy: " + str(counter / len(evaluationResultDf)))
 
 if __name__ == '__main__':
-    # model_name = "qwen2.5-coder:latest"
+    model_name = "qwen2.5-coder:7b-instruct"
 
-    model_name = "llama3.1:8b-instruct-q4_0"
+    # model_name = "llama3.1:8b-instruct-q4_0"
     datasetName = "spider"
     result = evaluateModel(model_name, datasetName)
     analyseEvaluation(result)
