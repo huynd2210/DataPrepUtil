@@ -27,22 +27,23 @@ def analyseEvaluation(evaluationResultDf: pd.DataFrame):
 if __name__ == '__main__':
     # model_name = "qwen2.5-coder:latest"
 
-    model_name = "qwen2.5-coder:7b-instruct"
-    # datasetName = "spider"
-    # result = evaluateModel(model_name, datasetName)
-    # analyseEvaluation(result)
-    # print("----RESULT----")
-    # print(result)
-    # outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
-    # print(f"Output saved to {outputName}")
-    # result.to_csv(outputName)
-
-    data = distillKnowledge(model_name)
-    outputName = f"{model_name.replace(':', '-')}_distilled_data.csv"
+    model_name = "llama3.1:8b-instruct-q4_0"
+    datasetName = "spider"
+    result = evaluateModel(model_name, datasetName)
+    analyseEvaluation(result)
+    print("----RESULT----")
+    print(result)
+    outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
     print(f"Output saved to {outputName}")
-    data.to_csv(outputName)
+    result.to_csv(outputName)
 
+    # data = distillKnowledge(model_name, dataset=datasetName)
+    # outputName = f"{model_name.replace(':', '-')}_distilled_data.csv"
+    # print(f"Output saved to {outputName}")
+    # data.to_csv(outputName)
 
+    # df = pd.read_csv("qwen2.5-coder-7b-instruct_distilled_data_spider.csv")
+    # print(df["reasoning"].iloc[0])
 
 
     # generatedSQL = """

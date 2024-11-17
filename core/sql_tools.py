@@ -39,18 +39,21 @@ def retrieveDatabaseSchema(db_path: str, include_sample_data: bool = False, samp
             sample_data = None
             if include_sample_data:
                 cursor.execute(f"SELECT * FROM {table_name} LIMIT {sample_size}")
-                sample_data = cursor.fetchone()
+                sample_data = cursor.fetchall()
 
             # Process column information
             columns = []
             for idx, col in enumerate(columns_info):
+                sample_values = []
+                for i in range(len(sample_data)):
+                    sample_values.append(sample_data[i][idx]) if sample_data else None
                 column = Column(
                     name=col[1],
                     type=col[2],
                     nullable=not col[3],  # notnull constraint
                     default=col[4],
                     primary_key=bool(col[5]),  # pk constraint
-                    sample_value=sample_data[idx] if sample_data else None
+                    sample_value=sample_values if sample_values else None
                 )
                 columns.append(column)
 

@@ -1,6 +1,7 @@
 import sqlite3
 
 import pandas as pd
+from tqdm import tqdm
 
 from core.data_loader import load_spider
 from core.generation import generateSQLEvaluationEntry
@@ -69,10 +70,10 @@ def evaluateModel(model_name: str, dataset="spider", split="train"):
     result = []
     if dataset == "spider":
         spider_instances = load_spider(split)
-        for instance in spider_instances:
+        for instance in tqdm(spider_instances):
             evaluation_entry = generateSQLEvaluationEntry(model_name, instance)
             result.append(evaluateSQLGenerationEntry(evaluation_entry))
-            break
 
+    # Convert result to pandas dataframe
     pd = objects_to_dataframe(result)
     return pd

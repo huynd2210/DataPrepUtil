@@ -25,11 +25,12 @@ def testSchemaRetrieval():
 
     print(formatSchemaForPrompt(db_info))
 
-# testSchemaRetrieval()
+testSchemaRetrieval()
 # load_spider("train")
 # test()
 # print(config['prompt_template'])
 # print(ollama.generate(model="llama3.1:latest", prompt="what is the answer to life, the universe, and everything?")['response'])
+# spider_instances = load_spider("test")
 
 
 

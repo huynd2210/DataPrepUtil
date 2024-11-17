@@ -1,5 +1,7 @@
 from typing import Optional
 
+from tqdm import tqdm
+
 from core.data_loader import load_spider, get_spider_db_path
 from core.evaluation import evaluateSQLGenerationEntry
 from core.generation import prompt
@@ -70,7 +72,7 @@ def distillKnowledge(teacher_model_name: str, student_model_name: Optional[str] 
     result = []
     if dataset == "spider":
         spider_instances = load_spider(split)
-        for instance in spider_instances:
+        for instance in tqdm(spider_instances):
             db_path = get_spider_db_path(instance.db_id)
             schema = getDatabaseSchemaForPrompt(db_path)
             distillationEntry = generateDistillationEntry(
