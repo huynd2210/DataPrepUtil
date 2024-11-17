@@ -1,6 +1,6 @@
 from typing import Optional
 
-import pandas as pd
+import pandas
 from tqdm import tqdm
 
 from core.data_loader import load_spider, get_spider_db_path
@@ -11,11 +11,6 @@ from core.utils import cleanLLMResponse, config, objects_to_dataframe
 from models.DistillationEntry import DistillationEntry
 from models.SQLEvaluationEntry import SQLEvaluationEntry
 from pathlib import Path
-
-
-def loadDistillationCache(cachePath: Path) -> Optional[pd.DataFrame]:
-    if cachePath.exists():
-        return pd.read_csv(cachePath)
 
 def generateDistillationEntry(
         modelName: str,
@@ -77,15 +72,16 @@ def distillKnowledge(
         student_model_name: Optional[str] = None,
         dataset="spider",
         split="train",
-        useCache=True,
+        useCache=False,
+        batchRange: Optional[tuple[int, int]] = None
 ):
     cachePath = Path(f'{config["cache_path"]}/distillation/{teacher_model_name}_{dataset}_{split}.csv')
-    if useCache:
-        return loadDistillationCache(cachePath)
+    if useCache and cachePath.exists():
+        return pandas.read_csv(cachePath)
 
     result = []
     if dataset == "spider":
-        spider_instances = load_spider(split)
+        spider_instances = load_spider(split, batchRange=batchRange)
         for instance in tqdm(spider_instances):
             db_path = get_spider_db_path(instance.db_id)
             schema = getDatabaseSchemaForPrompt(db_path)
@@ -102,7 +98,7 @@ def distillKnowledge(
                 db_path=db_path
             )
             result.append(distillationEntry)
-            break
+
 
     pd = objects_to_dataframe(result)
     if useCache:

@@ -1,10 +1,12 @@
+import yaml
+with open('config.yml', 'r') as file:
+    config = yaml.safe_load(file)
+
 import json
 import warnings
 from collections import Counter
 
-import yaml
-with open('config.yml', 'r') as file:
-    config = yaml.safe_load(file)
+
 import pandas as pd
 import functools
 import sys
