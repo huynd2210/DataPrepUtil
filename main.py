@@ -26,7 +26,8 @@ def analyseEvaluation(evaluationResultDf: pd.DataFrame):
 
 if __name__ == '__main__':
     model_name = "qwen2.5-coder:14b-instruct-q4_K_M"
-
+    split="train"
+    batchRange=(0, 1000)
     # model_name = "llama3.1:8b-instruct-q4_0"
     datasetName = "spider"
     # result = evaluateModel(model_name, datasetName)
@@ -37,8 +38,8 @@ if __name__ == '__main__':
     # print(f"Output saved to {outputName}")
     # result.to_csv(outputName)
 
-    data = distillKnowledge(model_name, dataset=datasetName, batchRange=(1000, 2000))
-    outputName = f"{model_name.replace(':', '-')}_distilled_data.csv"
+    data = distillKnowledge(model_name, dataset=datasetName, batchRange=batchRange)
+    outputName = f"{model_name.replace(':', '-')}_distilled_data_{datasetName}_{split}_{batchRange[0]}_{batchRange[1]}.csv"
     print(f"Output saved to {outputName}")
     data.to_csv(outputName)
 
