@@ -49,7 +49,7 @@ def distillWrapper(model_name: str, dataset="spider", split="train", batchRange:
 if __name__ == '__main__':
 
     prettyPrintCSV(
-        "qwen2.5-coder-14b-instruct-q4_K_M_distilled_data_spider_train_1001_1100.csv",
+        "qwen2.5-coder-14b-instruct-q4_K_M_distilled_data_spider_train_0_200.csv",
         ["question", "gold_solution", "reasoning"]
     )
 
