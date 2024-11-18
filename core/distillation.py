@@ -7,7 +7,7 @@ from core.data_loader import load_spider, get_spider_db_path
 from core.evaluation import evaluateSQLGenerationEntry
 from core.generation import prompt
 from core.sql_tools import getDatabaseSchemaForPrompt
-from core.utils import cleanLLMResponse, config, objects_to_dataframe
+from core.utils import cleanLLMResponse, config, objects_to_dataframe, loadToObjectsFromFile
 from models.DistillationEntry import DistillationEntry
 from models.SQLEvaluationEntry import SQLEvaluationEntry
 from pathlib import Path
@@ -41,11 +41,44 @@ def generateDistillationEntry(
 
     return distillationEntry
 
+
+#Load distillation entries from file
+def verifyDistillationFromFile(
+        db_path: str,
+        verifierModelName: str,
+        distillationFilePath: str,
+        promptTemplate: str = config["knowledge_distillation_verification_template"],
+) -> list[DistillationEntry]:
+    distillationEntries = loadToObjectsFromFile(distillationFilePath, DistillationEntry)
+    verificationResult = []
+    for distillationEntry in tqdm(distillationEntries):
+        distillationEntry = verifyDistillationEntry(
+            distillationEntry=distillationEntry,
+            model_name=verifierModelName,
+            db_path=db_path,
+            promptTemplate=promptTemplate
+        )
+        verificationResult.append(distillationEntry)
+
+    return verificationResult
+
+
+
+
 def verifyDistillationEntry(
         distillationEntry: DistillationEntry,
         model_name: str,
         db_path: str,
         promptTemplate: str = config["knowledge_distillation_verification_template"]) -> DistillationEntry:
+    '''
+    This function verifies the logical reasoning of the generated distillation by prompting another model
+    given the question and the reasoning to generate sql solution which would then be evaluated.
+    :param distillationEntry:
+    :param model_name:
+    :param db_path:
+    :param promptTemplate:
+    :return:
+    '''
     model_response = prompt(
         model_name,
         promptTemplate=promptTemplate,

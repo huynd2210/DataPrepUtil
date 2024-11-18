@@ -52,7 +52,7 @@ def load_data(file_path: str, file_type: str = 'csv') -> pd.DataFrame:
 
 
 # Function to load data, convert to DataFrame, and then convert DataFrame rows to objects
-def loadToObjectsFromFile(file_path: str, class_type, file_type: str = 'csv') -> list:
+def load_and_convert(file_path: str, class_type, file_type: str = 'csv') -> list:
     # Load data from the file and convert to DataFrame
     df = load_data(file_path, file_type)
 
