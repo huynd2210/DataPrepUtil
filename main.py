@@ -1,19 +1,35 @@
-from core.distillation import distillKnowledge
-from core.evaluation import evaluateModel
-from core.sql_tools import getDatabaseSchemaForPrompt
+import pprint
+import textwrap
+from typing import Optional
 
-import sqlite3
 import pandas as pd
-import ollama
 
-from models.SpiderDataset import SpiderDataset
-from models.SQLEvaluationEntry import SQLEvaluationEntry
-from core.utils import suppress_prints, objects_to_dataframe, load_json_to_class, config, cleanLLMResponse, \
-    compare_dataframes, print_comparison_results, isDataFrameEqual
-
-from core.data_loader import load_spider, get_spider_db_path
+from core.distillation import distillKnowledge
 
 
+def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
+    df = pd.read_csv(path)
+    if chosenColumns is not None:
+        df = df[chosenColumns]
+    textWrapWidth = 160
+    batch_size = 10  # Number of rows to display at a time
+
+    # Iterate in batches
+    for start_idx in range(0, len(df), batch_size):
+        end_idx = start_idx + batch_size
+        batch = df.iloc[start_idx:end_idx]
+
+        for index, row in batch.iterrows():
+            print(" Question: " + row["question"], end="\n\n")
+            print(textwrap.fill("gold_solution: " + row["gold_solution"], textWrapWidth), end="\n\n")
+            print(textwrap.fill("reasoning: " + row["reasoning"], textWrapWidth), end="\n\n")
+            print("-" * 20)
+            print("\n")
+
+        # Pause before displaying the next batch
+        if end_idx < len(df):  # Avoid asking for input after the last batch
+            input("Press Enter to view the next set of rows...")
+    # pprint.pprint(df)
 
 
 def analyseEvaluation(evaluationResultDf: pd.DataFrame):
@@ -24,10 +40,25 @@ def analyseEvaluation(evaluationResultDf: pd.DataFrame):
 
     print("Accuracy: " + str(counter / len(evaluationResultDf)))
 
+def distillWrapper(model_name: str, dataset="spider", split="train", batchRange: Optional[tuple[int, int]] = None):
+    data = distillKnowledge(model_name, dataset=dataset, split=split, batchRange=batchRange)
+    outputName = f"{model_name.replace(':', '-')}_distilled_data_{dataset}_{split}_{batchRange[0]}_{batchRange[1]}.csv"
+    print(f"Output saved to {outputName}")
+    data.to_csv(outputName)
+
 if __name__ == '__main__':
-    model_name = "qwen2.5-coder:14b-instruct-q4_K_M"
-    split="train"
-    batchRange=(0, 1000)
+
+    prettyPrintCSV(
+        "qwen2.5-coder-14b-instruct-q4_K_M_distilled_data_spider_train_1001_1100.csv",
+        ["question", "gold_solution", "reasoning"]
+    )
+
+
+    # model_name = "qwen2.5-coder:14b-instruct-q4_K_M"
+    # split = "train"
+    # batchRange = (1001, 1100)
+
+
     # model_name = "llama3.1:8b-instruct-q4_0"
     datasetName = "spider"
     # result = evaluateModel(model_name, datasetName)
@@ -38,14 +69,13 @@ if __name__ == '__main__':
     # print(f"Output saved to {outputName}")
     # result.to_csv(outputName)
 
-    data = distillKnowledge(model_name, dataset=datasetName, batchRange=batchRange)
-    outputName = f"{model_name.replace(':', '-')}_distilled_data_{datasetName}_{split}_{batchRange[0]}_{batchRange[1]}.csv"
-    print(f"Output saved to {outputName}")
-    data.to_csv(outputName)
+    # data = distillKnowledge(model_name, dataset=datasetName, batchRange=batchRange)
+    # outputName = f"{model_name.replace(':', '-')}_distilled_data_{datasetName}_{split}_{batchRange[0]}_{batchRange[1]}.csv"
+    # print(f"Output saved to {outputName}")
+    # data.to_csv(outputName)
 
     # df = pd.read_csv("qwen2.5-coder-14b-instruct-q4_K_M_distilled_data.csv")
     # print(df["reasoning"].iloc[0])
-
 
     # generatedSQL = """
     # SELECT COUNT(*)

@@ -107,7 +107,7 @@ def suppress_prints(func):
     return wrapper
 
 def cleanLLMResponse(response, openTag="<final answer>", closeTag="</final answer>"):
-    response = response.replace("```sql", "").replace("\n", " ").strip()
+    response = response.replace("```sql", "").replace("\n", " ").replace("```", "").strip()
 
     if openTag in response:
         response = response.split(openTag)[1].strip()
