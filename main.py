@@ -8,7 +8,7 @@ from core.distillation import distillKnowledge
 
 
 def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
-    df = pd.read_csv(path)
+    df = pd.read_csv(path, on_bad_lines='warn')
     if chosenColumns is not None:
         df = df[chosenColumns]
     textWrapWidth = 160
@@ -61,12 +61,11 @@ if __name__ == '__main__':
     # model_name = "gpt-4o-mini"
     # student_model_name = "qwen2.5-coder:14b-instruct-q4_K_M"
     # split = "train"
-    # batchRange = (201, 300)
-
-
-    # model_name = "llama3.1:8b-instruct-q4_0"
+    # batchRange = (301, 400)
     # datasetName = "spider"
     # distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
+
+    # model_name = "llama3.1:8b-instruct-q4_0"
 
 
 

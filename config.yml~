@@ -21,7 +21,8 @@ knowledge_distillation_generation_template: |
   Use <reasoning> tag for your logical reasoning for the SQL query.
 
 knowledge_distillation_verification_template: |
-  Given a sql problem, the schema and the logical reasoning steps that would lead to the correct solution, find the solution.
+  Given a sql problem, the schema and the logical reasoning steps that would lead to the correct solution, 
+  come up with the correct solution in the form of a sql query.
 
   SQL problem: {problem}
   Schema: {schema}

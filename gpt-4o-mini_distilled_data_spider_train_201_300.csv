@@ -1272,7 +1272,7 @@ WHERE T2.bikes_available > 12;
 
 3. **Analyze Sorting Requirements**:
    - Sorting is required based on the `Issues` column.
-   - "Ascending order" means the smallest value should appear first.
+   - ""Ascending order"" means the smallest value should appear first.
 
 4. **Construct Query Logic**:
    - Start with a `SELECT` statement to specify the columns to retrieve.
@@ -2046,22 +2046,22 @@ WHERE T2.bikes_available > 12;
     - Samples: [1988—, 1988, 1992—, 1993—, 1988–2008, 2013, 1994—]
   - Column: age
     - Samples: [26, 22, 21, 20, 20]","SELECT Name FROM musical WHERE Nominee  =  ""Bob Fosse""","Understand the Problem Statement:
-The question asks for the names of musicals where the nominee is "Bob Fosse." This indicates that the query needs to return data from the musical table, specifically the Name column.
+The question asks for the names of musicals where the nominee is ""Bob Fosse."" This indicates that the query needs to return data from the musical table, specifically the Name column.
 
 Identify Relevant Tables and Columns:
 From the schema, the relevant table is musical, as it contains columns such as Musical_ID, Name, and Nominee. Among these, the Name column holds the musical names, and the Nominee column identifies the person associated with a musical.
 
 Determine the Filtering Criteria:
-The problem specifies filtering by the nominee "Bob Fosse." Therefore, we need a condition on the Nominee column to match the value "Bob Fosse".
+The problem specifies filtering by the nominee ""Bob Fosse."" Therefore, we need a condition on the Nominee column to match the value ""Bob Fosse"".
 
 Formulate the Query Structure:
 
 The query should select the Name column since we want the names of musicals.
-Use a WHERE clause to filter rows where the Nominee column equals "Bob Fosse".
+Use a WHERE clause to filter rows where the Nominee column equals ""Bob Fosse"".
 Optimize and Finalize the Query:
 
 Check that the Nominee column belongs to the musical table, and no join is necessary since the required information is within a single table.
-Ensure the filter condition uses an exact match for the nominee's name, "Bob Fosse".
+Ensure the filter condition uses an exact match for the nominee's name, ""Bob Fosse"".
 Verify the Query:
 Validate that the constructed query fulfills the requirement by reviewing the schema and ensuring all requested information (musical names) can be retrieved.
 
@@ -2915,11 +2915,11 @@ HAVING COUNT(*) >= 3;
   - Column: Duration
     - Samples: [1988—, 1988, 1992—, 1993—, 1988–2008, 2013, 1994—]
   - Column: age
-    - Samples: [26, 22, 21, 20, 20]","SELECT Nominee FROM musical WHERE Award  =  ""Tony Award"" OR Award  =  ""Cleavant Derricks""","1. **Understand the Problem**: The task is to show the musical nominee for the specific awards "Bob Fosse" or "Cleavant Derricks". We are required to extract nominees from the `musical` table based on the condition that either the award is "Bob Fosse" or "Cleavant Derricks".
+    - Samples: [26, 22, 21, 20, 20]","SELECT Nominee FROM musical WHERE Award  =  ""Tony Award"" OR Award  =  ""Cleavant Derricks""","1. **Understand the Problem**: The task is to show the musical nominee for the specific awards ""Bob Fosse"" or ""Cleavant Derricks"". We are required to extract nominees from the `musical` table based on the condition that either the award is ""Bob Fosse"" or ""Cleavant Derricks"".
 Examine the Schema: The relevant table is musical, which contains columns like Musical_ID, Name, Year, Award, Category, Nominee, and Result. The Award column seems to hold the names of awards, and the Nominee column holds the names of the people nominated for those awards.
 Identify the Key Columns: From the problem statement, we are concerned with the Award and Nominee columns. We need to filter based on the Award column and retrieve the corresponding Nominee values.
-Identify the Logical Condition: The awards of interest are "Bob Fosse" or "Cleavant Derricks". Therefore, we need to build a condition in the WHERE clause that filters rows where the Award column matches either of these two names.
-Write the Query Logic: Since we want to select the nominees, we will use SELECT Nominee. For filtering, we can use the OR condition to check for either "Bob Fosse" or "Cleavant Derricks" in the Award column. Final Query:
+Identify the Logical Condition: The awards of interest are ""Bob Fosse"" or ""Cleavant Derricks"". Therefore, we need to build a condition in the WHERE clause that filters rows where the Award column matches either of these two names.
+Write the Query Logic: Since we want to select the nominees, we will use SELECT Nominee. For filtering, we can use the OR condition to check for either ""Bob Fosse"" or ""Cleavant Derricks"" in the Award column. Final Query:
 
 SELECT Nominee
 FROM musical
@@ -2955,18 +2955,18 @@ WHERE Nominee = 'Bob Fosse' OR Nominee = 'Cleavant Derricks';","",False
     - Samples: [26, 22, 21, 20, 20]","SELECT Nominee FROM musical WHERE Award  =  ""Tony Award"" OR Award  =  ""Cleavant Derricks""","Here are the logical steps that could have been taken to arrive at the solution:
 
 1. **Understand the problem:**
-   - The problem asks to find **nominees** who were nominated for either of the **"Bob Fosse"** or **"Cleavant Derricks"** awards.
+   - The problem asks to find **nominees** who were nominated for either of the **Bob Fosse** or **Cleavant Derricks** awards.
    - We need to query the `musical` table to get this information.
 
    <reasoning>
-   The problem wants us to focus on specific awards, which are either **Bob Fosse** or **Cleavant Derricks**. This means we must search through the `musical` table for nominees who were nominated under these two names in the "Award" column.
+   The problem wants us to focus on specific awards, which are either **Bob Fosse** or **Cleavant Derricks**. This means we must search through the `musical` table for nominees who were nominated under these two names in the ""Award"" column.
    </reasoning>
 
 2. **Identify relevant columns:**
    - The `musical` table contains several columns, including `Nominee`, `Award`, and `Result`.
    - The `Nominee` column holds the names of the nominees.
    - The `Award` column holds the name of the award.
-   - The `Result` column holds whether the nominee was "Nominated" or "Won".
+   - The `Result` column holds whether the nominee was ""Nominated"" or ""Won"".
 
    <reasoning>
    Since we are looking for **nominees**, the `Nominee` column is essential.
@@ -2978,12 +2978,12 @@ WHERE Nominee = 'Bob Fosse' OR Nominee = 'Cleavant Derricks';","",False
    - We need to retrieve the nominees, but only those who were nominated for either the **Bob Fosse** or **Cleavant Derricks** awards.
 
    <reasoning>
-   The `Award` column should be filtered for two specific values: "Bob Fosse" and "Cleavant Derricks".
+   The `Award` column should be filtered for two specific values: ""Bob Fosse"" and ""Cleavant Derricks"".
    We use an `OR` condition to apply this filter because we want nominees who were nominated for **either** of these two awards.
    </reasoning>
 
 4. **Write the SQL query:**
-   - The SQL query will select the `Nominee` from the `musical` table where the `Award` is either "Bob Fosse" or "Cleavant Derricks".
+   - The SQL query will select the `Nominee` from the `musical` table where the `Award` is either ""Bob Fosse"" or ""Cleavant Derricks"".
 
    <reasoning>
    The core part of the SQL query is based on selecting the `Nominee` from the `musical` table and applying the appropriate filter on the `Award` column.

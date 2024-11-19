@@ -19,6 +19,8 @@ knowledge_distillation_generation_template: |
 
   Formulate the reasoning steps as if you were coming up to the steps yourself.
   Use <reasoning> tag for your logical reasoning for the SQL query.
+  Avoid revealing the solution/answer in the reasoning steps.
+  Use <final answer> tag for your final answer. Do not include natural language in the final answer.
 
 knowledge_distillation_verification_template: |
   Given a sql problem, the schema and the logical reasoning steps that would lead to the correct solution, 
