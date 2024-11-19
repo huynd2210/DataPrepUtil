@@ -26,7 +26,7 @@ def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
             if type(row["verification_solution"]) == float:
                 print("0" * 20)
                 print(row["verification_solution"])
-            print(textwrap.fill("verification_solution: " str(row["verification_solution"]), textWrapWidth), end="\n\n")
+            print(textwrap.fill("verification_solution: " + str(row["verification_solution"]), textWrapWidth), end="\n\n")
             print(textwrap.fill("isVerified: " + str(row["isVerified"]), textWrapWidth), end="\n\n")
             print(textwrap.fill("schema: " + row["schema"], textWrapWidth), end="\n\n")
             print("-" * 20)

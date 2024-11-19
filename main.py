@@ -12,7 +12,7 @@ def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
     if chosenColumns is not None:
         df = df[chosenColumns]
     textWrapWidth = 160
-    batch_size = 10  # Number of rows to display at a time
+    batch_size = 100  # Number of rows to display at a time
 
     # Iterate in batches
     for start_idx in range(0, len(df), batch_size):
