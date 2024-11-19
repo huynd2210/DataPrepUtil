@@ -20,7 +20,7 @@ def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
         batch = df.iloc[start_idx:end_idx]
 
         for index, row in batch.iterrows():
-            print(" Question: " + row["question"], end="\n\n")
+            print(f" Question: {row['question']}" , end="\n\n")
             print(textwrap.fill("gold_solution: " + row["gold_solution"], textWrapWidth), end="\n\n")
             print(textwrap.fill("reasoning: " + row["reasoning"], textWrapWidth), end="\n\n")
             print("-" * 20)
@@ -40,27 +40,30 @@ def analyseEvaluation(evaluationResultDf: pd.DataFrame):
 
     print("Accuracy: " + str(counter / len(evaluationResultDf)))
 
-def distillWrapper(model_name: str, dataset="spider", split="train", batchRange: Optional[tuple[int, int]] = None):
+def distillWrapper(model_name: str, student_model_name: str, dataset="spider", split="train", batchRange: Optional[tuple[int, int]] = None):
     data = distillKnowledge(model_name, dataset=dataset, split=split, batchRange=batchRange)
     outputName = f"{model_name.replace(':', '-')}_distilled_data_{dataset}_{split}_{batchRange[0]}_{batchRange[1]}.csv"
     print(f"Output saved to {outputName}")
     data.to_csv(outputName)
 
 if __name__ == '__main__':
-
     prettyPrintCSV(
         "qwen2.5-coder-14b-instruct-q4_K_M_distilled_data_spider_train_0_200.csv",
         ["question", "gold_solution", "reasoning"]
     )
 
-
-    # model_name = "qwen2.5-coder:14b-instruct-q4_K_M"
+    # model_name = "gpt-4o-mini"
+    # student_model_name = "qwen2.5-coder:14b-instruct-q4_K_M"
     # split = "train"
-    # batchRange = (1001, 1100)
+    # batchRange = (201, 300)
 
 
     # model_name = "llama3.1:8b-instruct-q4_0"
-    datasetName = "spider"
+    # datasetName = "spider"
+    # distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
+
+
+
     # result = evaluateModel(model_name, datasetName)
     # analyseEvaluation(result)
     # print("----RESULT----")

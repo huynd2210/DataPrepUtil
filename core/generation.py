@@ -1,4 +1,7 @@
+import os
+
 import ollama
+from openai import OpenAI
 
 from core.data_loader import get_spider_db_path
 from core.sql_tools import getDatabaseSchemaForPrompt
@@ -11,7 +14,17 @@ from models.SpiderDataset import SpiderDataset
 def prompt(model_name, promptTemplate=config["prompt_template"], **kwargs):
     apiModels = ['gpt-4o-mini']
     if model_name in apiModels:
-        pass
+        client = OpenAI(api_key=None)
+        response = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": promptTemplate.format(**kwargs)
+                }
+            ], model=model_name
+        )
+        return response.choices[0].message.content
+
 
     return ollama.generate(model=model_name, prompt=promptTemplate.format(**kwargs))['response']
 
