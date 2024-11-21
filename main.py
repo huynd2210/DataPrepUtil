@@ -64,7 +64,7 @@ if __name__ == '__main__':
     student_model_name = "qwen2.5-coder:7b-instruct"
     # student_model_name = "gpt-4o-mini"
     split = "train"
-    batchRange = (400, 4000)
+    batchRange = (4001, 7000)
     datasetName = "spider"
     distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
 

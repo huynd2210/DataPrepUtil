@@ -13,7 +13,7 @@ def load_spider(split: str = "train", batchRange: Optional[tuple[int, int]] = No
         print("Loading batch range: " + str(batchRange))
         for i in range(len(instances)):
             instance = instances[i]
-            if i in range(batchRange[0], batchRange[1] + 1):
+            if batchRange is not None and i in range(batchRange[0], batchRange[1] + 1):
                 batchResult.append(instance)
             else:
                 print("Skipping instance " + str(i))
