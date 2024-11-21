@@ -1,5 +1,4 @@
 import os
-from typing import Union
 
 import instructor
 import ollama
@@ -59,7 +58,7 @@ def _deliverPrompt(messageContent, model_name: str, structuredOutputClass=SQLQue
 def prompt(
         model_name: str,
         promptTemplate=config["prompt_template"],
-        structuredOutputClass=SQLQuery,
+        structuredOutputClass=None,
         **kwargs):
     """
 
@@ -95,8 +94,10 @@ def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderData
     print("----------RESPONSE----------")
     print(response)
 
-    # generated_sql = cleanLLMResponse(response)
-    generated_sql = response.sql_query if isInstructor else cleanLLMResponse(response)
+    if isInstructor:
+        generated_sql = response.sql_query
+    else:
+        generated_sql = cleanLLMResponse(response)
 
     return SQLEvaluationEntry(
         db_path=get_spider_db_path(spider_dataset_entry.db_id),
