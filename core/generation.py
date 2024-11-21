@@ -12,7 +12,7 @@ from models.SpiderDataset import SpiderDataset
 
 
 def prompt(model_name, promptTemplate=config["prompt_template"], **kwargs):
-    apiModels = ['gpt-4o-mini']
+    apiModels = ['gpt-4o-mini', 'gpt-4o']
     if model_name in apiModels:
         print("Using: " + model_name)
         client = OpenAI(api_key=None)

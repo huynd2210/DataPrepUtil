@@ -19,6 +19,9 @@ def load_spider(split: str = "train", batchRange: Optional[tuple[int, int]] = No
                 print("Skipping instance " + str(i))
             # print(instance)
 
+    elif split == "dev":
+
+
         if batchRange is not None:
             instances = batchResult
         return instances

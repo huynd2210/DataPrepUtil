@@ -5,7 +5,8 @@ from typing import Optional
 import pandas as pd
 
 from core.distillation import distillKnowledge, distillUnverifiedEntries
-from core.utils import merge_csv_files
+from core.evaluation import evaluateModel
+from core.utils import merge_csv_files, load_json_to_class
 
 
 def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
@@ -62,7 +63,7 @@ def redistillWrapper(
         dataset: str = "spider",
         split: str = "train",
 ):
-    pd = distillUnverifiedEntries(file_path, model_name, student_model_name, dataset, split)
+    pd = distillUnverifiedEntries(file_path, model_name)
     outputName = file_path.replace(".csv", "_redistilled.csv")
     print(f"Output saved to {outputName}")
     pd.to_csv(outputName)
@@ -70,6 +71,8 @@ def redistillWrapper(
 
 
 if __name__ == '__main__':
+    load_json_to_class()
+
     # prettyPrintCSV(
     #     "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train.csv",
     #     ["question", "gold_solution", "reasoning", "verification_solution", "isVerified", "schema"]
@@ -77,11 +80,11 @@ if __name__ == '__main__':
 
     # model_name = "gpt-4o-mini"
     # # student_model_name = "gpt-4o-mini"
-    redistillWrapper(
-        "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train.csv",
-        "gpt-4o",
-        "gpt-4o-mini",
-    )
+    # redistillWrapper(
+    #     "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train.csv",
+    #     "gpt-4o",
+    #     "gpt-4o-mini",
+    # )
 
 
     # student_model_name = "qwen2.5-coder:7b-instruct"
@@ -91,20 +94,20 @@ if __name__ == '__main__':
 
     # split = "train"
     # batchRange = (4001, 7000)
-    # datasetName = "spider"
     # distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
 
     # model_name = "llama3.1:8b-instruct-q4_0"
 
 
-
-    # result = evaluateModel(model_name, datasetName)
-    # analyseEvaluation(result)
-    # print("----RESULT----")
-    # print(result)
-    # outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
-    # print(f"Output saved to {outputName}")
-    # result.to_csv(outputName)
+    model_name = "qwen2.5-coder:0.5b-instruct-fp16"
+    datasetName = "spider"
+    result = evaluateModel(model_name, datasetName)
+    analyseEvaluation(result)
+    print("----RESULT----")
+    print(result)
+    outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
+    print(f"Output saved to {outputName}")
+    result.to_csv(outputName)
 
     # data = distillKnowledge(model_name, dataset=datasetName, batchRange=batchRange)
     # outputName = f"{model_name.replace(':', '-')}_distilled_data_{datasetName}_{split}_{batchRange[0]}_{batchRange[1]}.csv"

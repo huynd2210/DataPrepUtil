@@ -1,5 +1,13 @@
 cache_path: cache
 spider_root_path: spider_data
+
+prompt_template_instructor: |
+  Solve the follow sql problem using sqllite:
+  {request}
+  
+  Schema:
+  {schema}
+
 prompt_template: |
   Solve the follow sql problem using sqllite:
   {request}

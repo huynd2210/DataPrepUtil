@@ -1,9 +1,13 @@
+import instructor
 import ollama
+from openai import OpenAI
 
+from core.data_loader import load_spider
 from core.evaluation import evaluateSQLGenerationEntry
 from core.generation import generateSQLEvaluationEntry
-from main import load_spider, config
 from core.sql_tools import retrieveDatabaseSchema, formatSchemaForPrompt
+from core.utils import config
+from models.SQLReasoning import SQLReasoning
 
 
 def test():
@@ -25,7 +29,72 @@ def testSchemaRetrieval():
 
     print(formatSchemaForPrompt(db_info))
 
-testSchemaRetrieval()
+def testInstructor():
+    model = "qwen2.5-coder:7b-instruct"
+    promptTemplate = config["prompt_template"]
+
+    question = "How many heads of the departments are older than 56 ?"
+    schema = """
+    SCHEMA:
+- Table: department
+  - Column: Department_ID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [State, Treasury, Defense, Justice, Interior]
+  - Column: Creation
+    - Samples: [1789, 1789, 1947, 1870, 1849]
+  - Column: Ranking
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Budget_in_Billions
+    - Samples: [9.96, 11.1, 439.3, 23.4, 10.7]
+  - Column: Num_Employees
+    - Samples: [30266.0, 115897.0, 3000000.0, 112557.0, 71436.0]
+- Table: head
+  - Column: head_ID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: name
+    - Samples: [Tiger Woods, Sergio García, K. J. Choi, Dudley Hart, Jeff Maggert]
+  - Column: born_state
+    - Samples: [Alabama, California, Alabama, California, Delaware]
+  - Column: age
+    - Samples: [67.0, 68.0, 69.0, 52.0, 53.0]
+- Table: management
+  - Column: department_ID
+    - Samples: [2, 15, 2, 7, 11]
+  - Column: head_ID
+    - Samples: [5, 4, 6, 3, 10]
+  - Column: temporary_acting
+    - Samples: [Yes, Yes, Yes, No, No]
+    """
+
+    message = promptTemplate.format(request=question, schema=schema)
+    client = instructor.from_openai(
+        OpenAI(
+            base_url="http://localhost:11434/v1",
+            api_key="ollama",  # required, but unused
+        ),
+        mode=instructor.Mode.JSON,
+    )
+
+    resp = client.chat.completions.create(
+        model=model,
+        messages=[
+            {
+                "role": "user",
+                "content": message,
+            }
+        ],
+        response_model=SQLReasoning,
+    )
+    print(resp.model_dump_json(indent=2))
+    print("_" * 20)
+    print("SQL: ", resp.sql_query)
+    print("Reasoning: ", resp.reasoning)
+
+
+testInstructor()
+
+# testSchemaRetrieval()
 # load_spider("train")
 # test()
 # print(config['prompt_template'])

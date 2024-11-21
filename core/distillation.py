@@ -143,21 +143,15 @@ def distillKnowledge(
 def distillUnverifiedEntries(
         filePath: str,
         teacher_model_name,
-        student_model_name=None,
-        dataset="spider",
-        split="train",
         promptTemplate=config["knowledge_distillation_generation_template"]
 ):
     result = []
-    distillationEntries = loadToObjectsFromFile(filePath, DistillationEntry)
-    if dataset == "spider":
-        spider_instances = load_spider(split)
+    try:
+        distillationEntries = loadToObjectsFromFile(filePath, DistillationEntry)
         for i in range(len(tqdm(distillationEntries))):
             distillationEntry = distillationEntries[i]
-            db_path = get_spider_db_path(spider_instances[i].db_id)
             if distillationEntry.isVerified is None or not distillationEntry.isVerified:
                 print("Redistilling: " + distillationEntry.question)
-                student_model_name = teacher_model_name if student_model_name is None else student_model_name
                 distillationEntry = generateDistillationEntry(
                     modelName=teacher_model_name,
                     question=distillationEntry.question,
@@ -165,11 +159,10 @@ def distillUnverifiedEntries(
                     schema=distillationEntry.schema,
                     promptTemplate=promptTemplate
                 )
-                distillationEntry = verifyDistillationEntry(
-                    distillationEntry=distillationEntry,
-                    model_name=student_model_name,
-                    db_path=db_path
-                )
             result.append(distillationEntry)
-    pd = objects_to_dataframe(result)
-    return pd
+        pd = objects_to_dataframe(result)
+        return pd
+    except Exception as e:
+        print(e)
+        pd = objects_to_dataframe(result)
+        return pd

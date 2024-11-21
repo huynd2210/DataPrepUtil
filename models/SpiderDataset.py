@@ -1,8 +1,15 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
+from typing import Any
 
-@dataclass
-class SpiderDataset:
-    db_id: any = None
-    query: any = None
-    question: any = None
+class SpiderDataset(BaseModel):
+    """
+    A Pydantic model to represent a Spider dataset entry.
 
+    Args:
+        db_id: Any -- Database identifier
+        query: Any -- Golden SQL Query
+        question: Any -- Corresponding natural language question
+    """
+    db_id: Any = None
+    query: Any = None
+    question: Any = None
