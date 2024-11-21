@@ -1,3 +1,4 @@
+import os
 from dataclasses import fields
 from typing import Union
 
@@ -197,6 +198,41 @@ def isDataFrameEqual(df1, df2):
             print(comparison)
             return False
     return True
+
+def merge_csv_files(input_directory, output_file):
+    """
+    Merges all CSV files in the specified directory into a single CSV file.
+
+    Parameters:
+        input_directory (str): Path to the directory containing CSV files.
+        output_file (str): Path to save the merged CSV file.
+
+    Returns:
+        None
+    """
+    # List to store individual dataframes
+    dataframes = []
+
+    # Loop through all CSV files in the directory
+    for filename in os.listdir(input_directory):
+        if filename.endswith(".csv"):
+            file_path = os.path.join(input_directory, filename)
+            df = pd.read_csv(file_path)
+            dataframes.append(df)
+
+    # Concatenate all dataframes
+    merged_df = pd.concat(dataframes, ignore_index=True)
+
+    # Save the merged dataframe to a CSV file
+    merged_df.to_csv(output_file, index=False)
+
+    print(f"Merged CSV saved to {output_file}")
+
+
+# Example usage
+# make_file_editable_windows("C:\\path\\to\\your\\file.csv")
+
+
 
 # instances = load_json_to_class('train_spider_clean.json', SpiderDataset)
 # for instance in instances:

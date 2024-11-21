@@ -10,10 +10,11 @@ from models.SQLEvaluationEntry import SQLEvaluationEntry
 from models.SpiderDataset import SpiderDataset
 
 
-#TODO: API models
+
 def prompt(model_name, promptTemplate=config["prompt_template"], **kwargs):
     apiModels = ['gpt-4o-mini']
     if model_name in apiModels:
+        print("Using: " + model_name)
         client = OpenAI(api_key=None)
         response = client.chat.completions.create(
             messages=[

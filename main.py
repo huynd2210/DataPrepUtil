@@ -4,7 +4,8 @@ from typing import Optional
 
 import pandas as pd
 
-from core.distillation import distillKnowledge
+from core.distillation import distillKnowledge, distillUnverifiedEntries
+from core.utils import merge_csv_files
 
 
 def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
@@ -54,19 +55,44 @@ def distillWrapper(model_name: str, student_model_name: str, dataset="spider", s
     print(f"Output saved to {outputName}")
     data.to_csv(outputName)
 
+def redistillWrapper(
+        file_path: str,
+        model_name: str,
+        student_model_name: str,
+        dataset: str = "spider",
+        split: str = "train",
+):
+    pd = distillUnverifiedEntries(file_path, model_name, student_model_name, dataset, split)
+    outputName = file_path.replace(".csv", "_redistilled.csv")
+    print(f"Output saved to {outputName}")
+    pd.to_csv(outputName)
+
+
+
 if __name__ == '__main__':
     # prettyPrintCSV(
-    #     "gpt-4o-mini_distilled_data_spider_train_401_1000.csv",
+    #     "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train.csv",
     #     ["question", "gold_solution", "reasoning", "verification_solution", "isVerified", "schema"]
     # )
 
-    model_name = "gpt-4o-mini"
-    student_model_name = "qwen2.5-coder:7b-instruct"
-    # student_model_name = "gpt-4o-mini"
-    split = "train"
-    batchRange = (4001, 7000)
-    datasetName = "spider"
-    distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
+    # model_name = "gpt-4o-mini"
+    # # student_model_name = "gpt-4o-mini"
+    redistillWrapper(
+        "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train.csv",
+        "gpt-4o",
+        "gpt-4o-mini",
+    )
+
+
+    # student_model_name = "qwen2.5-coder:7b-instruct"
+
+
+
+
+    # split = "train"
+    # batchRange = (4001, 7000)
+    # datasetName = "spider"
+    # distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
 
     # model_name = "llama3.1:8b-instruct-q4_0"
 
