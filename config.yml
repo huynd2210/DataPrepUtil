@@ -1,6 +1,8 @@
 cache_path: cache
 spider_root_path: spider_data
 
+default_ollama_server: http://localhost:11434/v1
+
 prompt_template_instructor: |
   Solve the follow sql problem using sqllite:
   {request}
@@ -11,12 +13,12 @@ prompt_template_instructor: |
 prompt_template: |
   Solve the follow sql problem using sqllite:
   {request}
-  
+
   Schema:
   {schema}
-  
+
   Use <final answer> tag for your final sql query. Only include sql query and no other text in the final answer.
-#  Hint: the table head already contains age. Therefore, dont use join from other tables
+  Hint: the table head already contains age. Therefore, dont use join from other tables
 
 knowledge_distillation_generation_template: |
   Given sql problem, schema and solution. Come up with logical steps that could have been taken to reach the solution.

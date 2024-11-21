@@ -22,8 +22,8 @@ def load_spider(split: str = "train", batchRange: Optional[tuple[int, int]] = No
     elif split == "dev":
         pass
 
-    if batchRange is not None:
-        instances = batchResult
+        if batchRange is not None:
+            instances = batchResult
     return instances
 
 def get_spider_db_path(db_id, spiderRootPath=config["spider_root_path"], split="train"):

@@ -1,21 +1,23 @@
 cache_path: cache
 spider_root_path: spider_data
 
-prompt_template_instructor: |
-    Solve the follow sql problem using sqllite:
-  {request}
-  
-  Schema:
-  {schema}
+default_ollama_server: http://localhost:11434/v1
 
-prompt_template: |
+prompt_template_instructor: |
   Solve the follow sql problem using sqllite:
   {request}
   
   Schema:
   {schema}
-  
-  Use <final answer> tag for your final sql query. Only include sql query and no other text in the final answer.
+
+#prompt_template: |
+#  Solve the follow sql problem using sqllite:
+#  {request}
+#
+#  Schema:
+#  {schema}
+#
+#  Use <final answer> tag for your final sql query. Only include sql query and no other text in the final answer.
 #  Hint: the table head already contains age. Therefore, dont use join from other tables
 
 knowledge_distillation_generation_template: |

@@ -7,7 +7,7 @@ from core.evaluation import evaluateSQLGenerationEntry
 from core.generation import generateSQLEvaluationEntry
 from core.sql_tools import retrieveDatabaseSchema, formatSchemaForPrompt
 from core.utils import config
-from models.SQLReasoning import SQLReasoning
+from models.SQLQuery import SQLQuery
 
 
 def test():
@@ -30,8 +30,10 @@ def testSchemaRetrieval():
     print(formatSchemaForPrompt(db_info))
 
 def testInstructor():
-    model = "qwen2.5-coder:7b-instruct"
-    promptTemplate = config["prompt_template"]
+    # model = "qwen2.5-coder:7b-instruct"
+    model = "llama3.1:8b-instruct-q4_0"
+
+    promptTemplate = config["prompt_template_instructor"]
 
     question = "How many heads of the departments are older than 56 ?"
     schema = """
@@ -84,7 +86,7 @@ def testInstructor():
                 "content": message,
             }
         ],
-        response_model=SQLReasoning,
+        response_model=SQLQuery,
     )
     print(resp.model_dump_json(indent=2))
     print("_" * 20)

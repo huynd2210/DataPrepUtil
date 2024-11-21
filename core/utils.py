@@ -157,6 +157,11 @@ def cleanLLMResponse(response, openTag="<final answer>", closeTag="</final answe
     if closeTag in response:
         response = response.split(closeTag)[0].strip()
 
+    #order is important
+    to_remove = ["<sql>", "</sql>", "```sql", "```", "\n", "<final answer>", "</final answer>"]
+    for string in to_remove:
+        response = response.replace(string, "")
+
     return response
 
 def compareCountersWithDiff(count1, count2):
@@ -227,6 +232,7 @@ def merge_csv_files(input_directory, output_file):
     merged_df.to_csv(output_file, index=False)
 
     print(f"Merged CSV saved to {output_file}")
+
 
 
 # Example usage

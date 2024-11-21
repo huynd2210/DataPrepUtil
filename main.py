@@ -71,7 +71,6 @@ def redistillWrapper(
 
 
 if __name__ == '__main__':
-    load_json_to_class()
 
     # prettyPrintCSV(
     #     "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train.csv",
@@ -96,10 +95,11 @@ if __name__ == '__main__':
     # batchRange = (4001, 7000)
     # distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
 
-    # model_name = "llama3.1:8b-instruct-q4_0"
+    model_name = "llama3.1:8b-instruct-q4_0"
+    # model_name = "qwen2.5-coder:7b-instruct"
 
 
-    model_name = "qwen2.5-coder:0.5b-instruct-fp16"
+    # model_name = "qwen2.5-coder:0.5b-instruct-fp16"
     datasetName = "spider"
     result = evaluateModel(model_name, datasetName)
     analyseEvaluation(result)

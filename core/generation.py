@@ -1,5 +1,7 @@
 import os
+from typing import Union
 
+import instructor
 import ollama
 from openai import OpenAI
 
@@ -7,27 +9,69 @@ from core.data_loader import get_spider_db_path
 from core.sql_tools import getDatabaseSchemaForPrompt
 from core.utils import config, cleanLLMResponse
 from models.SQLEvaluationEntry import SQLEvaluationEntry
+from models.SQLQuery import SQLQuery
 from models.SpiderDataset import SpiderDataset
 
 
+def _setupClient(isInstructor: bool):
+    if isInstructor:
+        client = instructor.from_openai(
+            OpenAI(
+                base_url=config["default_ollama_server"],
+                api_key="ollama",
+            ),
+            mode=instructor.Mode.JSON,
+        )
+        return client
+    return OpenAI(api_key=None)
 
-def prompt(model_name, promptTemplate=config["prompt_template"], **kwargs):
+def _deliverPrompt(messageContent, model_name: str, structuredOutputClass=SQLQuery):
+    print("Using: " + model_name)
+
     apiModels = ['gpt-4o-mini', 'gpt-4o']
-    if model_name in apiModels:
-        print("Using: " + model_name)
-        client = OpenAI(api_key=None)
+    isInstructor = structuredOutputClass is not None
+    if not isInstructor and model_name not in apiModels:
+        return ollama.generate(model=model_name, prompt=messageContent)['response']
+
+    client = _setupClient(isInstructor)
+    if isInstructor:
         response = client.chat.completions.create(
+            model=model_name,
             messages=[
                 {
                     "role": "user",
-                    "content": promptTemplate.format(**kwargs)
+                    "content": messageContent,
                 }
-            ], model=model_name
+            ],
+            response_model=structuredOutputClass,
         )
-        return response.choices[0].message.content
+        return response
 
+    return client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": messageContent
+            }
+        ], model=model_name
+    ).choices[0].message.content
 
-    return ollama.generate(model=model_name, prompt=promptTemplate.format(**kwargs))['response']
+def prompt(
+        model_name: str,
+        promptTemplate=config["prompt_template"],
+        structuredOutputClass=SQLQuery,
+        **kwargs):
+    """
+
+    :param model_name:
+    :param promptTemplate:
+    :param structuredOutputClass: Structured output for the prompt. If None then default to normal unstructured
+    :param kwargs:
+    :return:
+    """
+    messageContent = promptTemplate.format(**kwargs)
+    return _deliverPrompt(messageContent, model_name, structuredOutputClass)
+
 
 # @suppress_prints
 def generateSQL(model_name, promptTemplate=config["prompt_template"], db_path="", **kwargs):
@@ -40,7 +84,7 @@ def generateSQL(model_name, promptTemplate=config["prompt_template"], db_path=""
     return prompt(model_name, promptTemplate=promptTemplate, **kwargs)
 
 # @suppress_prints
-def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderDataset):
+def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderDataset, isInstructor=False):
     request = spider_dataset_entry.question
     schema = getDatabaseSchemaForPrompt(get_spider_db_path(spider_dataset_entry.db_id))
 
@@ -50,12 +94,14 @@ def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderData
                                 schema=schema)
     print("----------RESPONSE----------")
     print(response)
-    generated_sql = cleanLLMResponse(response)
+
+    # generated_sql = cleanLLMResponse(response)
+    generated_sql = response.sql_query if isInstructor else cleanLLMResponse(response)
 
     return SQLEvaluationEntry(
-        get_spider_db_path(spider_dataset_entry.db_id),
-        generated_sql,
-        spider_dataset_entry.query,
-        spider_dataset_entry.question
+        db_path=get_spider_db_path(spider_dataset_entry.db_id),
+        generated_sql=generated_sql,
+        gold_sql=spider_dataset_entry.query,
+        question=spider_dataset_entry.question
     )
 

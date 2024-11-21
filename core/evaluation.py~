@@ -80,8 +80,6 @@ def evaluateModel(model_name: str, dataset="spider", split="train"):
 def evaluateFromFile(filePath: str):
     result = []
     sqlEvalEntries = loadToObjectsFromFile(filePath, SQLEvaluationEntry, file_type="csv")
-    for sqlEvalEntry in tqdm(sqlEvalEntries):
-        result.append(evaluateSQLGenerationEntry(sqlEvalEntry))
-    # Convert result to pandas dataframe
-    df = objects_to_dataframe(result)
-    return df
+    if dataset == "spider":
+        spider_instances = load_spider(split)
+        for instance in tqdm(spider_instances):

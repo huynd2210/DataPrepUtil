@@ -6,7 +6,7 @@ import pandas as pd
 
 from core.distillation import distillKnowledge, distillUnverifiedEntries
 from core.evaluation import evaluateModel
-from core.utils import merge_csv_files
+from core.utils import merge_csv_files, load_json_to_class
 
 
 def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
@@ -71,6 +71,7 @@ def redistillWrapper(
 
 
 if __name__ == '__main__':
+
     # prettyPrintCSV(
     #     "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train.csv",
     #     ["question", "gold_solution", "reasoning", "verification_solution", "isVerified", "schema"]
@@ -95,9 +96,10 @@ if __name__ == '__main__':
     # distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
 
     # model_name = "llama3.1:8b-instruct-q4_0"
+    model_name = "qwen2.5-coder:7b-instruct"
 
 
-    model_name = "qwen2.5-coder:0.5b-instruct-fp16"
+    # model_name = "qwen2.5-coder:0.5b-instruct-fp16"
     datasetName = "spider"
     result = evaluateModel(model_name, datasetName)
     analyseEvaluation(result)
