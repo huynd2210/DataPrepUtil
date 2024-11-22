@@ -14,7 +14,7 @@ def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
     if chosenColumns is not None:
         df = df[chosenColumns]
     textWrapWidth = 160
-    batch_size = 100  # Number of rows to display at a time
+    batch_size = 10  # Number of rows to display at a time
 
     # Iterate in batches
     for start_idx in range(0, len(df), batch_size):
@@ -22,17 +22,17 @@ def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
         batch = df.iloc[start_idx:end_idx]
 
         for index, row in batch.iterrows():
-            if row["isVerified"] == 0:
+            if row["isVerified"] == 0 or row["isVerified"] is None:
 
                 print(f" Question: {row['question']}" , end="\n\n")
-                print(textwrap.fill("gold_solution: " + row["gold_solution"], textWrapWidth), end="\n\n")
                 print(textwrap.fill("reasoning: " + row["reasoning"], textWrapWidth), end="\n\n")
                 if type(row["verification_solution"]) == float:
                     print("0" * 20)
                     print(row["verification_solution"])
+                print(textwrap.fill("gold_solution: " + row["gold_solution"], textWrapWidth), end="\n\n")
                 print(textwrap.fill("verification_solution: " + str(row["verification_solution"]), textWrapWidth), end="\n\n")
                 print(textwrap.fill("isVerified: " + str(row["isVerified"]), textWrapWidth), end="\n\n")
-                print(textwrap.fill("schema: " + row["schema"], textWrapWidth), end="\n\n")
+                # print(textwrap.fill("schema: " + row["schema"], textWrapWidth), end="\n\n")
                 print("-" * 20)
                 print("\n")
 
@@ -59,9 +59,6 @@ def distillWrapper(model_name: str, student_model_name: str, dataset="spider", s
 def redistillWrapper(
         file_path: str,
         model_name: str,
-        student_model_name: str,
-        dataset: str = "spider",
-        split: str = "train",
 ):
     pd = distillUnverifiedEntries(file_path, model_name)
     outputName = file_path.replace(".csv", "_redistilled.csv")
@@ -72,10 +69,10 @@ def redistillWrapper(
 
 if __name__ == '__main__':
 
-    # prettyPrintCSV(
-    #     "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train.csv",
-    #     ["question", "gold_solution", "reasoning", "verification_solution", "isVerified", "schema"]
-    # )
+    prettyPrintCSV(
+        "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train_redistilled.csv",
+        ["question", "gold_solution", "reasoning", "verification_solution", "isVerified", "schema"]
+    )
 
     # model_name = "gpt-4o-mini"
     # # student_model_name = "gpt-4o-mini"
@@ -96,18 +93,18 @@ if __name__ == '__main__':
     # distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
 
     # model_name = "llama3.1:8b-instruct-q4_0"
-    model_name = "qwen2.5-coder:7b-instruct"
-
-
-    # model_name = "qwen2.5-coder:0.5b-instruct-fp16"
-    datasetName = "spider"
-    result = evaluateModel(model_name, datasetName)
-    analyseEvaluation(result)
-    print("----RESULT----")
-    print(result)
-    outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
-    print(f"Output saved to {outputName}")
-    result.to_csv(outputName)
+    # model_name = "qwen2.5-coder:7b-instruct"
+    #
+    #
+    # # model_name = "qwen2.5-coder:0.5b-instruct-fp16"
+    # datasetName = "spider"
+    # result = evaluateModel(model_name, datasetName)
+    # analyseEvaluation(result)
+    # print("----RESULT----")
+    # print(result)
+    # outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
+    # print(f"Output saved to {outputName}")
+    # result.to_csv(outputName)
 
     # data = distillKnowledge(model_name, dataset=datasetName, batchRange=batchRange)
     # outputName = f"{model_name.replace(':', '-')}_distilled_data_{datasetName}_{split}_{batchRange[0]}_{batchRange[1]}.csv"

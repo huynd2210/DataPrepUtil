@@ -18,7 +18,6 @@ prompt_template: |
   {schema}
 
   Use <final answer> tag for your final sql query. Only include sql query and no other text in the final answer.
-  Hint: the table head already contains age. Therefore, dont use join from other tables
 
 knowledge_distillation_generation_template: |
   Given sql problem, schema and solution. Come up with logical steps that could have been taken to reach the solution.

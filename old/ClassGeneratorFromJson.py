@@ -126,7 +126,7 @@ instances = ClassGenerator.load_json_to_class('spider_data/dev.json', SpiderData
 #     print(instance)
 
 serializedJson = msgspec.json.encode(instances)
-with open('train_spider_others_clean.json', 'wb') as json_file:  # Use 'wb' for binary writing
+with open('dev_spider_clean.json', 'wb') as json_file:  # Use 'wb' for binary writing
     json_file.write(serializedJson)
 
 # print(len(instances))

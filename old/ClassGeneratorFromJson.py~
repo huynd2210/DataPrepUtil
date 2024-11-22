@@ -121,7 +121,7 @@ class ClassGenerator:
 # generator = ClassGenerator('sharegpt.json', 'ShareGPTFormat', class_type='dataclass')
 # generator.generate(to_file=True)
 
-instances = ClassGenerator.load_json_to_class('train_others.json', SpiderDataset)
+instances = ClassGenerator.load_json_to_class('spider_data/dev.json', SpiderDataset)
 # for instance in instances:
 #     print(instance)
 

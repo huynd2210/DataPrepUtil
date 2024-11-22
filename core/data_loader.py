@@ -4,23 +4,24 @@ from core.utils import load_json_to_class, suppress_prints, config
 from models.SpiderDataset import SpiderDataset
 
 
-# @suppress_prints
+@suppress_prints
 def load_spider(split: str = "train", batchRange: Optional[tuple[int, int]] = None) -> list[SpiderDataset]:
     batchResult = []
-
-    if split == "train":
-        instances = load_json_to_class('old/train_spider_clean.json', SpiderDataset)
-        print("Loading batch range: " + str(batchRange))
-        for i in range(len(instances)):
-            instance = instances[i]
-            if batchRange is not None and i in range(batchRange[0], batchRange[1] + 1):
-                batchResult.append(instance)
-            else:
-                print("Skipping instance " + str(i))
-            # print(instance)
-
-    elif split == "dev":
-        pass
+    splitFilePath = {
+        "train": 'old/train_spider_clean.json',
+        "dev": 'old/dev_spider_clean.json',
+        "test": 'old/test_spider_clean.json'
+    }
+    jsonFilePath = splitFilePath[split]
+    instances = load_json_to_class(jsonFilePath, SpiderDataset)
+    print("Loading batch range: " + str(batchRange))
+    for i in range(len(instances)):
+        instance = instances[i]
+        if batchRange is not None and i in range(batchRange[0], batchRange[1] + 1):
+            batchResult.append(instance)
+        else:
+            print("Skipping instance " + str(i))
+        # print(instance)
 
     if batchRange is not None:
         instances = batchResult
