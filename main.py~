@@ -85,7 +85,7 @@ if __name__ == '__main__':
 
     # student_model_name = "qwen2.5-coder:7b-instruct"
 
-    split = "test"
+    split = "dev"
     # batchRange = (4001, 7000)
     # distillWrapper(model_name, student_model_name, datasetName, split, batchRange)
 

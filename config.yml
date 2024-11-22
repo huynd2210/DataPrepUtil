@@ -1,6 +1,13 @@
 cache_path: cache
 spider_root_path: spider_data
 
+alpaca_instruction_template: | 
+  Solve the following sql problem:
+  {request}
+
+  Schema:
+  {schema}
+
 default_ollama_server: http://localhost:11434/v1
 
 prompt_template_instructor: |

@@ -121,12 +121,12 @@ class ClassGenerator:
 # generator = ClassGenerator('sharegpt.json', 'ShareGPTFormat', class_type='dataclass')
 # generator.generate(to_file=True)
 
-instances = ClassGenerator.load_json_to_class('spider_data/dev.json', SpiderDataset)
+instances = ClassGenerator.load_json_to_class('../spider_data/dev.json', SpiderDataset)
 # for instance in instances:
 #     print(instance)
 
 serializedJson = msgspec.json.encode(instances)
-with open('train_spider_others_clean.json', 'wb') as json_file:  # Use 'wb' for binary writing
+with open('dev_spider_clean.json', 'wb') as json_file:  # Use 'wb' for binary writing
     json_file.write(serializedJson)
 
 # print(len(instances))

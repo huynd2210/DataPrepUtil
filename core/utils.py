@@ -158,7 +158,7 @@ def cleanLLMResponse(response, openTag="<final answer>", closeTag="</final answe
         response = response.split(closeTag)[0].strip()
 
     #order is important
-    to_remove = ["<sql>", "</sql>", "```sql", "```", "\n", "<final answer>", "</final answer>"]
+    to_remove = ["<sql>", "</sql>", "```sql", "```", "\n", "<final answer>", "</final answer>", "<final_answer>", "</final_answer>"]
     for string in to_remove:
         response = response.replace(string, "")
 

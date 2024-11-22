@@ -15,4 +15,3 @@ def distillationToAlpaca(
             AlpacaFormat(instruction=instruction, output=reasoning_with_answer)
         )
     return alpaca
-
