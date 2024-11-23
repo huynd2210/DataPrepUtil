@@ -1,7 +1,12 @@
 cache_path: cache
 spider_root_path: spider_data
 
-alpaca_instruction_template: Solve the following sql problem:
+alpaca_instruction_template: | 
+  Solve the following sql problem:
+  {request}
+
+  Schema:
+  {schema}
 
 default_ollama_server: http://localhost:11434/v1
 
@@ -22,14 +27,14 @@ prompt_template: |
   Use <final answer> tag for your final sql query. Only include sql query and no other text in the final answer.
 
 knowledge_distillation_generation_template: |
-  Given sql problem, schema and solution. Come up with logical steps that could have been taken to reach the solution.
+    Given sql problem, schema and solution. Come up with logical steps that could have been taken to reach the solution.
+    
+    SQL problem: {problem}
+    Schema: {schema}
+    Solution: {solution}
   
-  SQL problem: {problem}
-  Schema: {schema}
-  Solution: {solution}
-
-  Formulate the reasoning steps as if you were coming up to the steps yourself.
-  Use <reasoning> tag for your logical reasoning for the SQL query.
+    Formulate the reasoning steps as if you were coming up to the steps yourself.
+    Use <reasoning> tag for your logical reasoning for the SQL query.
 #  Avoid revealing the full solution/answer in the reasoning steps.
 #  Use <final answer> tag for your final answer. Do not include natural language in the final answer.
 

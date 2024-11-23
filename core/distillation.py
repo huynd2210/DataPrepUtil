@@ -1,3 +1,4 @@
+import textwrap
 from typing import Optional
 
 import pandas
@@ -117,7 +118,7 @@ def distillKnowledge(
     if dataset == "spider":
         spider_instances = load_spider(split, batchRange=batchRange)
         for instance in tqdm(spider_instances):
-            db_path = get_spider_db_path(instance.db_id)
+            db_path = get_spider_db_path(instance.db_id, split=split)
             schema = getDatabaseSchemaForPrompt(db_path)
             distillationEntry = generateDistillationEntry(
                 modelName=teacher_model_name,
@@ -166,3 +167,33 @@ def distillUnverifiedEntries(
         print(e)
         pd = objects_to_dataframe(result)
         return pd
+
+
+def redistillEntries(
+        inputFilePath: str,
+        outputFilePath: str,
+        model_name: str,
+        entriesIndex: list[int],
+        promptTemplate: str = config["knowledge_distillation_generation_template"]
+):
+    distillationEntries = loadToObjectsFromFile(inputFilePath, DistillationEntry)
+    result = []
+    for i in range(len(distillationEntries)):
+        if i in entriesIndex:
+            distillationEntry = distillationEntries[i]
+            distillationEntry = generateDistillationEntry(
+                modelName=model_name,
+                question=distillationEntry.question,
+                goldSolution=distillationEntry.gold_solution,
+                schema=distillationEntry.schema,
+                promptTemplate=promptTemplate
+            )
+            print("Redistilling: " + distillationEntry.question)
+            print(textwrap.fill("reasoning: " + distillationEntry.reasoning, 160))
+            print()
+            result.append(distillationEntry)
+        else:
+            result.append(distillationEntries[i])
+
+    pd = objects_to_dataframe(result)
+    pd.to_csv(outputFilePath)

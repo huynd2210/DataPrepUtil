@@ -63,7 +63,7 @@ def retrieveDatabaseSchema(db_path: str, include_sample_data: bool = False, samp
         return DatabaseSchema(tables=schema_tables)
 
     except sqlite3.Error as e:
-        raise Exception(f"Database error: {str(e)}")
+        raise Exception(f"Database error for {db_path}: str({e})")
 
     finally:
         if 'conn' in locals():

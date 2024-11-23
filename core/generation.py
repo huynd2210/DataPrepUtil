@@ -52,7 +52,8 @@ def _deliverPrompt(messageContent, model_name: str, structuredOutputClass=SQLQue
                 "role": "user",
                 "content": messageContent
             }
-        ], model=model_name
+        ], model=model_name,
+        temperature=0.1
     ).choices[0].message.content
 
 def prompt(
@@ -83,12 +84,12 @@ def generateSQL(model_name, promptTemplate=config["prompt_template"], db_path=""
     return prompt(model_name, promptTemplate=promptTemplate, **kwargs)
 
 # @suppress_prints
-def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderDataset, isInstructor=False):
+def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderDataset, isInstructor=False, split="train"):
     request = spider_dataset_entry.question
-    schema = getDatabaseSchemaForPrompt(get_spider_db_path(spider_dataset_entry.db_id))
+    schema = getDatabaseSchemaForPrompt(get_spider_db_path(spider_dataset_entry.db_id, split=split))
 
     response = generateSQL(model_name=model_name,
-                                db_path=get_spider_db_path(spider_dataset_entry.db_id),
+                                db_path=get_spider_db_path(spider_dataset_entry.db_id, split=split),
                                 request=request,
                                 schema=schema)
     print("----------RESPONSE----------")
@@ -100,7 +101,7 @@ def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderData
         generated_sql = cleanLLMResponse(response)
 
     return SQLEvaluationEntry(
-        db_path=get_spider_db_path(spider_dataset_entry.db_id),
+        db_path=get_spider_db_path(spider_dataset_entry.db_id, split=split),
         generated_sql=generated_sql,
         gold_sql=spider_dataset_entry.query,
         question=spider_dataset_entry.question
