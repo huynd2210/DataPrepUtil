@@ -10,7 +10,8 @@ def load_spider(split: str = "train", batchRange: Optional[tuple[int, int]] = No
     splitFilePath = {
         "train": 'old/train_spider_clean.json',
         "dev": 'old/dev_spider_clean.json',
-        "test": 'old/test_spider_clean.json'
+        "test": 'old/test_spider_clean.json',
+        "others": 'old/train_spider_others_clean.json'
     }
     jsonFilePath = splitFilePath[split]
     instances = load_json_to_class(jsonFilePath, SpiderDataset)
@@ -28,7 +29,7 @@ def load_spider(split: str = "train", batchRange: Optional[tuple[int, int]] = No
     return instances
 
 def get_spider_db_path(db_id, spiderRootPath=config["spider_root_path"], split="train"):
-    if split == "train":
+    if split == "train" or split == "others":
         return f"{spiderRootPath}/database/{db_id}/{db_id}.sqlite"
     else:
         return f"{spiderRootPath}/test_database/{db_id}/{db_id}.sqlite"

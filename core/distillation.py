@@ -110,6 +110,16 @@ def distillKnowledge(
         useCache=False,
         batchRange: Optional[tuple[int, int]] = None
 ):
+    """
+
+    :param teacher_model_name: Model used to generate data
+    :param student_model_name: Model used to verify reasoning if set to None then will not verify
+    :param dataset: dataset to distill
+    :param split: split of dateset
+    :param useCache:
+    :param batchRange:
+    :return:
+    """
     cachePath = Path(f'{config["cache_path"]}/distillation/{teacher_model_name}_{dataset}_{split}.csv')
     if useCache and cachePath.exists():
         return pandas.read_csv(cachePath)
@@ -120,18 +130,20 @@ def distillKnowledge(
         for instance in tqdm(spider_instances):
             db_path = get_spider_db_path(instance.db_id, split=split)
             schema = getDatabaseSchemaForPrompt(db_path)
+            print("Distilling: " + instance.question)
             distillationEntry = generateDistillationEntry(
                 modelName=teacher_model_name,
                 question=instance.question,
                 goldSolution=instance.query,
                 schema=schema,
             )
-            student_model_name = teacher_model_name if student_model_name is None else student_model_name
-            distillationEntry = verifyDistillationEntry(
-                distillationEntry=distillationEntry,
-                model_name=student_model_name,
-                db_path=db_path
-            )
+            print("Reasoning: " + distillationEntry.reasoning)
+            if student_model_name is not None:
+                distillationEntry = verifyDistillationEntry(
+                    distillationEntry=distillationEntry,
+                    model_name=student_model_name,
+                    db_path=db_path
+                )
             result.append(distillationEntry)
 
 
