@@ -2,5 +2,6 @@ from dataclasses import dataclass
 
 @dataclass
 class AlpacaFormat:
-    instruction: any = None
-    output: any = None
+    instruction: str = ""
+    input: str = ""
+    output: str = ""

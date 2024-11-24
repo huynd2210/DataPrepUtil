@@ -4,9 +4,12 @@ from typing import Optional
 
 import pandas as pd
 
+from DatasetFormat.AlpacaFormat import AlpacaFormat
+from core.data_handler import distillationToAlpaca, convertDistillationEntriesToAlpaca
 from core.distillation import distillKnowledge, distillUnverifiedEntries, redistillEntries
 from core.evaluation import evaluateModel
-from core.utils import merge_csv_files, load_json_to_class
+from core.utils import merge_csv_files, load_json_to_class, loadToObjectsFromFile
+from models.DistillationEntry import DistillationEntry
 
 
 def prettyPrintCSV(path: str, chosenColumns: Optional[list[str]] = None):
@@ -68,28 +71,12 @@ def redistillWrapper(
     print(f"Output saved to {outputName}")
     pd.to_csv(outputName)
 
-
-
 if __name__ == '__main__':
-    # entriesIndex = [5012, 5021, 5022, 5027, 5039, 5053, 5079, 5084, 5092, 5094, 5130, 5155,5231, 5232, 5252, 5266, 5287,
-    #                 5294, 5310, 5353, 5365, 5368, 5371, 5372, 5400, 5414, 5415, 5421, 5431, 5433, 5437, 5440, 5442, 5447,
-    #                 5455, 5469, 5524, 5542, 5551, 5560, 5569, 5571, 5602, 5621, 5623, 5624, 5625, 5646, 5656, 5667, 5722,
-    #                 5727, 5749, 5758, 5767, 5791, 5800, 5805, 5823, 5824, 5840, 5918, 5919, 5920, 5930, 5932, 5961, 6026,
-    #                 6068, 6070, 6109, 6111, 6157, 6158, 6177, 6190, 6197, 6203, 6204, 6301, 6317, 6390, 6413, 6415, 6416,
-    #                 6418, 6456, 6487, 6509, 6511, 6512, 6558, 6570, 6610, 6649, 6651, 6692, 6699, 6749, 6757, 6759, 6779,
-    #                 6792, 6821, 6827, 6864, 6867, 6870, 6895, 6939, 6964, 6994,
-    #                 ]
     # redistillEntries(
     #     inputFilePath="datasets/distilled_spider_train/spider-train-distilled.csv",
     #     outputFilePath="datasets/distilled_spider_train/spider-train-redistilled.csv",
     #     model_name="gpt-4o",
     #     entriesIndex=entriesIndex
-    # )
-
-
-    # prettyPrintCSV(
-    #     "datasets/distilled_spider_train/gpt-4o-mini-distilled-spider-train_redistilled.csv",
-    #     ["question", "gold_solution", "reasoning", "verification_solution", "isVerified", "schema"]
     # )
 
     # model_name = "gpt-4o-mini"
@@ -100,11 +87,22 @@ if __name__ == '__main__':
     #     "gpt-4o-mini",
     # )
 
-
     # student_model_name = "qwen2.5-coder:7b-instruct"
 
     # batchRange = (4001, 7000)
-    distillWrapper(model_name="gpt-4o", dataset="spider", split="others")
+    # distillWrapper(model_name="gpt-4o", dataset="spider", split="others")
+
+    convertDistillationEntriesToAlpaca(
+        inputFilePath="datasets/distilled_spider_train/spider_train_distilled.csv",
+        outputFilePath="datasets/distilled_spider_train/spider-train-redistilled-alpaca.csv",
+        outputExtension="csv"
+    )
+    # inputFilePath = "datasets/distilled_spider_train/spider-train-redistilled-alpaca.csv"
+    # distillationEntries = loadToObjectsFromFile(inputFilePath, AlpacaFormat)
+    # print(distillationEntries[0])
+
+
+
 
     # model_name = "llama3.1:8b-instruct-q4_0"
     #
