@@ -6,7 +6,7 @@ import pandas as pd
 
 from DatasetFormat.AlpacaFormat import AlpacaFormat
 from core.data_handler import distillationToAlpaca, convertDistillationEntriesToAlpaca
-from core.distillation import distillKnowledge, distillUnverifiedEntries, redistillEntries
+from core.distillation import distillKnowledge, distillUnverifiedEntries, redistillEntries, generateVanillaEntry
 from core.evaluation import evaluateModel
 from core.utils import merge_csv_files, load_json_to_class, loadToObjectsFromFile
 from models.DistillationEntry import DistillationEntry
@@ -62,6 +62,13 @@ def distillWrapper(model_name: str, student_model_name: str = None, dataset="spi
     print(f"Output saved to {outputName}")
     data.to_csv(outputName)
 
+def generateVanillaData(dataset, split):
+    data = generateVanillaEntry(dataset=dataset, split=split)
+    outputName = f"vanilla_data_{dataset}_{split}.csv"
+    print(f"Output saved to {outputName}")
+    data.to_csv(outputName)
+
+
 def redistillWrapper(
         file_path: str,
         model_name: str,
@@ -72,6 +79,9 @@ def redistillWrapper(
     pd.to_csv(outputName)
 
 if __name__ == '__main__':
+    # generateVanillaData(dataset="spider", split="train")
+
+
     # redistillEntries(
     #     inputFilePath="datasets/distilled_spider_train/spider-train-distilled.csv",
     #     outputFilePath="datasets/distilled_spider_train/spider-train-redistilled.csv",
@@ -93,10 +103,12 @@ if __name__ == '__main__':
     # distillWrapper(model_name="gpt-4o", dataset="spider", split="others")
 
     convertDistillationEntriesToAlpaca(
-        inputFilePath="datasets/distilled_spider_train/spider_train_distilled.csv",
-        outputFilePath="datasets/distilled_spider_train/spider-train-redistilled-alpaca.csv",
-        outputExtension="csv"
+        inputFilePath="vanilla_data_spider_train.csv",
+        outputFilePath="vanilla_data_spider_train-alpaca.csv",
+        outputExtension="json"
     )
+
+
     # inputFilePath = "datasets/distilled_spider_train/spider-train-redistilled-alpaca.csv"
     # distillationEntries = loadToObjectsFromFile(inputFilePath, AlpacaFormat)
     # print(distillationEntries[0])

@@ -207,5 +207,25 @@ def redistillEntries(
         else:
             result.append(distillationEntries[i])
 
-    pd = objects_to_dataframe(result)
-    pd.to_csv(outputFilePath)
+    df = objects_to_dataframe(result)
+    df.to_csv(outputFilePath)
+
+def generateVanillaEntry(dataset="spider", split="train", batchRange: Optional[tuple[int, int]] = None):
+    result = []
+    if dataset == "spider":
+        spider_instances = load_spider(split, batchRange=batchRange)
+        for instance in tqdm(spider_instances):
+            db_path = get_spider_db_path(instance.db_id, split=split)
+            schema = getDatabaseSchemaForPrompt(db_path)
+            distillationEntry = DistillationEntry(
+                teacher_model_name="",
+                question=instance.question,
+                schema=schema,
+                gold_solution=instance.query,
+                reasoning="",
+                verification_solution="",
+                isVerified=None
+            )
+            result.append(distillationEntry)
+    df = objects_to_dataframe(result)
+    return df
