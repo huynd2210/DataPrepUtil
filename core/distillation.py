@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 from core.data_loader import load_spider, get_spider_db_path
 from core.evaluation import evaluateSQLGenerationEntry
-from core.generation import prompt
+from core.prompt_delivery import Prompt
 from core.sql_tools import getDatabaseSchemaForPrompt
 from core.utils import cleanLLMResponse, config, objects_to_dataframe, loadToObjectsFromFile
 from models.DistillationEntry import DistillationEntry
@@ -22,13 +22,8 @@ def generateDistillationEntry(
         promptTemplate: str = config["knowledge_distillation_generation_template"],
 ):
 
-    model_response = prompt(
-        modelName,
-        promptTemplate=promptTemplate,
-        problem=question,
-        solution=goldSolution,
-        schema=schema
-    )
+    prompt = Prompt(modelName=modelName, promptTemplate=promptTemplate, problem=question, solution=goldSolution, schema=schema)
+    model_response = prompt.deliver()
 
     reasoning = cleanLLMResponse(model_response, openTag="<reasoning>", closeTag="</reasoning>")
     distillationEntry = DistillationEntry(
@@ -42,7 +37,6 @@ def generateDistillationEntry(
     )
 
     return distillationEntry
-
 
 #Load distillation entries from file
 def verifyDistillationFromFile(
@@ -81,13 +75,15 @@ def verifyDistillationEntry(
     :param promptTemplate:
     :return:
     '''
-    model_response = prompt(
-        model_name,
+
+    prompt = Prompt(
+        modelName=model_name,
         promptTemplate=promptTemplate,
         problem=distillationEntry.question,
         schema=distillationEntry.schema,
         reasoning=distillationEntry.reasoning
     )
+    model_response = prompt.deliver()
 
     distillationEntry.verification_solution = cleanLLMResponse(model_response, openTag="<final answer>", closeTag="</final answer>")
     sqlEvaluationEntry = SQLEvaluationEntry(

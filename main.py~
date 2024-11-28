@@ -8,7 +8,7 @@ from DatasetFormat.AlpacaFormat import AlpacaFormat
 from core.data_handler import distillationToAlpaca, convertDistillationEntriesToAlpaca
 from core.distillation import distillKnowledge, distillUnverifiedEntries, redistillEntries, generateVanillaEntry
 from core.evaluation import evaluateModel
-from core.utils import merge_csv_files, load_json_to_class, loadToObjectsFromFile
+from core.utils import merge_csv_files, load_json_to_class, loadToObjectsFromFile, config
 from models.DistillationEntry import DistillationEntry
 
 
@@ -102,11 +102,11 @@ if __name__ == '__main__':
     # batchRange = (4001, 7000)
     # distillWrapper(model_name="gpt-4o", dataset="spider", split="others")
 
-    convertDistillationEntriesToAlpaca(
-        inputFilePath="vanilla_data_spider_train.csv",
-        outputFilePath="vanilla_data_spider_train-alpaca.csv",
-        outputExtension="csv"
-    )
+    # convertDistillationEntriesToAlpaca(
+    #     inputFilePath="vanilla_data_spider_train.csv",
+    #     outputFilePath="vanilla_data_spider_train-alpaca.csv",
+    #     outputExtension="json"
+    # )
 
 
     # inputFilePath = "datasets/distilled_spider_train/spider-train-redistilled-alpaca.csv"
@@ -116,17 +116,20 @@ if __name__ == '__main__':
 
 
 
+
+
     # model_name = "llama3.1:8b-instruct-q4_0"
     #
-    # model_name = "qwen2.5-coder:0.5b-instruct-fp16"
-    # datasetName = "spider"
-    # result = evaluateModel(model_name, datasetName, split=split)
-    # analyseEvaluation(result)
-    # print("----RESULT----")
-    # print(result)
-    # outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
-    # print(f"Output saved to {outputName}")
-    # result.to_csv(outputName)
+    model_name = "qwen2.5-coder-3b-instruct-spider-baseline:latest"
+    split="train"
+    datasetName = "spider"
+    result = evaluateModel(model_name, datasetName, split=split, promptTemplate=config["prompt_template"])
+    analyseEvaluation(result)
+    print("----RESULT----")
+    print(result)
+    outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
+    print(f"Output saved to {outputName}")
+    result.to_csv(outputName)
 
 
 

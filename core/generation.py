@@ -5,72 +5,12 @@ import ollama
 from openai import OpenAI
 
 from core.data_loader import get_spider_db_path
+from core.prompt_delivery import Prompt
 from core.sql_tools import getDatabaseSchemaForPrompt
 from core.utils import config, cleanLLMResponse
 from models.SQLEvaluationEntry import SQLEvaluationEntry
 from models.SQLQuery import SQLQuery
 from models.SpiderDataset import SpiderDataset
-
-
-def _setupClient(isInstructor: bool):
-    if isInstructor:
-        client = instructor.from_openai(
-            OpenAI(
-                base_url=config["default_ollama_server"],
-                api_key="ollama",
-            ),
-            mode=instructor.Mode.JSON,
-        )
-        return client
-    return OpenAI(api_key=None)
-
-def _deliverPrompt(messageContent, model_name: str, structuredOutputClass=SQLQuery):
-    print("Using: " + model_name)
-
-    apiModels = ['gpt-4o-mini', 'gpt-4o']
-    isInstructor = structuredOutputClass is not None
-    if not isInstructor and model_name not in apiModels:
-        return ollama.generate(model=model_name, prompt=messageContent)['response']
-
-    client = _setupClient(isInstructor)
-    if isInstructor:
-        response = client.chat.completions.create(
-            model=model_name,
-            messages=[
-                {
-                    "role": "user",
-                    "content": messageContent,
-                }
-            ],
-            response_model=structuredOutputClass,
-        )
-        return response
-
-    return client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": messageContent
-            }
-        ], model=model_name,
-        temperature=0.1
-    ).choices[0].message.content
-
-def prompt(
-        model_name: str,
-        promptTemplate=config["prompt_template"],
-        structuredOutputClass=None,
-        **kwargs):
-    """
-
-    :param model_name:
-    :param promptTemplate:
-    :param structuredOutputClass: Structured output for the prompt. If None then default to normal unstructured
-    :param kwargs:
-    :return:
-    """
-    messageContent = promptTemplate.format(**kwargs)
-    return _deliverPrompt(messageContent, model_name, structuredOutputClass)
 
 
 # @suppress_prints
@@ -80,15 +20,26 @@ def generateSQL(model_name, promptTemplate=config["prompt_template"], db_path=""
     print("--" * 50)
     print(promptTemplate.format(**kwargs))
     print("--" * 50)
-
-    return prompt(model_name, promptTemplate=promptTemplate, **kwargs)
+    prompt = Prompt(
+        modelName=model_name,
+        promptTemplate=promptTemplate,
+        **kwargs
+    )
+    return prompt.deliver()
 
 # @suppress_prints
-def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderDataset, isInstructor=False, split="train"):
+def generateSQLEvaluationEntry(
+        model_name: str,
+        spider_dataset_entry: SpiderDataset,
+        isInstructor=False,
+        split="train",
+        promptTemplate=config["prompt_template"]
+):
     request = spider_dataset_entry.question
     schema = getDatabaseSchemaForPrompt(get_spider_db_path(spider_dataset_entry.db_id, split=split))
 
     response = generateSQL(model_name=model_name,
+                                promptTemplate=promptTemplate, #promptTemplate
                                 db_path=get_spider_db_path(spider_dataset_entry.db_id, split=split),
                                 request=request,
                                 schema=schema)
@@ -104,6 +55,7 @@ def generateSQLEvaluationEntry(model_name: str, spider_dataset_entry: SpiderData
         db_path=get_spider_db_path(spider_dataset_entry.db_id, split=split),
         generated_sql=generated_sql,
         gold_sql=spider_dataset_entry.query,
-        question=spider_dataset_entry.question
+        question=spider_dataset_entry.question,
+        response=response
     )
 

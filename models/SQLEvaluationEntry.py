@@ -13,3 +13,4 @@ class SQLEvaluationEntry:
     question: str
     #Result is set after this entry is evaluated
     isCorrect: Optional[bool] = None
+    response: Optional[str] = None
