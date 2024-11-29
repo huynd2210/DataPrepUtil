@@ -119,7 +119,7 @@ if __name__ == '__main__':
     model_name = "NyanDoggo/Qwen2.5-Coder-3B-Instruct-Spider-Vanilla"
     split="test"
     datasetName = "spider"
-    result = evaluateModel(model_name, datasetName, split=split, promptTemplate=config["prompt_template"])
+    result = evaluateModel(model_name, datasetName, split=split, promptTemplate=config["alpaca_inference_template"])
     analyseEvaluation(result)
     print("----RESULT----")
     print(result)
