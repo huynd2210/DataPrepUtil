@@ -5,7 +5,7 @@ alpaca_inference_template: |
   Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
 
   ### Instruction:
-  Solve the following sql problem:
+  Solve the following sql problem, use <final answer> tag for your final answer:
   {request}
   
   Schema:
