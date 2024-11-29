@@ -17,6 +17,10 @@ import sys
 from io import StringIO
 from contextlib import contextmanager
 
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+
+
 def objects_to_dataframe(objects):
     # Convert a list of objects to a list of dictionaries
     data = [vars(obj) for obj in objects]
@@ -213,8 +217,8 @@ def isDataFrameEqual(df1, df2):
     df2Values = [list(row.values()) for row in df2Dict.values()]
 
     for i in range(len(df1Values)):
-        # comparison = compareCountersWithDiff(Counter(df1Values[i]), Counter(df2Values[i]))
-        comparison = compareSetsWithDiff(set(df1Values[i]), set(df2Values[i]))
+        comparison = compareCountersWithDiff(Counter(df1Values[i]), Counter(df2Values[i]))
+        # comparison = compareSetsWithDiff(set(df1Values[i]), set(df2Values[i]))
 
 
         if not comparison["equal"]:

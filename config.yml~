@@ -12,10 +12,8 @@ alpaca_inference_template: |
   {schema}
 
   ### Input:
-  {{}}
 
   ### Response:
-  {{}}
 
 alpaca_instruction_template: | 
   Solve the following sql problem:
@@ -96,3 +94,60 @@ reasoning_prompt_template: |
   {schema}
 
   
+
+
+
+  Given sql problem, schema and solution. Come up with logical steps that could have been taken to reach the solution.
+
+  SQL problem: How many heads of the departments are older than 56 ?
+  Schema: SCHEMA:
+  - Table: department
+    - Column: Department_ID
+      - Samples: [1, 2, 3, 4, 5]
+    - Column: Name
+      - Samples: [State, Treasury, Defense, Justice, Interior]
+    - Column: Creation
+      - Samples: [1789, 1789, 1947, 1870, 1849]
+    - Column: Ranking
+      - Samples: [1, 2, 3, 4, 5]
+    - Column: Budget_in_Billions
+      - Samples: [9.96, 11.1, 439.3, 23.4, 10.7]
+    - Column: Num_Employees
+      - Samples: [30266.0, 115897.0, 3000000.0, 112557.0, 71436.0]
+  - Table: head
+    - Column: head_ID
+      - Samples: [1, 2, 3, 4, 5]
+    - Column: name
+      - Samples: [Tiger Woods, Sergio García, K. J. Choi, Dudley Hart, Jeff Maggert]
+    - Column: born_state
+      - Samples: [Alabama, California, Alabama, California, Delaware]
+    - Column: age
+      - Samples: [67.0, 68.0, 69.0, 52.0, 53.0]
+  - Table: management
+    - Column: department_ID
+      - Samples: [2, 15, 2, 7, 11]
+    - Column: head_ID
+      - Samples: [5, 4, 6, 3, 10]
+    - Column: temporary_acting
+      - Samples: [Yes, Yes, Yes, No, No]
+    
+    Formulate the reasoning steps as if you were coming up to the steps yourself.
+  
+  
+  
+    Response:
+    
+    1. **Understand the Requirement**: The task is to determine how many heads of departments are older than 56 years.
+    2. **Identify Relevant Tables**: From the given schema, I recognize that the relevant table for this query is the `head` table, which contains information about the department heads,
+       including their ages.
+    3. **Locate the Required Data**: I know I need the `age` column from the `head` table to check which heads are older than 56.
+    4. **Constructing the Query**: Since I need to count the number of records that meet the age condition, I will use the `COUNT(*)` function.
+       This will count all the rows that satisfy a certain condition.
+    5. **Specify the Condition**: The condition I need to apply is that the `age` must be greater than 56. I will translate this condition into SQL syntax as `WHERE age > 56`.
+    6. **Finalizing the Query**: I combine the counting function and the condition into a single SQL statement that selects the count of heads from the `head` table where the age condition is met.
+    7. **Compose the SQL Statement**: Finally, I write the SQL query as `SELECT count(*) FROM head WHERE age > 56;`, which will give me the total count of heads who are older than 56.
+    8. **Execution and Interpretation**: The execution of this SQL query will yield the desired number, which represents how many heads of departments are older than 56 years old.
+
+
+
+

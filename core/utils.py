@@ -17,6 +17,9 @@ import sys
 from io import StringIO
 from contextlib import contextmanager
 
+
+
+
 def objects_to_dataframe(objects):
     # Convert a list of objects to a list of dictionaries
     data = [vars(obj) for obj in objects]
