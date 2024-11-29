@@ -123,7 +123,8 @@ if __name__ == '__main__':
     analyseEvaluation(result)
     print("----RESULT----")
     print(result)
-    outputName = f"{model_name.replace(':', '-').replace("/", "_")}_{datasetName}_result.csv"
+    model_name = model_name.replace("/", "-")
+    outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
     print(f"Output saved to {outputName}")
     result.to_csv(outputName)
 
