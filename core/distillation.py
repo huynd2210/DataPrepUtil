@@ -5,7 +5,7 @@ import pandas
 from django.db.models.expressions import result
 from tqdm import tqdm
 
-from core.data_loader import load_spider, get_spider_db_path
+from core.data_loader import load_spider, get_spider_db_path, load_bird, getBirdDbPath
 from core.evaluation import evaluateSQLGenerationEntry
 from core.prompt_delivery import Prompt
 from core.sql_tools import getDatabaseSchemaForPrompt
@@ -98,6 +98,7 @@ def verifyDistillationEntry(
 
     return distillationEntry
 
+
 def distillKnowledge(
         teacher_model_name: str,
         student_model_name: Optional[str] = None,
@@ -122,25 +123,9 @@ def distillKnowledge(
 
     result = []
     if dataset == "spider":
-        spider_instances = load_spider(split, batchRange=batchRange)
-        for instance in tqdm(spider_instances):
-            db_path = get_spider_db_path(instance.db_id, split=split)
-            schema = getDatabaseSchemaForPrompt(db_path)
-            print("Distilling: " + instance.question)
-            distillationEntry = generateDistillationEntry(
-                modelName=teacher_model_name,
-                question=instance.question,
-                goldSolution=instance.query,
-                schema=schema,
-            )
-            print("Reasoning: " + distillationEntry.reasoning)
-            if student_model_name is not None:
-                distillationEntry = verifyDistillationEntry(
-                    distillationEntry=distillationEntry,
-                    model_name=student_model_name,
-                    db_path=db_path
-                )
-            result.append(distillationEntry)
+        result = distillSpider(batchRange, result, split, student_model_name, teacher_model_name)
+    if dataset == "bird":
+        result = distillBird(batchRange, result, split, student_model_name, teacher_model_name)
 
 
     pd = objects_to_dataframe(result)
@@ -148,6 +133,53 @@ def distillKnowledge(
         pd.to_csv(cachePath)
 
     return pd
+
+
+def distillSpider(batchRange, result, split, student_model_name, teacher_model_name):
+    spider_instances = load_spider(split, batchRange=batchRange)
+    for instance in tqdm(spider_instances):
+        db_path = get_spider_db_path(instance.db_id, split=split)
+        schema = getDatabaseSchemaForPrompt(db_path)
+        print("Distilling: " + instance.question)
+        distillationEntry = generateDistillationEntry(
+            modelName=teacher_model_name,
+            question=instance.question,
+            goldSolution=instance.query,
+            schema=schema,
+        )
+        print("Reasoning: " + distillationEntry.reasoning)
+        if student_model_name is not None:
+            distillationEntry = verifyDistillationEntry(
+                distillationEntry=distillationEntry,
+                model_name=student_model_name,
+                db_path=db_path
+            )
+        result.append(distillationEntry)
+
+    return result
+
+def distillBird(batchRange, result, split, student_model_name, teacher_model_name):
+    bird_instances = load_bird(split, batchRange=batchRange)
+    for instance in tqdm(bird_instances):
+        db_path = getBirdDbPath(instance.db_id, split=split)
+        schema = getDatabaseSchemaForPrompt(db_path)
+        print("Distilling: " + instance.question)
+        distillationEntry = generateDistillationEntry(
+            modelName=teacher_model_name,
+            question=instance.question,
+            goldSolution=instance.query,
+            schema=schema,
+        )
+        print("Reasoning: " + distillationEntry.reasoning)
+        if student_model_name is not None:
+            distillationEntry = verifyDistillationEntry(
+                distillationEntry=distillationEntry,
+                model_name=student_model_name,
+                db_path=db_path
+            )
+        result.append(distillationEntry)
+    return result
+
 
 def distillUnverifiedEntries(
         filePath: str,

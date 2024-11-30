@@ -1,11 +1,11 @@
 from typing import Optional
 
 from core.utils import load_json_to_class, suppress_prints, config
-from models.SpiderDataset import SpiderDataset
+from models.SQLDataset import SQLDataset
 
 
 @suppress_prints
-def load_spider(split: str = "train", batchRange: Optional[tuple[int, int]] = None) -> list[SpiderDataset]:
+def load_spider(split: str = "train", batchRange: Optional[tuple[int, int]] = None) -> list[SQLDataset]:
     batchResult = []
     splitFilePath = {
         "train": 'old/train_spider_clean.json',
@@ -14,15 +14,42 @@ def load_spider(split: str = "train", batchRange: Optional[tuple[int, int]] = No
         "others": 'old/train_spider_others_clean.json'
     }
     jsonFilePath = splitFilePath[split]
-    instances = load_json_to_class(jsonFilePath, SpiderDataset)
-    print("Loading batch range: " + str(batchRange))
+    instances = load_json_to_class(jsonFilePath, SQLDataset)
+
+    if batchRange is not None:
+        print("Loading batch range: " + str(batchRange))
+
     for i in range(len(instances)):
         instance = instances[i]
-        if batchRange is not None and i in range(batchRange[0], batchRange[1] + 1):
+        if batchRange is None:
+            batchResult.append(instance)
+        elif i in range(batchRange[0], batchRange[1] + 1):
             batchResult.append(instance)
         else:
             print("Skipping instance " + str(i))
         # print(instance)
+
+    if batchRange is not None:
+        instances = batchResult
+    return instances
+
+def load_bird(split: str = "train", batchRange: Optional[tuple[int, int]] = None) -> list[SQLDataset]:
+    batchResult = []
+    splitFilePath = {
+        "train": 'old/train_bird.json',
+    }
+    jsonFilePath = splitFilePath[split]
+    instances = load_json_to_class(jsonFilePath, SQLDataset, {"SQL": "query"})
+    if batchRange is not None:
+        print("Loading batch range: " + str(batchRange))
+    for i in range(len(instances)):
+        instance = instances[i]
+        if batchRange is None:
+            batchResult.append(instance)
+        elif i in range(batchRange[0], batchRange[1] + 1):
+            batchResult.append(instance)
+        else:
+            print("Skipping instance " + str(i))
 
     if batchRange is not None:
         instances = batchResult
@@ -34,3 +61,6 @@ def get_spider_db_path(db_id, spiderRootPath=config["spider_root_path"], split="
     else:
         return f"{spiderRootPath}/test_database/{db_id}/{db_id}.sqlite"
 
+def getBirdDbPath(db_id, birdRootPath=config["bird_root_path"], split="train"):
+    if split == "train":
+        return f"{birdRootPath}\\{db_id}\\{db_id}.sqlite"

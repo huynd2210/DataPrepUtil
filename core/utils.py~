@@ -17,7 +17,6 @@ import sys
 from io import StringIO
 from contextlib import contextmanager
 
-from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 

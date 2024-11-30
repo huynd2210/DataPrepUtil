@@ -2,7 +2,7 @@ import json
 import warnings
 import msgspec.json
 
-from models.SpiderDataset import SpiderDataset
+from models.SpiderDataset import SQLDataset
 
 
 class ClassGenerator:
@@ -121,7 +121,7 @@ class ClassGenerator:
 # generator = ClassGenerator('sharegpt.json', 'ShareGPTFormat', class_type='dataclass')
 # generator.generate(to_file=True)
 
-instances = ClassGenerator.load_json_to_class('../spider_data/test.json', SpiderDataset)
+instances = ClassGenerator.load_json_to_class('../spider_data/test.json', SQLDataset)
 # for instance in instances:
 #     print(instance)
 

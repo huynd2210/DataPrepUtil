@@ -92,7 +92,7 @@ class Prompt:
                     "content": self.messageContent
                 }
             ], model=self.modelName,
-            temperature=0.1
+            temperature=0.3
         ).choices[0].message.content
 
     def _deliverOllamaPrompt(self):

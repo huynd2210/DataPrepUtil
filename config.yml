@@ -1,5 +1,6 @@
 cache_path: cache
 spider_root_path: spider_data
+bird_root_path: F:\bird\train_databases
 
 alpaca_inference_template: |
   Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
@@ -53,7 +54,7 @@ knowledge_distillation_generation_template: |
 #  Use <final answer> tag for your final answer. Do not include natural language in the final answer.
 
 knowledge_distillation_verification_template: |
-  Given a sql problem, the schema and the logical reasoning steps that would lead to the correct solution, 
+  Given a sql problem, the schema and the logical reasoning steps that would lead to the correct solution,
   come up with the correct solution in the form of a sql query.
 
   SQL problem: {problem}
@@ -63,35 +64,35 @@ knowledge_distillation_verification_template: |
 
   Use <final answer> tag for your final answer. Do not include natural language in the final answer.
 
-prompt_template_no_reasoning: |
-  ### Task
-    You are a specialized AI model in generating SQL queries given user request.
-    You will be provided with a request and you will be expected to generate a SQL query that will satisfy the request.
-    You will also be given a schema as well as sample data from the database.
-
-    Use <final answer> tag for your final answer. There should only be SQL query in the final answer.
-
-    ### Input
-    {request}
-
-    ### Schema
-    {schema}
-  
-
-reasoning_prompt_template: |
-  ### Task
-  You are a specialized AI model in generating SQL queries given user request.
-  You will be provided with a request and you will be expected to generate a SQL query that will satisfy the request.
-  You will also be given a schema as well as sample data from the database.
-  
-  Use <reasoning> tag for your logical reasoning for the SQL query.
-  Use <final answer> tag for your final answer. There should only be SQL query in the final answer.
-  
-  ### Input
-  {request}
-  
-  ### Schema
-  {schema}
-
-
-
+#prompt_template_no_reasoning: |
+#  ### Task
+#    You are a specialized AI model in generating SQL queries given user request.
+#    You will be provided with a request and you will be expected to generate a SQL query that will satisfy the request.
+#    You will also be given a schema as well as sample data from the database.
+#
+#    Use <final answer> tag for your final answer. There should only be SQL query in the final answer.
+#
+#    ### Input
+#    {request}
+#
+#    ### Schema
+#    {schema}
+#
+#
+#reasoning_prompt_template: |
+#  ### Task
+#  You are a specialized AI model in generating SQL queries given user request.
+#  You will be provided with a request and you will be expected to generate a SQL query that will satisfy the request.
+#  You will also be given a schema as well as sample data from the database.
+#
+#  Use <reasoning> tag for your logical reasoning for the SQL query.
+#  Use <final answer> tag for your final answer. There should only be SQL query in the final answer.
+#
+#  ### Input
+#  {request}
+#
+#  ### Schema
+#  {schema}
+#
+#
+#
