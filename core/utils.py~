@@ -65,7 +65,18 @@ def loadToObjectsFromFile(file_path: str, class_type, file_type: str = 'csv') ->
     return objects
 
 
-def load_json_to_class(json_file_path, cls):
+def load_json_to_class(json_file_path, cls, key_mapping=None):
+    """
+    Load data from a JSON file into instances of a given class.
+
+    Args:
+        json_file_path (str): Path to the JSON file.
+        cls (type): Class to map the data to.
+        key_mapping (dict, optional): Mapping of JSON keys to class attributes.
+
+    Returns:
+        list: A list of instances of the class populated with data from the JSON file.
+    """
     # Read the JSON file
     with open(json_file_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
@@ -78,15 +89,25 @@ def load_json_to_class(json_file_path, cls):
     temp_instance = cls()
     class_attributes = temp_instance.__dict__.keys()
 
+    # Initialize the mapping dictionary if not provided
+    if key_mapping is None:
+        key_mapping = {}
+
     # List to store instances of the class
     instances = []
 
     for obj_data in data:
-        # Filter JSON data to only include keys matching class attributes
-        filtered_data = {k: v for k, v in obj_data.items() if k in class_attributes}
+        # Create a mapped version of the JSON data based on the key_mapping
+        mapped_data = {
+            key_mapping.get(k, k): v  # Use the mapped key if it exists, otherwise use the original key
+            for k, v in obj_data.items()
+        }
+
+        # Filter mapped JSON data to only include keys matching class attributes
+        filtered_data = {k: v for k, v in mapped_data.items() if k in class_attributes}
 
         # Check for missing attributes and set them to None
-        missing_attrs = set(class_attributes) - set(obj_data.keys())
+        missing_attrs = set(class_attributes) - set(filtered_data.keys())
         for missing in missing_attrs:
             filtered_data[missing] = None
             warnings.warn(f"Attribute '{missing}' is missing in JSON data and will be set to None.")

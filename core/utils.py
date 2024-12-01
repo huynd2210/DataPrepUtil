@@ -64,6 +64,13 @@ def loadToObjectsFromFile(file_path: str, class_type, file_type: str = 'csv') ->
     objects = [create_object(class_type, row) for _, row in df.iterrows()]
     return objects
 
+def save_list_to_jsonl(data_list, filename):
+    with open(filename, 'w', encoding='utf-8') as f:
+        for item in data_list:
+            json.dump(item, f)
+            f.write('\n')
+    return True
+
 
 def load_json_to_class(json_file_path, cls, key_mapping=None):
     """
