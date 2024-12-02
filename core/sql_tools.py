@@ -32,7 +32,9 @@ def retrieveDatabaseSchema(db_path: str, include_sample_data: bool = False, samp
             table_name = table[0]
 
             # Get column information
-            cursor.execute(f"PRAGMA table_info({table_name})")
+            # cursor.execute(f"PRAGMA table_info({table_name})")
+            cursor.execute(f'PRAGMA table_info("{table_name}")')
+
             columns_info = cursor.fetchall()
 
             # Get sample data if requested
@@ -63,8 +65,8 @@ def retrieveDatabaseSchema(db_path: str, include_sample_data: bool = False, samp
         return DatabaseSchema(tables=schema_tables)
 
     except sqlite3.Error as e:
-        raise Exception(f"Database error for {db_path}: str({e})")
-
+        # raise Exception(f"Database error for {db_path}: str({e})")
+        raise e
     finally:
         if 'conn' in locals():
             conn.close()
