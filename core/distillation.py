@@ -11,8 +11,10 @@ from core.prompt_delivery import Prompt
 from core.sql_tools import getDatabaseSchemaForPrompt
 from core.utils import cleanLLMResponse, config, objects_to_dataframe, loadToObjectsFromFile
 from models.DistillationEntry import DistillationEntry
+from models.OpenAIBatchRequestAPI import BatchRequestController
 from models.SQLEvaluationEntry import SQLEvaluationEntry
 from pathlib import Path
+
 
 def generateDistillationEntry(
         modelName: str,
@@ -21,8 +23,8 @@ def generateDistillationEntry(
         schema: str,
         promptTemplate: str = config["knowledge_distillation_generation_template"],
 ):
-
-    prompt = Prompt(modelName=modelName, promptTemplate=promptTemplate, problem=question, solution=goldSolution, schema=schema)
+    prompt = Prompt(modelName=modelName, promptTemplate=promptTemplate, problem=question, solution=goldSolution,
+                    schema=schema)
     model_response = prompt.deliver()
 
     reasoning = cleanLLMResponse(model_response, openTag="<reasoning>", closeTag="</reasoning>")
@@ -38,7 +40,8 @@ def generateDistillationEntry(
 
     return distillationEntry
 
-#Load distillation entries from file
+
+# Load distillation entries from file
 def verifyDistillationFromFile(
         db_path: str,
         verifierModelName: str,
@@ -57,8 +60,6 @@ def verifyDistillationFromFile(
         verificationResult.append(distillationEntry)
 
     return verificationResult
-
-
 
 
 def verifyDistillationEntry(
@@ -85,7 +86,8 @@ def verifyDistillationEntry(
     )
     model_response = prompt.deliver()
 
-    distillationEntry.verification_solution = cleanLLMResponse(model_response, openTag="<final answer>", closeTag="</final answer>")
+    distillationEntry.verification_solution = cleanLLMResponse(model_response, openTag="<final answer>",
+                                                               closeTag="</final answer>")
     sqlEvaluationEntry = SQLEvaluationEntry(
         db_path=db_path,
         generated_sql=distillationEntry.verification_solution,
@@ -105,7 +107,8 @@ def distillKnowledge(
         dataset="spider",
         split="train",
         useCache=False,
-        batchRange: Optional[tuple[int, int]] = None
+        batchRange: Optional[tuple[int, int]] = None,
+        isBatchMode=False
 ):
     """
 
@@ -125,14 +128,35 @@ def distillKnowledge(
     if dataset == "spider":
         result = distillSpider(batchRange, result, split, student_model_name, teacher_model_name)
     if dataset == "bird":
-        result = distillBird(batchRange, result, split, student_model_name, teacher_model_name)
+        if isBatchMode:
+            distillBirdAsBatch(batchRange, result, split, student_model_name, teacher_model_name)
+            return
 
+        result = distillBird(batchRange, result, split, student_model_name, teacher_model_name)
 
     pd = objects_to_dataframe(result)
     if useCache:
         pd.to_csv(cachePath)
 
     return pd
+
+
+def distillBirdAsBatch(batchRange, result, split, student_model_name, teacher_model_name):
+    spider_instances = load_spider(split, batchRange=batchRange)
+    batchPrompt = []
+    for instance in tqdm(spider_instances):
+        db_path = get_spider_db_path(instance.db_id, split=split)
+        schema = getDatabaseSchemaForPrompt(db_path)
+        prompt = Prompt(
+            modelName=teacher_model_name,
+            promptTemplate=config["knowledge_distillation_generation_template"],
+            problem=instance.question,
+            solution=instance.query,
+            schema=schema
+        )
+
+        batchPrompt.append(prompt.toOpenAIBatchRequestAPI(instance.question))
+    BatchRequestController.upload(batchPrompt)
 
 
 def distillSpider(batchRange, result, split, student_model_name, teacher_model_name):
@@ -158,8 +182,10 @@ def distillSpider(batchRange, result, split, student_model_name, teacher_model_n
 
     return result
 
+
 def distillBird(batchRange, result, split, student_model_name, teacher_model_name):
     bird_instances = load_bird(split, batchRange=batchRange)
+
     for instance in tqdm(bird_instances):
         db_path = getBirdDbPath(instance.db_id, split=split)
         schema = getDatabaseSchemaForPrompt(db_path)
@@ -237,6 +263,7 @@ def redistillEntries(
 
     df = objects_to_dataframe(result)
     df.to_csv(outputFilePath)
+
 
 def generateVanillaEntry(dataset="spider", split="train", batchRange: Optional[tuple[int, int]] = None):
     result = []

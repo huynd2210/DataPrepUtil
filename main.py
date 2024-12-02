@@ -53,8 +53,15 @@ def analyseEvaluation(evaluationResultDf: pd.DataFrame):
 
     print("Accuracy: " + str(counter / len(evaluationResultDf)))
 
-def distillWrapper(model_name: str, student_model_name: str = None, dataset="spider", split="train", batchRange: Optional[tuple[int, int]] = None):
-    data = distillKnowledge(model_name, student_model_name, dataset=dataset, split=split, batchRange=batchRange)
+def distillWrapper(
+        model_name: str,
+        student_model_name: str = None,
+        dataset="spider",
+        split="train",
+        batchRange: Optional[tuple[int, int]] = None,
+        isBatchMode=False
+):
+    data = distillKnowledge(model_name, student_model_name, dataset=dataset, split=split, batchRange=batchRange, isBatchMode=isBatchMode)
     if batchRange is not None:
         outputName = f"{model_name.replace(':', '-')}_distilled_data_{dataset}_{split}_{batchRange[0]}_{batchRange[1]}.csv"
     else:
@@ -99,8 +106,10 @@ if __name__ == '__main__':
 
     # student_model_name = "qwen2.5-coder:7b-instruct"
 
-    batchRange = (2301, 2400)
+    batchRange = (3301, 3400)
+    # batchRange = (2601, 2700)
     distillWrapper(model_name="gpt-4o", dataset="bird", split="train", batchRange=batchRange)
+
 
     # convertDistillationEntriesToAlpaca(
     #     inputFilePath="vanilla_data_spider_train.csv",

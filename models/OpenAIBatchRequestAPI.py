@@ -11,6 +11,8 @@ class Request:
     def __dict__(self):
         return {"custom_id": self.custom_id, "method": self.method, "url": self.url, "body": self.body.__dict__()}
 
+    def to_dict(self):
+        return {"custom_id": self.custom_id, "method": self.method, "url": self.url, "body": self.body.to_dict()}
 
 class Message:
     def __init__(self, role, content):
@@ -18,6 +20,9 @@ class Message:
         self.content = content
 
     def __dict__(self):
+        return {"role": self.role, "content": self.content}
+
+    def to_dict(self):
         return {"role": self.role, "content": self.content}
 
 
@@ -30,21 +35,24 @@ class Body:
     def __dict__(self):
         return {"model": self.model, "messages": self.messages, "max_tokens": self.max_tokens}
 
+    def to_dict(self):
+        return {"model": self.model, "messages": self.messages, "max_tokens": self.max_tokens}
+
 class BatchRequestController:
-    def __init__(self):
-        self.requests = []
+    @classmethod
+    def _create_jsonl_requests(cls, requests, fileName="batch_requests.jsonl"):
+        data_list = [req.to_dict() for req in requests]
+        save_list_to_jsonl(data_list, fileName)
 
-    def _create_jsonl_requests(self, requests, fileName = "batch_requests.jsonl"):
-        save_list_to_jsonl(requests, fileName)
-
-    def upload(self, requests):
+    @classmethod
+    def upload(cls, requests):
         fileName = "batch_requests.jsonl"
-        self._create_jsonl_requests(requests, fileName=fileName)
+        cls._create_jsonl_requests(requests, fileName=fileName)
         from openai import OpenAI
         client = OpenAI()
 
         batch_input_file = client.files.create(
-            file=open("batchinput.jsonl", "rb"),
+            file=open(fileName, "rb"),
             purpose="batch"
         )
 
@@ -60,4 +68,9 @@ class BatchRequestController:
         )
         print("Batch request uploaded")
         print(batch)
-        save_list_to_jsonl([batch], "batch.jsonl")
+        # Ensure batch is serializable
+        if hasattr(batch, 'to_dict'):
+            batch_dict = batch.to_dict()
+        else:
+            batch_dict = batch  # Assuming batch is already a dict
+        save_list_to_jsonl([batch_dict], "batch.jsonl")

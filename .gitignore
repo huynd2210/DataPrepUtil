@@ -3,3 +3,5 @@ spider_data
 __pycache__
 bird
 .py~
+.aider*
+.env
