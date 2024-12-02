@@ -40,7 +40,7 @@ def retrieveDatabaseSchema(db_path: str, include_sample_data: bool = False, samp
             # Get sample data if requested
             sample_data = None
             if include_sample_data:
-                cursor.execute(f"SELECT * FROM {table_name} LIMIT {sample_size}")
+                cursor.execute(f'SELECT * FROM "{table_name}" LIMIT {sample_size}')
                 sample_data = cursor.fetchall()
 
             # Process column information
