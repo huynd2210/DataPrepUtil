@@ -107,7 +107,7 @@ if __name__ == '__main__':
     # student_model_name = "qwen2.5-coder:7b-instruct"
 
     batchList = [
-        (6991, 7000),
+        (7301, 7330),
         # (7001, 7200),
         # (7201, 7400),
         # (7401, 7600),

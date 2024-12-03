@@ -93,7 +93,7 @@ def print_schema(schema: DatabaseSchema):
             if col.sample_value is not None:
                 print(f"   Sample: {col.sample_value}")
 
-def formatSchemaForPrompt(schema: DatabaseSchema, simple=True) -> str:
+def formatSchemaForPrompt(schema: DatabaseSchema, simple=True, maxSampleLength=70) -> str:
     """
     Format DatabaseSchema in a YAML-like structure.
 
@@ -121,7 +121,16 @@ def formatSchemaForPrompt(schema: DatabaseSchema, simple=True) -> str:
             # Add sample values if they exist
             if col.sample_value is not None:
                 if isinstance(col.sample_value, (list, tuple)):
+                    isTruncated = False
+                    for i in range(len(col.sample_value)):
+                        if len(str(col.sample_value[i])) > maxSampleLength:
+                            col.sample_value[i] = str(col.sample_value[i])[:maxSampleLength] + "..."
+                            isTruncated = True
+
                     samples = ", ".join(str(x) for x in col.sample_value)
+                    if isTruncated:
+                        samples += " (truncated)"
+
                     lines.append(f"    - Samples: [{samples}]")
                 else:
                     lines.append(f"    - Sample: {col.sample_value}")

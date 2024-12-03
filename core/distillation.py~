@@ -11,6 +11,7 @@ from core.prompt_delivery import Prompt
 from core.sql_tools import getDatabaseSchemaForPrompt
 from core.utils import cleanLLMResponse, config, objects_to_dataframe, loadToObjectsFromFile
 from models.DistillationEntry import DistillationEntry
+from models.OpenAIBatchRequestAPI import BatchRequestController
 from models.SQLEvaluationEntry import SQLEvaluationEntry
 from pathlib import Path
 
@@ -106,7 +107,8 @@ def distillKnowledge(
         dataset="spider",
         split="train",
         useCache=False,
-        batchRange: Optional[tuple[int, int]] = None
+        batchRange: Optional[tuple[int, int]] = None,
+        isBatchMode=False
 ):
     """
 
@@ -126,6 +128,10 @@ def distillKnowledge(
     if dataset == "spider":
         result = distillSpider(batchRange, result, split, student_model_name, teacher_model_name)
     if dataset == "bird":
+        if isBatchMode:
+            distillBirdAsBatch(batchRange, result, split, student_model_name, teacher_model_name)
+            return
+
         result = distillBird(batchRange, result, split, student_model_name, teacher_model_name)
 
     pd = objects_to_dataframe(result)
@@ -150,7 +156,7 @@ def distillBirdAsBatch(batchRange, result, split, student_model_name, teacher_mo
         )
 
         batchPrompt.append(prompt.toOpenAIBatchRequestAPI(instance.question))
-    Batc
+    BatchRequestController.upload(batchPrompt)
 
 
 def distillSpider(batchRange, result, split, student_model_name, teacher_model_name):
@@ -179,6 +185,7 @@ def distillSpider(batchRange, result, split, student_model_name, teacher_model_n
 
 def distillBird(batchRange, result, split, student_model_name, teacher_model_name):
     bird_instances = load_bird(split, batchRange=batchRange)
+
     for instance in tqdm(bird_instances):
         db_path = getBirdDbPath(instance.db_id, split=split)
         schema = getDatabaseSchemaForPrompt(db_path)

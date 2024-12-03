@@ -190,6 +190,7 @@ def distillBird(batchRange, result, split, student_model_name, teacher_model_nam
         db_path = getBirdDbPath(instance.db_id, split=split)
         schema = getDatabaseSchemaForPrompt(db_path)
         print("Distilling: " + instance.question)
+        print("Schema:" + str(schema))
         distillationEntry = generateDistillationEntry(
             modelName=teacher_model_name,
             question=instance.question,

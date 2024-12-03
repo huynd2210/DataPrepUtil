@@ -1,0 +1,1939 @@
+,teacher_model_name,question,schema,gold_solution,reasoning,verification_solution,isVerified
+0,gpt-4o,Provide details of review from reviewer whose name begin with letter 'J'. State the product ID, rating and comments.,SCHEMA:
+- Table: CountryRegion
+  - Column: CountryRegionCode
+    - Samples: [Cou, AD, AE, AF, AG]
+  - Column: Name
+    - Samples: [Name, Andorra, United Arab Emirates, Afghanistan, Antigua and Barbuda]
+  - Column: ModifiedDate
+    - Samples: [ModifiedDate, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: Culture
+  - Column: CultureID
+    - Samples: [, ar, en, es, fr]
+  - Column: Name
+    - Samples: [Invariant Language (Invariant Country), Arabic, English, Spanish, French]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: Currency
+  - Column: CurrencyCode
+    - Samples: [AED, AFA, ALL, AMD, ANG]
+  - Column: Name
+    - Samples: [Emirati Dirham, Afghani, Lek, Armenian Dram, Netherlands Antillian Guilder]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: CountryRegionCurrency
+  - Column: CountryRegionCode
+    - Samples: [AE, AR, AT, AT, AU]
+  - Column: CurrencyCode
+    - Samples: [AED, ARS, ATS, EUR, AUD]
+  - Column: ModifiedDate
+    - Samples: [2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2008-04-30 00:00:00.0, 2014-02-08 10:17:21.0]
+- Table: Person
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: PersonType
+    - Samples: [EM, EM, EM, EM, EM]
+  - Column: NameStyle
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: Title
+    - Samples: [None, None, None, None, Ms.]
+  - Column: FirstName
+    - Samples: [Ken, Terri, Roberto, Rob, Gail]
+  - Column: MiddleName
+    - Samples: [J, Lee, None, None, A]
+  - Column: LastName
+    - Samples: [Sánchez, Duffy, Tamburello, Walters, Erickson]
+  - Column: Suffix
+    - Samples: [None, None, None, None, None]
+  - Column: EmailPromotion
+    - Samples: [0, 1, 0, 0, 0]
+  - Column: AdditionalContactInfo
+    - Samples: [None, None, None, None, None]
+  - Column: Demographics
+    - Samples: [<IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0..., <IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0..., <IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0..., <IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0..., <IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0... (truncated)]
+  - Column: rowguid
+    - Samples: [92C4279F-1207-48A3-8448-4636514EB7E2, D8763459-8AA8-47CC-AFF7-C9079AF79033, E1A2555E-0828-434B-A33B-6F38136A37DE, F2D7CE06-38B3-4357-805B-F4B6B71C01FF, F3A3F6B4-AE3B-430C-A754-9F2231BA6FEF]
+  - Column: ModifiedDate
+    - Samples: [2009-01-07 00:00:00.0, 2008-01-24 00:00:00.0, 2007-11-04 00:00:00.0, 2007-11-28 00:00:00.0, 2007-12-30 00:00:00.0]
+- Table: BusinessEntityContact
+  - Column: BusinessEntityID
+    - Samples: [292, 294, 296, 298, 300]
+  - Column: PersonID
+    - Samples: [291, 293, 295, 297, 299]
+  - Column: ContactTypeID
+    - Samples: [11, 11, 11, 11, 11]
+  - Column: rowguid
+    - Samples: [7D4D2DBC-4A44-48F5-911D-A63ABAFD5120, 3EA25B65-9579-4260-977D-D6F00D7D20EE, DADAC1FF-3351-4827-9AE0-95004885C193, B924F26F-6446-45D1-A92B-6F418374F075, 5BA4E7BE-8D29-46A2-B68D-67B1615B124A]
+  - Column: ModifiedDate
+    - Samples: [2017-12-13 13:21:02.0, 2017-12-13 13:21:02.0, 2017-12-13 13:21:02.0, 2017-12-13 13:21:02.0, 2017-12-13 13:21:02.0]
+- Table: EmailAddress
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: EmailAddressID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: EmailAddress
+    - Samples: [ken0@adventure-works.com, terri0@adventure-works.com, roberto0@adventure-works.com, rob0@adventure-works.com, gail0@adventure-works.com]
+  - Column: rowguid
+    - Samples: [8A1901E4-671B-431A-871C-EADB2942E9EE, B5FF9EFD-72A2-4F87-830B-F338FDD4D162, C8A51084-1C03-4C58-A8B3-55854AE7C499, 17703ED1-0031-4B4A-AFD2-77487A556B3B, E76D2EA3-08E5-409C-BBE2-5DD1CDF89A3B]
+  - Column: ModifiedDate
+    - Samples: [2009-01-07 00:00:00.0, 2008-01-24 00:00:00.0, 2007-11-04 00:00:00.0, 2007-11-28 00:00:00.0, 2007-12-30 00:00:00.0]
+- Table: Employee
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: NationalIDNumber
+    - Samples: [295847284, 245797967, 509647174, 112457891, 695256908]
+  - Column: LoginID
+    - Samples: [adventure-works\ken0, adventure-works\terri0, adventure-works\roberto0, adventure-works\rob0, adventure-works\gail0]
+  - Column: OrganizationNode
+    - Samples: [None, /1/, /1/1/, /1/1/1/, /1/1/2/]
+  - Column: OrganizationLevel
+    - Samples: [None, 1, 2, 3, 3]
+  - Column: JobTitle
+    - Samples: [Chief Executive Officer, Vice President of Engineering, Engineering Manager, Senior Tool Designer, Design Engineer]
+  - Column: BirthDate
+    - Samples: [1969-01-29, 1971-08-01, 1974-11-12, 1974-12-23, 1952-09-27]
+  - Column: MaritalStatus
+    - Samples: [S, S, M, S, M]
+  - Column: Gender
+    - Samples: [M, F, M, M, F]
+  - Column: HireDate
+    - Samples: [2009-01-14, 2008-01-31, 2007-11-11, 2007-12-05, 2008-01-06]
+  - Column: SalariedFlag
+    - Samples: [1, 1, 1, 0, 1]
+  - Column: VacationHours
+    - Samples: [99, 1, 2, 48, 5]
+  - Column: SickLeaveHours
+    - Samples: [69, 20, 21, 80, 22]
+  - Column: CurrentFlag
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: rowguid
+    - Samples: [F01251E5-96A3-448D-981E-0F99D789110D, 45E8F437-670D-4409-93CB-F9424A40D6EE, 9BBBFB2C-EFBB-4217-9AB7-F97689328841, 59747955-87B8-443F-8ED4-F8AD3AFDF3A9, EC84AE09-F9B8-4A15-B4A9-6CCBAB919B08]
+  - Column: ModifiedDate
+    - Samples: [2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0]
+- Table: Password
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: PasswordHash
+    - Samples: [pbFwXWE99vobT6g+vPWFy93NtUU/orrIWafF01hccfM=, bawRVNrZQYQ05qF05Gz6VLilnviZmrqBReTTAGAudm0=, 8BUXrZfDqO1IyHCWOYzYmqN1IhTUn3CJMpdx/UCQ3iY=, SjLXpiarHSlz+6AG+H+4QpB/IPRzras/+9q/5Wr7tf8=, 8FYdAiY6gWuBsgjCFdg0UibtsqOcWHf9TyaHIP7+paA=]
+  - Column: PasswordSalt
+    - Samples: [bE3XiWw=, EjJaC3U=, wbPZqMw=, PwSunQU=, qYhZRiM=]
+  - Column: rowguid
+    - Samples: [329EACBE-C883-4F48-B8B6-17AA4627EFFF, A4C82398-7466-4FE6-B9EE-CEC34D116F68, AC3F4536-BB2E-41C5-B70D-454BE460C1BD, B3FA4C24-2E96-477C-A923-0CB0F6FA5C80, C4D13BCF-0209-44C7-AC67-6F817FDD7F16]
+  - Column: ModifiedDate
+    - Samples: [2009-01-07 00:00:00.0, 2008-01-24 00:00:00.0, 2007-11-04 00:00:00.0, 2007-11-28 00:00:00.0, 2007-12-30 00:00:00.0]
+- Table: PersonCreditCard
+  - Column: BusinessEntityID
+    - Samples: [293, 295, 297, 299, 301]
+  - Column: CreditCardID
+    - Samples: [17038, 15369, 8010, 5316, 6653]
+  - Column: ModifiedDate
+    - Samples: [2013-07-31 00:00:00.0, 2011-08-01 00:00:00.0, 2011-08-01 00:00:00.0, 2013-07-31 00:00:00.0, 2011-05-31 00:00:00.0]
+- Table: ProductCategory
+  - Column: ProductCategoryID
+    - Samples: [1, 2, 3, 4]
+  - Column: Name
+    - Samples: [Bikes, Components, Clothing, Accessories]
+  - Column: rowguid
+    - Samples: [CFBDA25C-DF71-47A7-B81B-64EE161AA37C, C657828D-D808-4ABA-91A3-AF2CE02300E9, 10A7C342-CA82-48D4-8A38-46A2EB089B74, 2BE3BE36-D9A2-4EEE-B593-ED895D97C2A6]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: ProductDescription
+  - Column: ProductDescriptionID
+    - Samples: [3, 4, 5, 8, 64]
+  - Column: Description
+    - Samples: [Chromoly steel., Aluminum alloy cups; large diameter spindle., Aluminum alloy cups and a hollow axle., Suitable for any type of riding, on or off-road. Fits any budget. Smoo..., This bike delivers a high-level of performance on a budget. It is resp... (truncated)]
+  - Column: rowguid
+    - Samples: [301EED3A-1A82-4855-99CB-2AFE8290D641, DFEBA528-DA11-4650-9D86-CAFDA7294EB0, F7178DA7-1A7E-4997-8470-06737181305E, 8E6746E5-AD97-46E2-BD24-FCEA075C3B52, 7B1C4E90-85E2-4792-B47B-E0C424E2EC94]
+  - Column: ModifiedDate
+    - Samples: [2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0]
+- Table: ProductModel
+  - Column: ProductModelID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Classic Vest, Cycling Cap, Full-Finger Gloves, Half-Finger Gloves, HL Mountain Frame]
+  - Column: CatalogDescription
+    - Samples: [None, None, None, None, None]
+  - Column: Instructions
+    - Samples: [None, None, None, None, None]
+  - Column: rowguid
+    - Samples: [29321D47-1E4C-4AAC-887C-19634328C25E, 474FB654-3C96-4CB9-82DF-2152EEFFBDB0, A75483FE-3C47-4AA4-93CF-664B51192987, 14B56F2A-D4AA-40A4-B9A2-984F165ED702, FDD5407B-C2DB-49D1-A86B-C13A2E3582A2]
+  - Column: ModifiedDate
+    - Samples: [2013-04-30 00:00:00.0, 2011-05-01 00:00:00.0, 2012-04-30 00:00:00.0, 2012-04-30 00:00:00.0, 2011-05-01 00:00:00.0]
+- Table: ProductModelProductDescriptionCulture
+  - Column: ProductModelID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: ProductDescriptionID
+    - Samples: [1199, 1467, 1589, 1712, 1838]
+  - Column: CultureID
+    - Samples: [en, ar, fr, th, he]
+  - Column: ModifiedDate
+    - Samples: [2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0]
+- Table: ProductPhoto
+  - Column: ProductPhotoID
+    - Samples: [69, 70, 72, 73, 76]
+  - Column: ThumbNailPhoto
+    - Samples: [0x47494638396150003100F70000E3E3FCA6ACB3F5F6FE303D47F8FAFDEDEEFE989DA2..., 0x47494638396150003100F70000E3E3FCEBECF3F5F6FE999B9DEDEDFEDCE3EB374249..., 0x47494638396150003100F70000F1F2FEE3E3FCA3ACB6EBEBF3F5F6FEEDEEFE66676B..., 0x47494638396150003100F700004978A7E2E3F3FAFCFE34353A46474BE1E3E4E3E3FB..., 0x47494638396150003100F700007689B3B1D5A475777BECEBF234353A85A376FAFCFE... (truncated)]
+  - Column: ThumbnailPhotoFileName
+    - Samples: [racer02_black_f_small.gif, racer02_black_small.gif, racer02_blue_f_small.gif, racer02_blue_small.gif, racer02_green_f_small.gif]
+  - Column: LargePhoto
+    - Samples: [0x474946383961F0009500F70000D3D3FEE2E3FE86878ADBDCFED7D8E7929BA8545659..., 0x474946383961F0009500F7000086878AECEDFED7D8E7D3D3FEE3E3FE909AA8DCDDFE..., 0x474946383961F0009500F700008EAFC785868991A5B2B5C7D1F2F3F4ECEDFE97989A..., 0x474946383961F0009500F700008B99A9708FAEA5A7AA8CAECA97A4AFD7D8E7F2F3F4..., 0x474946383961F0009500F70000CACBF8D6E4EFA3D19EECEDFEF3F4F4D3D3FEE2E3FE... (truncated)]
+  - Column: LargePhotoFileName
+    - Samples: [racer02_black_f_large.gif, racer02_black_large.gif, racer02_blue_f_large.gif, racer02_blue_large.gif, racer02_green_f_large.gif]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2012-10-19 09:56:38.0, 2012-10-19 09:56:38.0, 2012-10-19 09:56:38.0, 2012-10-19 09:56:38.0]
+- Table: ProductSubcategory
+  - Column: ProductSubcategoryID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: ProductCategoryID
+    - Samples: [1, 1, 1, 2, 2]
+  - Column: Name
+    - Samples: [Mountain Bikes, Road Bikes, Touring Bikes, Handlebars, Bottom Brackets]
+  - Column: rowguid
+    - Samples: [2D364ADE-264A-433C-B092-4FCBF3804E01, 000310C0-BCC8-42C4-B0C3-45AE611AF06B, 02C5061D-ECDC-4274-B5F1-E91D76BC3F37, 3EF2C725-7135-4C85-9AE6-AE9A3BDD9283, A9E54089-8A1E-4CF5-8646-E3801F685934]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: SalesReason
+  - Column: SalesReasonID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Price, On Promotion, Magazine Advertisement, Television  Advertisement, Manufacturer]
+  - Column: ReasonType
+    - Samples: [Other, Promotion, Marketing, Marketing, Other]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: SalesTerritory
+  - Column: TerritoryID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Northwest, Northeast, Central, Southwest, Southeast]
+  - Column: CountryRegionCode
+    - Samples: [US, US, US, US, US]
+  - Column: Group
+    - Samples: [North America, North America, North America, North America, North America]
+  - Column: SalesYTD
+    - Samples: [7887186.7882, 2402176.8476, 3072175.118, 10510853.8739, 2538667.2515]
+  - Column: SalesLastYear
+    - Samples: [3298694.4938, 3607148.9371, 3205014.0767, 5366575.7098, 3925071.4318]
+  - Column: CostYTD
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: CostLastYear
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: rowguid
+    - Samples: [43689A10-E30B-497F-B0DE-11DE20267FF7, 00FB7309-96CC-49E2-8363-0A1BA72486F2, DF6E7FD8-1A8D-468C-B103-ED8ADDB452C1, DC3E9EA0-7950-4431-9428-99DBCBC33865, 6DC4165A-5E4C-42D2-809D-4344E0AC75E7]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: SalesPerson
+  - Column: BusinessEntityID
+    - Samples: [274, 275, 276, 277, 278]
+  - Column: TerritoryID
+    - Samples: [None, 2, 4, 3, 6]
+  - Column: SalesQuota
+    - Samples: [None, 300000.0, 250000.0, 250000.0, 250000.0]
+  - Column: Bonus
+    - Samples: [0.0, 4100.0, 2000.0, 2500.0, 500.0]
+  - Column: CommissionPct
+    - Samples: [0.0, 0.012, 0.015, 0.015, 0.01]
+  - Column: SalesYTD
+    - Samples: [559697.5639, 3763178.1787, 4251368.5497, 3189418.3662, 1453719.4653]
+  - Column: SalesLastYear
+    - Samples: [0.0, 1750406.4785, 1439156.0291, 1997186.2037, 1620276.8966]
+  - Column: rowguid
+    - Samples: [48754992-9EE0-4C0E-8C94-9451604E3E02, 1E0A7274-3064-4F58-88EE-4C6586C87169, 4DD9EEE4-8E81-4F8C-AF97-683394C1F7C0, 39012928-BFEC-4242-874D-423162C3F567, 7A0AE1AB-B283-40F9-91D1-167ABF06D720]
+  - Column: ModifiedDate
+    - Samples: [2010-12-28 00:00:00.0, 2011-05-24 00:00:00.0, 2011-05-24 00:00:00.0, 2011-05-24 00:00:00.0, 2011-05-24 00:00:00.0]
+- Table: SalesPersonQuotaHistory
+  - Column: BusinessEntityID
+    - Samples: [274, 274, 274, 274, 274]
+  - Column: QuotaDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-08-31 00:00:00.0, 2011-12-01 00:00:00.0, 2012-02-29 00:00:00.0, 2012-05-30 00:00:00.0]
+  - Column: SalesQuota
+    - Samples: [28000.0, 7000.0, 91000.0, 140000.0, 70000.0]
+  - Column: rowguid
+    - Samples: [99109BBF-8693-4587-BC23-6036EC89E1BE, DFD01444-8900-461C-8D6F-04598DAE01D4, 0A69F453-9689-4CCF-A08C-C644670F5668, DA8D1458-5FB9-4C3E-9EAD-8F5CE1393047, 760CEF84-B980-417B-A667-7358C38857F0]
+  - Column: ModifiedDate
+    - Samples: [2011-04-16 00:00:00.0, 2011-07-17 00:00:00.0, 2011-10-17 00:00:00.0, 2012-01-15 00:00:00.0, 2012-04-15 00:00:00.0]
+- Table: SalesTerritoryHistory
+  - Column: BusinessEntityID
+    - Samples: [275, 275, 276, 277, 277]
+  - Column: TerritoryID
+    - Samples: [2, 3, 4, 3, 2]
+  - Column: StartDate
+    - Samples: [2011-05-31 00:00:00.0, 2012-11-30 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2012-11-30 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2012-11-29 00:00:00.0, None, None, 2012-11-29 00:00:00.0, None]
+  - Column: rowguid
+    - Samples: [8563CE6A-00FF-47D7-BA4D-3C3E1CDEF531, 2F44304C-EE87-4C72-813E-CA75C5F61F4C, 64BCB1B3-A793-40BA-9859-D90F78C3F167, 3E9F893D-5142-46C9-A76A-867D1E3D6F90, 132E4721-32DD-4A73-B556-1837F3A2B9AE]
+  - Column: ModifiedDate
+    - Samples: [2012-11-22 00:00:00.0, 2012-11-23 00:00:00.0, 2011-05-24 00:00:00.0, 2012-11-22 00:00:00.0, 2012-11-23 00:00:00.0]
+- Table: ScrapReason
+  - Column: ScrapReasonID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Brake assembly not as ordered, Color incorrect, Gouge in metal, Drill pattern incorrect, Drill size too large]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: Shift
+  - Column: ShiftID
+    - Samples: [1, 2, 3]
+  - Column: Name
+    - Samples: [Day, Evening, Night]
+  - Column: StartTime
+    - Samples: [07:00:00, 15:00:00, 23:00:00]
+  - Column: EndTime
+    - Samples: [15:00:00, 23:00:00, 07:00:00]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: ShipMethod
+  - Column: ShipMethodID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [XRQ - TRUCK GROUND, ZY - EXPRESS, OVERSEAS - DELUXE, OVERNIGHT J-FAST, CARGO TRANSPORT 5]
+  - Column: ShipBase
+    - Samples: [3.95, 9.95, 29.95, 21.95, 8.99]
+  - Column: ShipRate
+    - Samples: [0.99, 1.99, 2.99, 1.29, 1.49]
+  - Column: rowguid
+    - Samples: [6BE756D9-D7BE-4463-8F2C-AE60C710D606, 3455079B-F773-4DC6-8F1E-2A58649C4AB8, 22F4E461-28CF-4ACE-A980-F686CF112EC8, 107E8356-E7A8-463D-B60C-079FFF467F3F, B166019A-B134-4E76-B957-2B0490C610ED]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: SpecialOffer
+  - Column: SpecialOfferID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Description
+    - Samples: [No Discount, Volume Discount 11 to 14, Volume Discount 15 to 24, Volume Discount 25 to 40, Volume Discount 41 to 60]
+  - Column: DiscountPct
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: Type
+    - Samples: [No Discount, Volume Discount, Volume Discount, Volume Discount, Volume Discount]
+  - Column: Category
+    - Samples: [No Discount, Reseller, Reseller, Reseller, Reseller]
+  - Column: StartDate
+    - Samples: [2011-05-01 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2014-11-30 00:00:00.0, 2014-05-30 00:00:00.0, 2014-05-30 00:00:00.0, 2014-05-30 00:00:00.0, 2014-05-30 00:00:00.0]
+  - Column: MinQty
+    - Samples: [0, 11, 15, 25, 41]
+  - Column: MaxQty
+    - Samples: [None, 14, 24, 40, 60]
+  - Column: rowguid
+    - Samples: [0290C4F5-191F-4337-AB6B-0A2DDE03CBF9, D7542EE7-15DB-4541-985C-5CC27AEF26D6, 4BDBCC01-8CF7-40A9-B643-40EC5B717491, 504B5E85-8F3F-4EBC-9E1D-C1BC5DEA9AA8, 677E1D9D-944F-4E81-90E8-47EB0A82D48C]
+  - Column: ModifiedDate
+    - Samples: [2011-04-01 00:00:00.0, 2011-05-01 00:00:00.0, 2011-05-01 00:00:00.0, 2011-05-01 00:00:00.0, 2011-05-01 00:00:00.0]
+- Table: BusinessEntityAddress
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: AddressID
+    - Samples: [249, 293, 224, 11387, 190]
+  - Column: AddressTypeID
+    - Samples: [2, 2, 2, 2, 2]
+  - Column: rowguid
+    - Samples: [3A5D0A00-6739-4DFE-A8F7-844CD9DEE3DF, 84AE7057-EDF4-4C51-8B8D-3AEAEFBFB4A1, 3C915B31-7C05-4A05-9859-0DF663677240, 3DC70CC4-3AE8-424F-8B1F-481C5478E941, C0ED2F68-937B-4594-9459-581AC53C98E3]
+  - Column: ModifiedDate
+    - Samples: [2014-09-12 11:15:06.0, 2014-09-12 11:15:06.0, 2014-09-12 11:15:06.0, 2014-09-12 11:15:06.0, 2014-09-12 11:15:06.0]
+- Table: SalesTaxRate
+  - Column: SalesTaxRateID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: StateProvinceID
+    - Samples: [1, 57, 63, 1, 57]
+  - Column: TaxType
+    - Samples: [1, 1, 1, 2, 2]
+  - Column: TaxRate
+    - Samples: [14.0, 14.25, 14.25, 7.0, 7.0]
+  - Column: Name
+    - Samples: [Canadian GST + Alberta Provincial Tax, Canadian GST + Ontario Provincial Tax, Canadian GST + Quebec Provincial Tax, Canadian GST, Canadian GST]
+  - Column: rowguid
+    - Samples: [683DE5DD-521A-47D4-A573-06A3CDB1BC5D, 05C4FFDB-4F84-4CDF-ABE5-FDF3216EA74E, D4EDB557-56D7-403C-B538-4DF5E7302588, F0D76907-B433-453F-B95E-16FCE73B807A, 7E0E97A2-878B-476F-A648-05A3DD4450ED]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: Store
+  - Column: BusinessEntityID
+    - Samples: [292, 294, 296, 298, 300]
+  - Column: Name
+    - Samples: [Next-Door Bike Store, Professional Sales and Service, Riders Company, The Bike Mechanics, Nationwide Supply]
+  - Column: SalesPersonID
+    - Samples: [279, 276, 277, 275, 286]
+  - Column: Demographics
+    - Samples: [<StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv..., <StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv..., <StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv..., <StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv..., <StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv... (truncated)]
+  - Column: rowguid
+    - Samples: [A22517E3-848D-4EBE-B9D9-7437F3432304, B50CA50B-C601-4A13-B07E-2C63862D71B4, 337C3688-1339-4E1A-A08A-B54B23566E49, 7894F278-F0C8-4D16-BD75-213FDBF13023, C3FC9705-A8C4-4F3A-9550-EB2FA4B7B64D]
+  - Column: ModifiedDate
+    - Samples: [2014-09-12 11:15:07.0, 2014-09-12 11:15:07.0, 2014-09-12 11:15:07.0, 2014-09-12 11:15:07.0, 2014-09-12 11:15:07.0]
+- Table: SalesOrderHeaderSalesReason
+  - Column: SalesOrderID
+    - Samples: [43697, 43697, 43702, 43702, 43703]
+  - Column: SalesReasonID
+    - Samples: [5, 9, 5, 9, 5]
+  - Column: ModifiedDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-06-01 00:00:00.0, 2011-06-01 00:00:00.0, 2011-06-01 00:00:00.0]
+- Table: TransactionHistoryArchive
+  - Column: TransactionID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: ProductID
+    - Samples: [1, 359, 360, 530, 4]
+  - Column: ReferenceOrderID
+    - Samples: [1, 2, 2, 3, 4]
+  - Column: ReferenceOrderLineID
+    - Samples: [1, 1, 2, 1, 1]
+  - Column: TransactionDate
+    - Samples: [2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0]
+  - Column: TransactionType
+    - Samples: [P, P, P, P, P]
+  - Column: Quantity
+    - Samples: [4, 3, 3, 550, 3]
+  - Column: ActualCost
+    - Samples: [50.0, 45.0, 46.0, 16.0, 57.0]
+  - Column: ModifiedDate
+    - Samples: [2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0]
+- Table: UnitMeasure
+  - Column: UnitMeasureCode
+    - Samples: [BOX, BTL, C, CAN, CAR]
+  - Column: Name
+    - Samples: [Boxes, Bottle, Celsius, Canister, Carton]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: ProductCostHistory
+  - Column: ProductID
+    - Samples: [707, 707, 707, 708, 708]
+  - Column: StartDate
+    - Samples: [2011-05-31 00:00:00.0, 2012-05-30 00:00:00.0, 2013-05-30 00:00:00.0, 2011-05-31 00:00:00.0, 2012-05-30 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0, None, 2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0]
+  - Column: StandardCost
+    - Samples: [12.0278, 13.8782, 13.0863, 12.0278, 13.8782]
+  - Column: ModifiedDate
+    - Samples: [2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0, 2013-05-16 00:00:00.0, 2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0]
+- Table: ProductDocument
+  - Column: ProductID
+    - Samples: [317, 318, 319, 506, 506]
+  - Column: DocumentNode
+    - Samples: [/2/1/, /2/1/, /2/1/, /3/1/, /3/2/]
+  - Column: ModifiedDate
+    - Samples: [2013-12-29 13:51:58.0, 2013-12-29 13:51:58.0, 2013-12-29 13:51:58.0, 2013-12-29 13:51:58.0, 2013-12-29 13:51:58.0]
+- Table: ProductInventory
+  - Column: ProductID
+    - Samples: [1, 1, 1, 2, 2]
+  - Column: LocationID
+    - Samples: [1, 6, 50, 1, 6]
+  - Column: Shelf
+    - Samples: [A, B, A, A, B]
+  - Column: Bin
+    - Samples: [1, 5, 5, 2, 1]
+  - Column: Quantity
+    - Samples: [408, 324, 353, 427, 318]
+  - Column: rowguid
+    - Samples: [47A24246-6C43-48EB-968F-025738A8A410, D4544D7D-CAF5-46B3-AB22-5718DCC26B5E, BFF7DC60-96A8-43CA-81A7-D6D2ED3000A8, F407C07A-CA14-4684-A02C-608BD00C2233, CA1FF2F4-48FB-4960-8D92-3940B633E4C1]
+  - Column: ModifiedDate
+    - Samples: [2014-08-08 00:00:00.0, 2014-08-08 00:00:00.0, 2014-08-08 00:00:00.0, 2014-08-08 00:00:00.0, 2014-08-08 00:00:00.0]
+- Table: ProductProductPhoto
+  - Column: ProductID
+    - Samples: [1, 2, 3, 4, 316]
+  - Column: ProductPhotoID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: Primary
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: ModifiedDate
+    - Samples: [2008-03-31 00:00:00.0, 2008-03-31 00:00:00.0, 2008-03-31 00:00:00.0, 2008-03-31 00:00:00.0, 2008-03-31 00:00:00.0]
+- Table: ProductReview
+  - Column: ProductReviewID
+    - Samples: [1, 2, 3, 4]
+  - Column: ProductID
+    - Samples: [709, 937, 937, 798]
+  - Column: ReviewerName
+    - Samples: [John Smith, David, Jill, Laura Norman]
+  - Column: ReviewDate
+    - Samples: [2013-09-18 00:00:00.0, 2013-11-13 00:00:00.0, 2013-11-15 00:00:00.0, 2013-11-15 00:00:00.0]
+  - Column: EmailAddress
+    - Samples: [john@fourthcoffee.com, david@graphicdesigninstitute.com, jill@margiestravel.com, laura@treyresearch.net]
+  - Column: Rating
+    - Samples: [5, 4, 2, 5]
+  - Column: Comments
+    - Samples: [I can't believe I'm singing the praises of a pair of socks, but I just..., A little on the heavy side, but overall the entry/exit is easy in all ..., Maybe it's just because I'm new to mountain biking, but I had a terrib..., The Road-550-W from Adventure Works Cycles is everything it's advertis... (truncated)]
+  - Column: ModifiedDate
+    - Samples: [2013-09-18 00:00:00.0, 2013-11-13 00:00:00.0, 2013-11-15 00:00:00.0, 2013-11-15 00:00:00.0]
+- Table: ShoppingCartItem
+  - Column: ShoppingCartItemID
+    - Samples: [2, 4, 5]
+  - Column: ShoppingCartID
+    - Samples: [14951, 20621, 20621]
+  - Column: Quantity
+    - Samples: [3, 4, 7]
+  - Column: ProductID
+    - Samples: [862, 881, 874]
+  - Column: DateCreated
+    - Samples: [2013-11-09 17:54:07.0, 2013-11-09 17:54:07.0, 2013-11-09 17:54:07.0]
+  - Column: ModifiedDate
+    - Samples: [2013-11-09 17:54:07.0, 2013-11-09 17:54:07.0, 2013-11-09 17:54:07.0]
+- Table: SpecialOfferProduct
+  - Column: SpecialOfferID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: ProductID
+    - Samples: [680, 706, 707, 708, 709]
+  - Column: rowguid
+    - Samples: [BB30B868-D86C-4557-8DB2-4B2D0A83A0FB, B3C9A4B1-2AE6-4CBA-B552-1F206C9F4C1F, 27B711FE-0B77-4EA4-AD1A-7C239956BEF4, 46CBB78B-246E-4D69-9BD6-E521277C1078, CF102AA0-055F-4D2B-8B98-04B161758EA8]
+  - Column: ModifiedDate
+    - Samples: [2011-04-01 00:00:00.0, 2011-04-01 00:00:00.0, 2011-04-01 00:00:00.0, 2011-04-01 00:00:00.0, 2011-04-01 00:00:00.0]
+- Table: SalesOrderDetail
+  - Column: SalesOrderID
+    - Samples: [43659, 43659, 43659, 43659, 43659]
+  - Column: SalesOrderDetailID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: CarrierTrackingNumber
+    - Samples: [4911-403C-98, 4911-403C-98, 4911-403C-98, 4911-403C-98, 4911-403C-98]
+  - Column: OrderQty
+    - Samples: [1, 3, 1, 1, 1]
+  - Column: ProductID
+    - Samples: [776, 777, 778, 771, 772]
+  - Column: SpecialOfferID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: UnitPrice
+    - Samples: [2025.0, 2025.0, 2025.0, 2040.0, 2040.0]
+  - Column: UnitPriceDiscount
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: LineTotal
+    - Samples: [2025.0, 6075.0, 2025.0, 2040.0, 2040.0]
+  - Column: rowguid
+    - Samples: [B207C96D-D9E6-402B-8470-2CC176C42283, 7ABB600D-1E77-41BE-9FE5-B9142CFC08FA, 475CF8C6-49F6-486E-B0AD-AFC6A50CDD2F, 04C4DE91-5815-45D6-8670-F462719FBCE3, 5A74C7D2-E641-438E-A7AC-37BF23280301]
+  - Column: ModifiedDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+- Table: TransactionHistory
+  - Column: TransactionID
+    - Samples: [100000, 100001, 100002, 100003, 100004]
+  - Column: ProductID
+    - Samples: [784, 794, 797, 798, 799]
+  - Column: ReferenceOrderID
+    - Samples: [41590, 41591, 41592, 41593, 41594]
+  - Column: ReferenceOrderLineID
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: TransactionDate
+    - Samples: [2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0]
+  - Column: TransactionType
+    - Samples: [W, W, W, W, W]
+  - Column: Quantity
+    - Samples: [2, 1, 1, 1, 1]
+  - Column: ActualCost
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: ModifiedDate
+    - Samples: [2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0]
+- Table: Vendor
+  - Column: BusinessEntityID
+    - Samples: [1492, 1494, 1496, 1498, 1500]
+  - Column: AccountNumber
+    - Samples: [AUSTRALI0001, ALLENSON0001, ADVANCED0001, TRIKES0001, MORGANB0001]
+  - Column: Name
+    - Samples: [Australia Bike Retailer, Allenson Cycles, Advanced Bicycles, Trikes, Inc., Morgan Bike Accessories]
+  - Column: CreditRating
+    - Samples: [1, 2, 1, 2, 1]
+  - Column: PreferredVendorStatus
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: ActiveFlag
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: PurchasingWebServiceURL
+    - Samples: [None, None, None, None, None]
+  - Column: ModifiedDate
+    - Samples: [2011-12-23 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2012-02-03 00:00:00.0, 2012-02-02 00:00:00.0]
+- Table: ProductVendor
+  - Column: ProductID
+    - Samples: [1, 2, 4, 317, 317]
+  - Column: BusinessEntityID
+    - Samples: [1580, 1688, 1650, 1578, 1678]
+  - Column: AverageLeadTime
+    - Samples: [17, 19, 17, 19, 17]
+  - Column: StandardPrice
+    - Samples: [47.87, 39.92, 54.31, 28.17, 25.77]
+  - Column: LastReceiptCost
+    - Samples: [50.2635, 41.916, 57.0255, 29.5785, 27.0585]
+  - Column: LastReceiptDate
+    - Samples: [2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-25 00:00:00.0]
+  - Column: MinOrderQty
+    - Samples: [1, 1, 1, 100, 100]
+  - Column: MaxOrderQty
+    - Samples: [5, 5, 5, 1000, 1000]
+  - Column: OnOrderQty
+    - Samples: [3, 3, None, 300, None]
+  - Column: UnitMeasureCode
+    - Samples: [CS, CTN, CTN, EA, EA]
+  - Column: ModifiedDate
+    - Samples: [2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-25 00:00:00.0]
+- Table: PurchaseOrderHeader
+  - Column: PurchaseOrderID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: RevisionNumber
+    - Samples: [4, 4, 4, 4, 4]
+  - Column: Status
+    - Samples: [4, 1, 4, 3, 4]
+  - Column: EmployeeID
+    - Samples: [258, 254, 257, 261, 251]
+  - Column: VendorID
+    - Samples: [1580, 1496, 1494, 1650, 1654]
+  - Column: ShipMethodID
+    - Samples: [3, 5, 2, 5, 4]
+  - Column: OrderDate
+    - Samples: [2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-30 00:00:00.0]
+  - Column: ShipDate
+    - Samples: [2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-05-09 00:00:00.0]
+  - Column: SubTotal
+    - Samples: [201.04, 272.1015, 8847.3, 171.0765, 20397.3]
+  - Column: TaxAmt
+    - Samples: [16.0832, 21.7681, 707.784, 13.6861, 1631.784]
+  - Column: Freight
+    - Samples: [5.026, 6.8025, 221.1825, 4.2769, 509.9325]
+  - Column: TotalDue
+    - Samples: [222.1492, 300.6721, 9776.2665, 189.0395, 22539.0165]
+  - Column: ModifiedDate
+    - Samples: [2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-05-09 00:00:00.0]
+- Table: PurchaseOrderDetail
+  - Column: PurchaseOrderID
+    - Samples: [1, 2, 2, 3, 4]
+  - Column: PurchaseOrderDetailID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: DueDate
+    - Samples: [2011-04-30 00:00:00.0, 2011-04-30 00:00:00.0, 2011-04-30 00:00:00.0, 2011-04-30 00:00:00.0, 2011-04-30 00:00:00.0]
+  - Column: OrderQty
+    - Samples: [4, 3, 3, 550, 3]
+  - Column: ProductID
+    - Samples: [1, 359, 360, 530, 4]
+  - Column: UnitPrice
+    - Samples: [50.0, 45.0, 46.0, 16.0, 57.0]
+  - Column: LineTotal
+    - Samples: [201.0, 135.0, 137.0, 8847.0, 171.0]
+  - Column: ReceivedQty
+    - Samples: [3.0, 3.0, 3.0, 550.0, 2.0]
+  - Column: RejectedQty
+    - Samples: [0.0, 0.0, 0.0, 0.0, 1.0]
+  - Column: StockedQty
+    - Samples: [3.0, 3.0, 3.0, 550.0, 1.0]
+  - Column: ModifiedDate
+    - Samples: [2011-04-23 00:00:00.0, 2011-04-23 00:00:00.0, 2011-04-23 00:00:00.0, 2011-04-23 00:00:00.0, 2011-04-23 00:00:00.0]
+- Table: WorkOrder
+  - Column: WorkOrderID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: ProductID
+    - Samples: [722, 725, 726, 729, 730]
+  - Column: OrderQty
+    - Samples: [8, 15, 9, 16, 14]
+  - Column: StockedQty
+    - Samples: [8, 15, 9, 16, 14]
+  - Column: ScrappedQty
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: StartDate
+    - Samples: [2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0]
+  - Column: DueDate
+    - Samples: [2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0]
+  - Column: ScrapReasonID
+    - Samples: [None, None, None, None, None]
+  - Column: ModifiedDate
+    - Samples: [2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0]
+- Table: WorkOrderRouting
+  - Column: WorkOrderID
+    - Samples: [13, 13, 13, 13, 13]
+  - Column: ProductID
+    - Samples: [747, 747, 747, 747, 747]
+  - Column: OperationSequence
+    - Samples: [1, 2, 3, 4, 6]
+  - Column: LocationID
+    - Samples: [10, 20, 30, 40, 50]
+  - Column: ScheduledStartDate
+    - Samples: [2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0]
+  - Column: ScheduledEndDate
+    - Samples: [2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0]
+  - Column: ActualStartDate
+    - Samples: [2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0]
+  - Column: ActualEndDate
+    - Samples: [2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0]
+  - Column: ActualResourceHrs
+    - Samples: [4.1, 3.5, 1.0, 2.0, 3.0]
+  - Column: PlannedCost
+    - Samples: [92.25, 87.5, 14.5, 31.5, 36.75]
+  - Column: ActualCost
+    - Samples: [92.25, 87.5, 14.5, 31.5, 36.75]
+  - Column: ModifiedDate
+    - Samples: [2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0]
+- Table: Customer
+  - Column: CustomerID
+  - Column: PersonID
+  - Column: StoreID
+  - Column: TerritoryID
+  - Column: AccountNumber
+  - Column: rowguid
+  - Column: ModifiedDate
+- Table: ProductListPriceHistory
+  - Column: ProductID
+    - Samples: [707, 707, 707, 708, 708]
+  - Column: StartDate
+    - Samples: [2011-05-31 00:00:00.0, 2012-05-30 00:00:00.0, 2013-05-30 00:00:00.0, 2011-05-31 00:00:00.0, 2012-05-30 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0, None, 2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0]
+  - Column: ListPrice
+    - Samples: [33.6442, 33.6442, 34.99, 33.6442, 33.6442]
+  - Column: ModifiedDate
+    - Samples: [2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0, 2013-05-09 00:00:00.0, 2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0]
+- Table: Address
+  - Column: AddressID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: AddressLine1
+    - Samples: [1970 Napa Ct., 9833 Mt. Dias Blv., 7484 Roundtree Drive, 9539 Glenside Dr, 1226 Shoe St.]
+  - Column: AddressLine2
+    - Samples: [None, None, None, None, None]
+  - Column: City
+    - Samples: [Bothell, Bothell, Bothell, Bothell, Bothell]
+  - Column: StateProvinceID
+    - Samples: [79, 79, 79, 79, 79]
+  - Column: PostalCode
+    - Samples: [98011, 98011, 98011, 98011, 98011]
+  - Column: SpatialLocation
+    - Samples: [0x00000000010100000067A89189898A5EC0AE8BFC28BCE44740, 0x000000000101000000BC262A0A03905EC0D6FA851AE6D74740, 0x000000000101000000DA930C7893915EC018E304C4ADE14740, 0x00000000010100000011A5C28A7C955EC0813A0D5F9FDE4740, 0x000000000101000000C460EA3FD8855EC061C64D8ABBD94740]
+  - Column: rowguid
+    - Samples: [9AADCB0D-36CF-483F-84D8-585C2D4EC6E9, 32A54B9E-E034-4BFB-B573-A71CDE60D8C0, 4C506923-6D1B-452C-A07C-BAA6F5B142A4, E5946C78-4BCC-477F-9FA1-CC09DE16A880, FBAFF937-4A97-4AF0-81FD-B849900E9BB0]
+  - Column: ModifiedDate
+    - Samples: [2007-12-04 00:00:00.0, 2008-11-30 00:00:00.0, 2013-03-07 00:00:00.0, 2009-02-03 00:00:00.0, 2008-12-19 00:00:00.0]
+- Table: AddressType
+  - Column: AddressTypeID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Billing, Home, Main Office, Primary, Shipping]
+  - Column: rowguid
+    - Samples: [B84F78B1-4EFE-4A0E-8CB7-70E9F112F886, 41BC2FF6-F0FC-475F-8EB9-CEC0805AA0F2, 8EEEC28C-07A2-4FB9-AD0A-42D4A0BBC575, 24CB3088-4345-47C4-86C5-17B535133D1E, B29DA3F8-19A3-47DA-9DAA-15C84F4A83A5]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: BillOfMaterials
+  - Column: BillOfMaterialsID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: ProductAssemblyID
+    - Samples: [807, 782, None, None, None]
+  - Column: ComponentID
+    - Samples: [1, 995, 989, 785, 775]
+  - Column: StartDate
+    - Samples: [2010-03-04 00:00:00.0, 2010-03-04 00:00:00.0, 2010-03-04 00:00:00.0, 2010-03-04 00:00:00.0, 2010-03-04 00:00:00.0]
+  - Column: EndDate
+    - Samples: [None, None, None, None, None]
+  - Column: UnitMeasureCode
+    - Samples: [EA, EA, EA, EA, EA]
+  - Column: BOMLevel
+    - Samples: [2, 1, 0, 0, 0]
+  - Column: PerAssemblyQty
+    - Samples: [1.0, 1.0, 1.0, 1.0, 1.0]
+  - Column: ModifiedDate
+    - Samples: [2010-02-18 00:00:00.0, 2010-02-18 00:00:00.0, 2010-02-18 00:00:00.0, 2010-02-18 00:00:00.0, 2010-02-18 00:00:00.0]
+- Table: BusinessEntity
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: rowguid
+    - Samples: [0C7D8F81-D7B1-4CF0-9C0A-4CD8B6B50087, 6648747F-7843-4002-B317-65389684C398, 568204DA-93D7-42F4-8A7A-4446A144277D, 0EFF57B9-4F4F-41A6-8867-658C199A5FC0, B82F88D1-FF79-4FD9-8C54-9D24C140F647]
+  - Column: ModifiedDate
+    - Samples: [2017-12-13 13:20:24.0, 2017-12-13 13:20:24.0, 2017-12-13 13:20:24.0, 2017-12-13 13:20:24.0, 2017-12-13 13:20:24.0]
+- Table: ContactType
+  - Column: ContactTypeID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Accounting Manager, Assistant Sales Agent, Assistant Sales Representative, Coordinator Foreign Markets, Export Administrator]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: CurrencyRate
+  - Column: CurrencyRateID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: CurrencyRateDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+  - Column: FromCurrencyCode
+    - Samples: [USD, USD, USD, USD, USD]
+  - Column: ToCurrencyCode
+    - Samples: [ARS, AUD, BRL, CAD, CNY]
+  - Column: AverageRate
+    - Samples: [1.0, 1.5491, 1.9379, 1.4641, 8.2781]
+  - Column: EndOfDayRate
+    - Samples: [1.0002, 1.55, 1.9419, 1.4683, 8.2784]
+  - Column: ModifiedDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+- Table: Department
+  - Column: DepartmentID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Engineering, Tool Design, Sales, Marketing, Purchasing]
+  - Column: GroupName
+    - Samples: [Research and Development, Research and Development, Sales and Marketing, Sales and Marketing, Inventory Management]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: EmployeeDepartmentHistory
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 4]
+  - Column: DepartmentID
+    - Samples: [16, 1, 1, 1, 2]
+  - Column: ShiftID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: StartDate
+    - Samples: [2009-01-14, 2008-01-31, 2007-11-11, 2007-12-05, 2010-05-31]
+  - Column: EndDate
+    - Samples: [None, None, None, 2010-05-30, None]
+  - Column: ModifiedDate
+    - Samples: [2009-01-13 00:00:00.0, 2008-01-30 00:00:00.0, 2007-11-10 00:00:00.0, 2010-05-28 00:00:00.0, 2010-05-30 00:00:00.0]
+- Table: EmployeePayHistory
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 4]
+  - Column: RateChangeDate
+    - Samples: [2009-01-14 00:00:00.0, 2008-01-31 00:00:00.0, 2007-11-11 00:00:00.0, 2007-12-05 00:00:00.0, 2010-05-31 00:00:00.0]
+  - Column: Rate
+    - Samples: [125.5, 63.4615, 43.2692, 8.62, 23.72]
+  - Column: PayFrequency
+    - Samples: [2, 2, 2, 2, 2]
+  - Column: ModifiedDate
+    - Samples: [2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2007-11-21 00:00:00.0, 2010-05-16 00:00:00.0]
+- Table: JobCandidate
+  - Column: JobCandidateID
+    - Samples: [2, 3, 4, 5, 6]
+  - Column: BusinessEntityID
+    - Samples: [None, None, 274, None, None]
+  - Column: Resume
+    - Samples: [<ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad..., <ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad..., <ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad..., <ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad..., <ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad... (truncated)]
+  - Column: ModifiedDate
+    - Samples: [2007-06-23 00:00:00.0, 2007-06-23 00:00:00.0, 2013-12-22 18:32:21.0, 2007-06-23 00:00:00.0, 2007-06-23 00:00:00.0]
+- Table: Location
+  - Column: LocationID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Tool Crib, Sheet Metal Racks, Paint Shop, Paint Storage, Metal Storage]
+  - Column: CostRate
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: Availability
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: PhoneNumberType
+  - Column: PhoneNumberTypeID
+    - Samples: [1, 2, 3]
+  - Column: Name
+    - Samples: [Cell, Home, Work]
+  - Column: ModifiedDate
+    - Samples: [2017-12-13 13:19:22.0, 2017-12-13 13:19:22.0, 2017-12-13 13:19:22.0]
+- Table: Product
+  - Column: ProductID
+    - Samples: [1, 2, 3, 4, 316]
+  - Column: Name
+    - Samples: [Adjustable Race, Bearing Ball, BB Ball Bearing, Headset Ball Bearings, Blade]
+  - Column: ProductNumber
+    - Samples: [AR-5381, BA-8327, BE-2349, BE-2908, BL-2036]
+  - Column: MakeFlag
+    - Samples: [0, 0, 1, 0, 1]
+  - Column: FinishedGoodsFlag
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: Color
+    - Samples: [None, None, None, None, None]
+  - Column: SafetyStockLevel
+    - Samples: [1000, 1000, 800, 800, 800]
+  - Column: ReorderPoint
+    - Samples: [750, 750, 600, 600, 600]
+  - Column: StandardCost
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: ListPrice
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: Size
+    - Samples: [None, None, None, None, None]
+  - Column: SizeUnitMeasureCode
+    - Samples: [None, None, None, None, None]
+  - Column: WeightUnitMeasureCode
+    - Samples: [None, None, None, None, None]
+  - Column: Weight
+    - Samples: [None, None, None, None, None]
+  - Column: DaysToManufacture
+    - Samples: [0, 0, 1, 0, 1]
+  - Column: ProductLine
+    - Samples: [None, None, None, None, None]
+  - Column: Class
+    - Samples: [None, None, None, None, None]
+  - Column: Style
+    - Samples: [None, None, None, None, None]
+  - Column: ProductSubcategoryID
+    - Samples: [None, None, None, None, None]
+  - Column: ProductModelID
+    - Samples: [None, None, None, None, None]
+  - Column: SellStartDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+  - Column: SellEndDate
+    - Samples: [None, None, None, None, None]
+  - Column: DiscontinuedDate
+    - Samples: [None, None, None, None, None]
+  - Column: rowguid
+    - Samples: [694215B7-08F7-4C0D-ACB1-D734BA44C0C8, 58AE3C20-4F3A-4749-A7D4-D568806CC537, 9C21AED2-5BFA-4F18-BCB8-F11638DC2E4E, ECFED6CB-51FF-49B5-B06C-7D8AC834DB8B, E73E9750-603B-4131-89F5-3DD15ED5FF80]
+  - Column: ModifiedDate
+    - Samples: [2014-02-08 10:01:36.0, 2014-02-08 10:01:36.0, 2014-02-08 10:01:36.0, 2014-02-08 10:01:36.0, 2014-02-08 10:01:36.0]
+- Table: Document
+  - Column: DocumentNode
+    - Samples: [/, /1/, /1/1/, /1/2/, /2/]
+  - Column: DocumentLevel
+    - Samples: [0, 1, 2, 2, 1]
+  - Column: Title
+    - Samples: [Documents, Overview, Introduction 1, Repair and Service Guidelines, Maintenance]
+  - Column: Owner
+    - Samples: [217, 217, 219, 220, 217]
+  - Column: FolderFlag
+    - Samples: [1, 1, 0, 0, 1]
+  - Column: FileName
+    - Samples: [Documents, Overview, Introduction 1.doc, Repair and Service Guidelines.doc, Maintenance]
+  - Column: FileExtension
+    - Samples: [, , .doc, .doc, ]
+  - Column: Revision
+    - Samples: [0, 0, 4, 0, 0]
+  - Column: ChangeNumber
+    - Samples: [0, 0, 28, 8, 0]
+  - Column: Status
+    - Samples: [2, 2, 2, 2, 2]
+  - Column: DocumentSummary
+    - Samples: [None, None, None, It is important that you maintain your bicycle and keep it in good rep..., None (truncated)]
+  - Column: Document
+    - Samples: [None, None, 0xD0CF11E0A1B11AE1000000000000000000000000000000003E000300FEFF09000600..., 0xD0CF11E0A1B11AE1000000000000000000000000000000003E000300FEFF09000600..., None (truncated)]
+  - Column: rowguid
+    - Samples: [27CF33AF-C338-4842-966C-75CA11AAA6A3, 26A266F1-1D23-40E2-AF48-6AB8D954FE37, 48265174-8451-4967-973A-639C2276CFAF, 7ED4DEF5-D5BB-4818-8748-5BB5F8315FA2, 5184D96A-EE8C-499A-9316-625496784DE6]
+  - Column: ModifiedDate
+    - Samples: [2017-12-13 13:58:03.0, 2017-12-13 13:58:03.0, 2013-05-30 00:00:00.0, 2008-03-31 00:00:00.0, 2017-12-13 13:58:04.0]
+- Table: StateProvince
+  - Column: StateProvinceID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: StateProvinceCode
+    - Samples: [AB, AK, AL, AR, AS]
+  - Column: CountryRegionCode
+    - Samples: [CA, US, US, US, AS]
+  - Column: IsOnlyStateProvinceFlag
+    - Samples: [0, 0, 0, 0, 1]
+  - Column: Name
+    - Samples: [Alberta, Alaska, Alabama, Arkansas, American Samoa]
+  - Column: TerritoryID
+    - Samples: [6, 1, 5, 3, 1]
+  - Column: rowguid
+    - Samples: [298C2880-AB1C-4982-A5AD-A36EB4BA0D34, 5B7B8462-A888-4E0B-A3E1-7278F8AF107E, 41B328BE-21AE-45D0-841D-6F8DD71CE626, 54656A80-06F2-4C70-BA10-247179FC246E, 255D15E1-9F6E-4CF8-9E5F-6B3858AD9B6A]
+  - Column: ModifiedDate
+    - Samples: [2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0]
+- Table: CreditCard
+  - Column: CreditCardID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: CardType
+    - Samples: [SuperiorCard, Distinguish, ColonialVoice, ColonialVoice, Vista]
+  - Column: CardNumber
+    - Samples: [33332664695310, 55552127249722, 77778344838353, 77774915718248, 11114404600042]
+  - Column: ExpMonth
+    - Samples: [11, 8, 7, 7, 4]
+  - Column: ExpYear
+    - Samples: [2006, 2005, 2005, 2006, 2005]
+  - Column: ModifiedDate
+    - Samples: [2013-07-29 00:00:00.0, 2013-12-05 00:00:00.0, 2014-01-14 00:00:00.0, 2013-05-20 00:00:00.0, 2013-02-01 00:00:00.0]
+- Table: SalesOrderHeader
+  - Column: SalesOrderID
+    - Samples: [43659, 43660, 43661, 43662, 43663]
+  - Column: RevisionNumber
+    - Samples: [8, 8, 8, 8, 8]
+  - Column: OrderDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+  - Column: DueDate
+    - Samples: [2011-06-12 00:00:00.0, 2011-06-12 00:00:00.0, 2011-06-12 00:00:00.0, 2011-06-12 00:00:00.0, 2011-06-12 00:00:00.0]
+  - Column: ShipDate
+    - Samples: [2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0]
+  - Column: Status
+    - Samples: [5, 5, 5, 5, 5]
+  - Column: OnlineOrderFlag
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: SalesOrderNumber
+    - Samples: [SO43659, SO43660, SO43661, SO43662, SO43663]
+  - Column: PurchaseOrderNumber
+    - Samples: [PO522145787, PO18850127500, PO18473189620, PO18444174044, PO18009186470]
+  - Column: AccountNumber
+    - Samples: [10-4020-000676, 10-4020-000117, 10-4020-000442, 10-4020-000227, 10-4020-000510]
+  - Column: CustomerID
+    - Samples: [29825, 29672, 29734, 29994, 29565]
+  - Column: SalesPersonID
+    - Samples: [279, 279, 282, 282, 276]
+  - Column: TerritoryID
+    - Samples: [5, 5, 6, 6, 4]
+  - Column: BillToAddressID
+    - Samples: [985, 921, 517, 482, 1073]
+  - Column: ShipToAddressID
+    - Samples: [985, 921, 517, 482, 1073]
+  - Column: ShipMethodID
+    - Samples: [5, 5, 5, 5, 5]
+  - Column: CreditCardID
+    - Samples: [16281, 5618, 1346, 10456, 4322]
+  - Column: CreditCardApprovalCode
+    - Samples: [105041Vi84182, 115213Vi29411, 85274Vi6854, 125295Vi53935, 45303Vi22691]
+  - Column: CurrencyRateID
+    - Samples: [None, None, 4, 4, None]
+  - Column: SubTotal
+    - Samples: [20565.6206, 1294.2529, 32726.4786, 28832.5289, 419.4589]
+  - Column: TaxAmt
+    - Samples: [1971.5149, 124.2483, 3153.7696, 2775.1646, 40.2681]
+  - Column: Freight
+    - Samples: [616.0984, 38.8276, 985.553, 867.2389, 12.5838]
+  - Column: TotalDue
+    - Samples: [23153.2339, 1457.3288, 36865.8012, 32474.9324, 472.3108]
+  - Column: Comment
+    - Samples: [None, None, None, None, None]
+  - Column: rowguid
+    - Samples: [79B65321-39CA-4115-9CBA-8FE0903E12E6, 738DC42D-D03B-48A1-9822-F95A67EA7389, D91B9131-18A4-4A11-BC3A-90B6F53E9D74, 4A1ECFC0-CC3A-4740-B028-1C50BB48711C, 9B1E7A40-6AE0-4AD3-811C-A64951857C4B]
+  - Column: ModifiedDate
+    - Samples: [2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0],SELECT ProductID, Rating, Comments FROM ProductReview WHERE ReviewerName LIKE 'J%',To solve the SQL problem, we need to retrieve specific details from the `ProductReview` table based on a condition related to the reviewer's name. Here are the logical steps to arrive at the solution:  1. **Understand the Requirement**:     - We need to provide details of reviews from reviewers whose names begin with the letter 'J'.    - The required details are the product ID, rating, and comments.  2. **Identify Relevant Table**:    - From the schema provided, the `ProductReview` table contains information about product reviews, including the reviewer's name, product ID, rating, and comments.  3. **Determine the Columns to Select**:    - Based on the requirement, we need to select the `ProductID`, `Rating`, and `Comments` columns from the `ProductReview` table.  4. **Formulate the Filtering Condition**:    - We need to filter reviews where the reviewer's name starts with 'J'.     - In SQL, this can be achieved using the `LIKE` operator with a pattern. The pattern `'J%'` matches any string that starts with 'J'.  5. **Write the SQL Query**:    - Combine the selection of columns and the filtering condition into a single SQL query:        SELECT ProductID, Rating, Comments     FROM ProductReview     WHERE ReviewerName LIKE 'J%'      6. **Review and Validate the Query**:    - Ensure that the query correctly selects the desired columns and applies the correct filtering condition.    - Validate that the query syntax is correct and aligns with SQL standards.  By following these logical steps, we can construct a query that retrieves the necessary review details for reviewers whose names start with 'J'.,,
+1,gpt-4o,State the product name, product line, rating and the selling price of product with the lowest rating.,SCHEMA:
+- Table: CountryRegion
+  - Column: CountryRegionCode
+    - Samples: [Cou, AD, AE, AF, AG]
+  - Column: Name
+    - Samples: [Name, Andorra, United Arab Emirates, Afghanistan, Antigua and Barbuda]
+  - Column: ModifiedDate
+    - Samples: [ModifiedDate, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: Culture
+  - Column: CultureID
+    - Samples: [, ar, en, es, fr]
+  - Column: Name
+    - Samples: [Invariant Language (Invariant Country), Arabic, English, Spanish, French]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: Currency
+  - Column: CurrencyCode
+    - Samples: [AED, AFA, ALL, AMD, ANG]
+  - Column: Name
+    - Samples: [Emirati Dirham, Afghani, Lek, Armenian Dram, Netherlands Antillian Guilder]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: CountryRegionCurrency
+  - Column: CountryRegionCode
+    - Samples: [AE, AR, AT, AT, AU]
+  - Column: CurrencyCode
+    - Samples: [AED, ARS, ATS, EUR, AUD]
+  - Column: ModifiedDate
+    - Samples: [2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2008-04-30 00:00:00.0, 2014-02-08 10:17:21.0]
+- Table: Person
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: PersonType
+    - Samples: [EM, EM, EM, EM, EM]
+  - Column: NameStyle
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: Title
+    - Samples: [None, None, None, None, Ms.]
+  - Column: FirstName
+    - Samples: [Ken, Terri, Roberto, Rob, Gail]
+  - Column: MiddleName
+    - Samples: [J, Lee, None, None, A]
+  - Column: LastName
+    - Samples: [Sánchez, Duffy, Tamburello, Walters, Erickson]
+  - Column: Suffix
+    - Samples: [None, None, None, None, None]
+  - Column: EmailPromotion
+    - Samples: [0, 1, 0, 0, 0]
+  - Column: AdditionalContactInfo
+    - Samples: [None, None, None, None, None]
+  - Column: Demographics
+    - Samples: [<IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0..., <IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0..., <IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0..., <IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0..., <IndividualSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/0... (truncated)]
+  - Column: rowguid
+    - Samples: [92C4279F-1207-48A3-8448-4636514EB7E2, D8763459-8AA8-47CC-AFF7-C9079AF79033, E1A2555E-0828-434B-A33B-6F38136A37DE, F2D7CE06-38B3-4357-805B-F4B6B71C01FF, F3A3F6B4-AE3B-430C-A754-9F2231BA6FEF]
+  - Column: ModifiedDate
+    - Samples: [2009-01-07 00:00:00.0, 2008-01-24 00:00:00.0, 2007-11-04 00:00:00.0, 2007-11-28 00:00:00.0, 2007-12-30 00:00:00.0]
+- Table: BusinessEntityContact
+  - Column: BusinessEntityID
+    - Samples: [292, 294, 296, 298, 300]
+  - Column: PersonID
+    - Samples: [291, 293, 295, 297, 299]
+  - Column: ContactTypeID
+    - Samples: [11, 11, 11, 11, 11]
+  - Column: rowguid
+    - Samples: [7D4D2DBC-4A44-48F5-911D-A63ABAFD5120, 3EA25B65-9579-4260-977D-D6F00D7D20EE, DADAC1FF-3351-4827-9AE0-95004885C193, B924F26F-6446-45D1-A92B-6F418374F075, 5BA4E7BE-8D29-46A2-B68D-67B1615B124A]
+  - Column: ModifiedDate
+    - Samples: [2017-12-13 13:21:02.0, 2017-12-13 13:21:02.0, 2017-12-13 13:21:02.0, 2017-12-13 13:21:02.0, 2017-12-13 13:21:02.0]
+- Table: EmailAddress
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: EmailAddressID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: EmailAddress
+    - Samples: [ken0@adventure-works.com, terri0@adventure-works.com, roberto0@adventure-works.com, rob0@adventure-works.com, gail0@adventure-works.com]
+  - Column: rowguid
+    - Samples: [8A1901E4-671B-431A-871C-EADB2942E9EE, B5FF9EFD-72A2-4F87-830B-F338FDD4D162, C8A51084-1C03-4C58-A8B3-55854AE7C499, 17703ED1-0031-4B4A-AFD2-77487A556B3B, E76D2EA3-08E5-409C-BBE2-5DD1CDF89A3B]
+  - Column: ModifiedDate
+    - Samples: [2009-01-07 00:00:00.0, 2008-01-24 00:00:00.0, 2007-11-04 00:00:00.0, 2007-11-28 00:00:00.0, 2007-12-30 00:00:00.0]
+- Table: Employee
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: NationalIDNumber
+    - Samples: [295847284, 245797967, 509647174, 112457891, 695256908]
+  - Column: LoginID
+    - Samples: [adventure-works\ken0, adventure-works\terri0, adventure-works\roberto0, adventure-works\rob0, adventure-works\gail0]
+  - Column: OrganizationNode
+    - Samples: [None, /1/, /1/1/, /1/1/1/, /1/1/2/]
+  - Column: OrganizationLevel
+    - Samples: [None, 1, 2, 3, 3]
+  - Column: JobTitle
+    - Samples: [Chief Executive Officer, Vice President of Engineering, Engineering Manager, Senior Tool Designer, Design Engineer]
+  - Column: BirthDate
+    - Samples: [1969-01-29, 1971-08-01, 1974-11-12, 1974-12-23, 1952-09-27]
+  - Column: MaritalStatus
+    - Samples: [S, S, M, S, M]
+  - Column: Gender
+    - Samples: [M, F, M, M, F]
+  - Column: HireDate
+    - Samples: [2009-01-14, 2008-01-31, 2007-11-11, 2007-12-05, 2008-01-06]
+  - Column: SalariedFlag
+    - Samples: [1, 1, 1, 0, 1]
+  - Column: VacationHours
+    - Samples: [99, 1, 2, 48, 5]
+  - Column: SickLeaveHours
+    - Samples: [69, 20, 21, 80, 22]
+  - Column: CurrentFlag
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: rowguid
+    - Samples: [F01251E5-96A3-448D-981E-0F99D789110D, 45E8F437-670D-4409-93CB-F9424A40D6EE, 9BBBFB2C-EFBB-4217-9AB7-F97689328841, 59747955-87B8-443F-8ED4-F8AD3AFDF3A9, EC84AE09-F9B8-4A15-B4A9-6CCBAB919B08]
+  - Column: ModifiedDate
+    - Samples: [2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0]
+- Table: Password
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: PasswordHash
+    - Samples: [pbFwXWE99vobT6g+vPWFy93NtUU/orrIWafF01hccfM=, bawRVNrZQYQ05qF05Gz6VLilnviZmrqBReTTAGAudm0=, 8BUXrZfDqO1IyHCWOYzYmqN1IhTUn3CJMpdx/UCQ3iY=, SjLXpiarHSlz+6AG+H+4QpB/IPRzras/+9q/5Wr7tf8=, 8FYdAiY6gWuBsgjCFdg0UibtsqOcWHf9TyaHIP7+paA=]
+  - Column: PasswordSalt
+    - Samples: [bE3XiWw=, EjJaC3U=, wbPZqMw=, PwSunQU=, qYhZRiM=]
+  - Column: rowguid
+    - Samples: [329EACBE-C883-4F48-B8B6-17AA4627EFFF, A4C82398-7466-4FE6-B9EE-CEC34D116F68, AC3F4536-BB2E-41C5-B70D-454BE460C1BD, B3FA4C24-2E96-477C-A923-0CB0F6FA5C80, C4D13BCF-0209-44C7-AC67-6F817FDD7F16]
+  - Column: ModifiedDate
+    - Samples: [2009-01-07 00:00:00.0, 2008-01-24 00:00:00.0, 2007-11-04 00:00:00.0, 2007-11-28 00:00:00.0, 2007-12-30 00:00:00.0]
+- Table: PersonCreditCard
+  - Column: BusinessEntityID
+    - Samples: [293, 295, 297, 299, 301]
+  - Column: CreditCardID
+    - Samples: [17038, 15369, 8010, 5316, 6653]
+  - Column: ModifiedDate
+    - Samples: [2013-07-31 00:00:00.0, 2011-08-01 00:00:00.0, 2011-08-01 00:00:00.0, 2013-07-31 00:00:00.0, 2011-05-31 00:00:00.0]
+- Table: ProductCategory
+  - Column: ProductCategoryID
+    - Samples: [1, 2, 3, 4]
+  - Column: Name
+    - Samples: [Bikes, Components, Clothing, Accessories]
+  - Column: rowguid
+    - Samples: [CFBDA25C-DF71-47A7-B81B-64EE161AA37C, C657828D-D808-4ABA-91A3-AF2CE02300E9, 10A7C342-CA82-48D4-8A38-46A2EB089B74, 2BE3BE36-D9A2-4EEE-B593-ED895D97C2A6]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: ProductDescription
+  - Column: ProductDescriptionID
+    - Samples: [3, 4, 5, 8, 64]
+  - Column: Description
+    - Samples: [Chromoly steel., Aluminum alloy cups; large diameter spindle., Aluminum alloy cups and a hollow axle., Suitable for any type of riding, on or off-road. Fits any budget. Smoo..., This bike delivers a high-level of performance on a budget. It is resp... (truncated)]
+  - Column: rowguid
+    - Samples: [301EED3A-1A82-4855-99CB-2AFE8290D641, DFEBA528-DA11-4650-9D86-CAFDA7294EB0, F7178DA7-1A7E-4997-8470-06737181305E, 8E6746E5-AD97-46E2-BD24-FCEA075C3B52, 7B1C4E90-85E2-4792-B47B-E0C424E2EC94]
+  - Column: ModifiedDate
+    - Samples: [2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0]
+- Table: ProductModel
+  - Column: ProductModelID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Classic Vest, Cycling Cap, Full-Finger Gloves, Half-Finger Gloves, HL Mountain Frame]
+  - Column: CatalogDescription
+    - Samples: [None, None, None, None, None]
+  - Column: Instructions
+    - Samples: [None, None, None, None, None]
+  - Column: rowguid
+    - Samples: [29321D47-1E4C-4AAC-887C-19634328C25E, 474FB654-3C96-4CB9-82DF-2152EEFFBDB0, A75483FE-3C47-4AA4-93CF-664B51192987, 14B56F2A-D4AA-40A4-B9A2-984F165ED702, FDD5407B-C2DB-49D1-A86B-C13A2E3582A2]
+  - Column: ModifiedDate
+    - Samples: [2013-04-30 00:00:00.0, 2011-05-01 00:00:00.0, 2012-04-30 00:00:00.0, 2012-04-30 00:00:00.0, 2011-05-01 00:00:00.0]
+- Table: ProductModelProductDescriptionCulture
+  - Column: ProductModelID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: ProductDescriptionID
+    - Samples: [1199, 1467, 1589, 1712, 1838]
+  - Column: CultureID
+    - Samples: [en, ar, fr, th, he]
+  - Column: ModifiedDate
+    - Samples: [2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0, 2013-04-30 00:00:00.0]
+- Table: ProductPhoto
+  - Column: ProductPhotoID
+    - Samples: [69, 70, 72, 73, 76]
+  - Column: ThumbNailPhoto
+    - Samples: [0x47494638396150003100F70000E3E3FCA6ACB3F5F6FE303D47F8FAFDEDEEFE989DA2..., 0x47494638396150003100F70000E3E3FCEBECF3F5F6FE999B9DEDEDFEDCE3EB374249..., 0x47494638396150003100F70000F1F2FEE3E3FCA3ACB6EBEBF3F5F6FEEDEEFE66676B..., 0x47494638396150003100F700004978A7E2E3F3FAFCFE34353A46474BE1E3E4E3E3FB..., 0x47494638396150003100F700007689B3B1D5A475777BECEBF234353A85A376FAFCFE... (truncated)]
+  - Column: ThumbnailPhotoFileName
+    - Samples: [racer02_black_f_small.gif, racer02_black_small.gif, racer02_blue_f_small.gif, racer02_blue_small.gif, racer02_green_f_small.gif]
+  - Column: LargePhoto
+    - Samples: [0x474946383961F0009500F70000D3D3FEE2E3FE86878ADBDCFED7D8E7929BA8545659..., 0x474946383961F0009500F7000086878AECEDFED7D8E7D3D3FEE3E3FE909AA8DCDDFE..., 0x474946383961F0009500F700008EAFC785868991A5B2B5C7D1F2F3F4ECEDFE97989A..., 0x474946383961F0009500F700008B99A9708FAEA5A7AA8CAECA97A4AFD7D8E7F2F3F4..., 0x474946383961F0009500F70000CACBF8D6E4EFA3D19EECEDFEF3F4F4D3D3FEE2E3FE... (truncated)]
+  - Column: LargePhotoFileName
+    - Samples: [racer02_black_f_large.gif, racer02_black_large.gif, racer02_blue_f_large.gif, racer02_blue_large.gif, racer02_green_f_large.gif]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2012-10-19 09:56:38.0, 2012-10-19 09:56:38.0, 2012-10-19 09:56:38.0, 2012-10-19 09:56:38.0]
+- Table: ProductSubcategory
+  - Column: ProductSubcategoryID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: ProductCategoryID
+    - Samples: [1, 1, 1, 2, 2]
+  - Column: Name
+    - Samples: [Mountain Bikes, Road Bikes, Touring Bikes, Handlebars, Bottom Brackets]
+  - Column: rowguid
+    - Samples: [2D364ADE-264A-433C-B092-4FCBF3804E01, 000310C0-BCC8-42C4-B0C3-45AE611AF06B, 02C5061D-ECDC-4274-B5F1-E91D76BC3F37, 3EF2C725-7135-4C85-9AE6-AE9A3BDD9283, A9E54089-8A1E-4CF5-8646-E3801F685934]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: SalesReason
+  - Column: SalesReasonID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Price, On Promotion, Magazine Advertisement, Television  Advertisement, Manufacturer]
+  - Column: ReasonType
+    - Samples: [Other, Promotion, Marketing, Marketing, Other]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: SalesTerritory
+  - Column: TerritoryID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Northwest, Northeast, Central, Southwest, Southeast]
+  - Column: CountryRegionCode
+    - Samples: [US, US, US, US, US]
+  - Column: Group
+    - Samples: [North America, North America, North America, North America, North America]
+  - Column: SalesYTD
+    - Samples: [7887186.7882, 2402176.8476, 3072175.118, 10510853.8739, 2538667.2515]
+  - Column: SalesLastYear
+    - Samples: [3298694.4938, 3607148.9371, 3205014.0767, 5366575.7098, 3925071.4318]
+  - Column: CostYTD
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: CostLastYear
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: rowguid
+    - Samples: [43689A10-E30B-497F-B0DE-11DE20267FF7, 00FB7309-96CC-49E2-8363-0A1BA72486F2, DF6E7FD8-1A8D-468C-B103-ED8ADDB452C1, DC3E9EA0-7950-4431-9428-99DBCBC33865, 6DC4165A-5E4C-42D2-809D-4344E0AC75E7]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: SalesPerson
+  - Column: BusinessEntityID
+    - Samples: [274, 275, 276, 277, 278]
+  - Column: TerritoryID
+    - Samples: [None, 2, 4, 3, 6]
+  - Column: SalesQuota
+    - Samples: [None, 300000.0, 250000.0, 250000.0, 250000.0]
+  - Column: Bonus
+    - Samples: [0.0, 4100.0, 2000.0, 2500.0, 500.0]
+  - Column: CommissionPct
+    - Samples: [0.0, 0.012, 0.015, 0.015, 0.01]
+  - Column: SalesYTD
+    - Samples: [559697.5639, 3763178.1787, 4251368.5497, 3189418.3662, 1453719.4653]
+  - Column: SalesLastYear
+    - Samples: [0.0, 1750406.4785, 1439156.0291, 1997186.2037, 1620276.8966]
+  - Column: rowguid
+    - Samples: [48754992-9EE0-4C0E-8C94-9451604E3E02, 1E0A7274-3064-4F58-88EE-4C6586C87169, 4DD9EEE4-8E81-4F8C-AF97-683394C1F7C0, 39012928-BFEC-4242-874D-423162C3F567, 7A0AE1AB-B283-40F9-91D1-167ABF06D720]
+  - Column: ModifiedDate
+    - Samples: [2010-12-28 00:00:00.0, 2011-05-24 00:00:00.0, 2011-05-24 00:00:00.0, 2011-05-24 00:00:00.0, 2011-05-24 00:00:00.0]
+- Table: SalesPersonQuotaHistory
+  - Column: BusinessEntityID
+    - Samples: [274, 274, 274, 274, 274]
+  - Column: QuotaDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-08-31 00:00:00.0, 2011-12-01 00:00:00.0, 2012-02-29 00:00:00.0, 2012-05-30 00:00:00.0]
+  - Column: SalesQuota
+    - Samples: [28000.0, 7000.0, 91000.0, 140000.0, 70000.0]
+  - Column: rowguid
+    - Samples: [99109BBF-8693-4587-BC23-6036EC89E1BE, DFD01444-8900-461C-8D6F-04598DAE01D4, 0A69F453-9689-4CCF-A08C-C644670F5668, DA8D1458-5FB9-4C3E-9EAD-8F5CE1393047, 760CEF84-B980-417B-A667-7358C38857F0]
+  - Column: ModifiedDate
+    - Samples: [2011-04-16 00:00:00.0, 2011-07-17 00:00:00.0, 2011-10-17 00:00:00.0, 2012-01-15 00:00:00.0, 2012-04-15 00:00:00.0]
+- Table: SalesTerritoryHistory
+  - Column: BusinessEntityID
+    - Samples: [275, 275, 276, 277, 277]
+  - Column: TerritoryID
+    - Samples: [2, 3, 4, 3, 2]
+  - Column: StartDate
+    - Samples: [2011-05-31 00:00:00.0, 2012-11-30 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2012-11-30 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2012-11-29 00:00:00.0, None, None, 2012-11-29 00:00:00.0, None]
+  - Column: rowguid
+    - Samples: [8563CE6A-00FF-47D7-BA4D-3C3E1CDEF531, 2F44304C-EE87-4C72-813E-CA75C5F61F4C, 64BCB1B3-A793-40BA-9859-D90F78C3F167, 3E9F893D-5142-46C9-A76A-867D1E3D6F90, 132E4721-32DD-4A73-B556-1837F3A2B9AE]
+  - Column: ModifiedDate
+    - Samples: [2012-11-22 00:00:00.0, 2012-11-23 00:00:00.0, 2011-05-24 00:00:00.0, 2012-11-22 00:00:00.0, 2012-11-23 00:00:00.0]
+- Table: ScrapReason
+  - Column: ScrapReasonID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Brake assembly not as ordered, Color incorrect, Gouge in metal, Drill pattern incorrect, Drill size too large]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: Shift
+  - Column: ShiftID
+    - Samples: [1, 2, 3]
+  - Column: Name
+    - Samples: [Day, Evening, Night]
+  - Column: StartTime
+    - Samples: [07:00:00, 15:00:00, 23:00:00]
+  - Column: EndTime
+    - Samples: [15:00:00, 23:00:00, 07:00:00]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: ShipMethod
+  - Column: ShipMethodID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [XRQ - TRUCK GROUND, ZY - EXPRESS, OVERSEAS - DELUXE, OVERNIGHT J-FAST, CARGO TRANSPORT 5]
+  - Column: ShipBase
+    - Samples: [3.95, 9.95, 29.95, 21.95, 8.99]
+  - Column: ShipRate
+    - Samples: [0.99, 1.99, 2.99, 1.29, 1.49]
+  - Column: rowguid
+    - Samples: [6BE756D9-D7BE-4463-8F2C-AE60C710D606, 3455079B-F773-4DC6-8F1E-2A58649C4AB8, 22F4E461-28CF-4ACE-A980-F686CF112EC8, 107E8356-E7A8-463D-B60C-079FFF467F3F, B166019A-B134-4E76-B957-2B0490C610ED]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: SpecialOffer
+  - Column: SpecialOfferID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Description
+    - Samples: [No Discount, Volume Discount 11 to 14, Volume Discount 15 to 24, Volume Discount 25 to 40, Volume Discount 41 to 60]
+  - Column: DiscountPct
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: Type
+    - Samples: [No Discount, Volume Discount, Volume Discount, Volume Discount, Volume Discount]
+  - Column: Category
+    - Samples: [No Discount, Reseller, Reseller, Reseller, Reseller]
+  - Column: StartDate
+    - Samples: [2011-05-01 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2014-11-30 00:00:00.0, 2014-05-30 00:00:00.0, 2014-05-30 00:00:00.0, 2014-05-30 00:00:00.0, 2014-05-30 00:00:00.0]
+  - Column: MinQty
+    - Samples: [0, 11, 15, 25, 41]
+  - Column: MaxQty
+    - Samples: [None, 14, 24, 40, 60]
+  - Column: rowguid
+    - Samples: [0290C4F5-191F-4337-AB6B-0A2DDE03CBF9, D7542EE7-15DB-4541-985C-5CC27AEF26D6, 4BDBCC01-8CF7-40A9-B643-40EC5B717491, 504B5E85-8F3F-4EBC-9E1D-C1BC5DEA9AA8, 677E1D9D-944F-4E81-90E8-47EB0A82D48C]
+  - Column: ModifiedDate
+    - Samples: [2011-04-01 00:00:00.0, 2011-05-01 00:00:00.0, 2011-05-01 00:00:00.0, 2011-05-01 00:00:00.0, 2011-05-01 00:00:00.0]
+- Table: BusinessEntityAddress
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: AddressID
+    - Samples: [249, 293, 224, 11387, 190]
+  - Column: AddressTypeID
+    - Samples: [2, 2, 2, 2, 2]
+  - Column: rowguid
+    - Samples: [3A5D0A00-6739-4DFE-A8F7-844CD9DEE3DF, 84AE7057-EDF4-4C51-8B8D-3AEAEFBFB4A1, 3C915B31-7C05-4A05-9859-0DF663677240, 3DC70CC4-3AE8-424F-8B1F-481C5478E941, C0ED2F68-937B-4594-9459-581AC53C98E3]
+  - Column: ModifiedDate
+    - Samples: [2014-09-12 11:15:06.0, 2014-09-12 11:15:06.0, 2014-09-12 11:15:06.0, 2014-09-12 11:15:06.0, 2014-09-12 11:15:06.0]
+- Table: SalesTaxRate
+  - Column: SalesTaxRateID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: StateProvinceID
+    - Samples: [1, 57, 63, 1, 57]
+  - Column: TaxType
+    - Samples: [1, 1, 1, 2, 2]
+  - Column: TaxRate
+    - Samples: [14.0, 14.25, 14.25, 7.0, 7.0]
+  - Column: Name
+    - Samples: [Canadian GST + Alberta Provincial Tax, Canadian GST + Ontario Provincial Tax, Canadian GST + Quebec Provincial Tax, Canadian GST, Canadian GST]
+  - Column: rowguid
+    - Samples: [683DE5DD-521A-47D4-A573-06A3CDB1BC5D, 05C4FFDB-4F84-4CDF-ABE5-FDF3216EA74E, D4EDB557-56D7-403C-B538-4DF5E7302588, F0D76907-B433-453F-B95E-16FCE73B807A, 7E0E97A2-878B-476F-A648-05A3DD4450ED]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: Store
+  - Column: BusinessEntityID
+    - Samples: [292, 294, 296, 298, 300]
+  - Column: Name
+    - Samples: [Next-Door Bike Store, Professional Sales and Service, Riders Company, The Bike Mechanics, Nationwide Supply]
+  - Column: SalesPersonID
+    - Samples: [279, 276, 277, 275, 286]
+  - Column: Demographics
+    - Samples: [<StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv..., <StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv..., <StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv..., <StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv..., <StoreSurvey xmlns=http://schemas.microsoft.com/sqlserver/2004/07/adv... (truncated)]
+  - Column: rowguid
+    - Samples: [A22517E3-848D-4EBE-B9D9-7437F3432304, B50CA50B-C601-4A13-B07E-2C63862D71B4, 337C3688-1339-4E1A-A08A-B54B23566E49, 7894F278-F0C8-4D16-BD75-213FDBF13023, C3FC9705-A8C4-4F3A-9550-EB2FA4B7B64D]
+  - Column: ModifiedDate
+    - Samples: [2014-09-12 11:15:07.0, 2014-09-12 11:15:07.0, 2014-09-12 11:15:07.0, 2014-09-12 11:15:07.0, 2014-09-12 11:15:07.0]
+- Table: SalesOrderHeaderSalesReason
+  - Column: SalesOrderID
+    - Samples: [43697, 43697, 43702, 43702, 43703]
+  - Column: SalesReasonID
+    - Samples: [5, 9, 5, 9, 5]
+  - Column: ModifiedDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-06-01 00:00:00.0, 2011-06-01 00:00:00.0, 2011-06-01 00:00:00.0]
+- Table: TransactionHistoryArchive
+  - Column: TransactionID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: ProductID
+    - Samples: [1, 359, 360, 530, 4]
+  - Column: ReferenceOrderID
+    - Samples: [1, 2, 2, 3, 4]
+  - Column: ReferenceOrderLineID
+    - Samples: [1, 1, 2, 1, 1]
+  - Column: TransactionDate
+    - Samples: [2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0]
+  - Column: TransactionType
+    - Samples: [P, P, P, P, P]
+  - Column: Quantity
+    - Samples: [4, 3, 3, 550, 3]
+  - Column: ActualCost
+    - Samples: [50.0, 45.0, 46.0, 16.0, 57.0]
+  - Column: ModifiedDate
+    - Samples: [2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0]
+- Table: UnitMeasure
+  - Column: UnitMeasureCode
+    - Samples: [BOX, BTL, C, CAN, CAR]
+  - Column: Name
+    - Samples: [Boxes, Bottle, Celsius, Canister, Carton]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: ProductCostHistory
+  - Column: ProductID
+    - Samples: [707, 707, 707, 708, 708]
+  - Column: StartDate
+    - Samples: [2011-05-31 00:00:00.0, 2012-05-30 00:00:00.0, 2013-05-30 00:00:00.0, 2011-05-31 00:00:00.0, 2012-05-30 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0, None, 2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0]
+  - Column: StandardCost
+    - Samples: [12.0278, 13.8782, 13.0863, 12.0278, 13.8782]
+  - Column: ModifiedDate
+    - Samples: [2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0, 2013-05-16 00:00:00.0, 2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0]
+- Table: ProductDocument
+  - Column: ProductID
+    - Samples: [317, 318, 319, 506, 506]
+  - Column: DocumentNode
+    - Samples: [/2/1/, /2/1/, /2/1/, /3/1/, /3/2/]
+  - Column: ModifiedDate
+    - Samples: [2013-12-29 13:51:58.0, 2013-12-29 13:51:58.0, 2013-12-29 13:51:58.0, 2013-12-29 13:51:58.0, 2013-12-29 13:51:58.0]
+- Table: ProductInventory
+  - Column: ProductID
+    - Samples: [1, 1, 1, 2, 2]
+  - Column: LocationID
+    - Samples: [1, 6, 50, 1, 6]
+  - Column: Shelf
+    - Samples: [A, B, A, A, B]
+  - Column: Bin
+    - Samples: [1, 5, 5, 2, 1]
+  - Column: Quantity
+    - Samples: [408, 324, 353, 427, 318]
+  - Column: rowguid
+    - Samples: [47A24246-6C43-48EB-968F-025738A8A410, D4544D7D-CAF5-46B3-AB22-5718DCC26B5E, BFF7DC60-96A8-43CA-81A7-D6D2ED3000A8, F407C07A-CA14-4684-A02C-608BD00C2233, CA1FF2F4-48FB-4960-8D92-3940B633E4C1]
+  - Column: ModifiedDate
+    - Samples: [2014-08-08 00:00:00.0, 2014-08-08 00:00:00.0, 2014-08-08 00:00:00.0, 2014-08-08 00:00:00.0, 2014-08-08 00:00:00.0]
+- Table: ProductProductPhoto
+  - Column: ProductID
+    - Samples: [1, 2, 3, 4, 316]
+  - Column: ProductPhotoID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: Primary
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: ModifiedDate
+    - Samples: [2008-03-31 00:00:00.0, 2008-03-31 00:00:00.0, 2008-03-31 00:00:00.0, 2008-03-31 00:00:00.0, 2008-03-31 00:00:00.0]
+- Table: ProductReview
+  - Column: ProductReviewID
+    - Samples: [1, 2, 3, 4]
+  - Column: ProductID
+    - Samples: [709, 937, 937, 798]
+  - Column: ReviewerName
+    - Samples: [John Smith, David, Jill, Laura Norman]
+  - Column: ReviewDate
+    - Samples: [2013-09-18 00:00:00.0, 2013-11-13 00:00:00.0, 2013-11-15 00:00:00.0, 2013-11-15 00:00:00.0]
+  - Column: EmailAddress
+    - Samples: [john@fourthcoffee.com, david@graphicdesigninstitute.com, jill@margiestravel.com, laura@treyresearch.net]
+  - Column: Rating
+    - Samples: [5, 4, 2, 5]
+  - Column: Comments
+    - Samples: [I can't believe I'm singing the praises of a pair of socks, but I just..., A little on the heavy side, but overall the entry/exit is easy in all ..., Maybe it's just because I'm new to mountain biking, but I had a terrib..., The Road-550-W from Adventure Works Cycles is everything it's advertis... (truncated)]
+  - Column: ModifiedDate
+    - Samples: [2013-09-18 00:00:00.0, 2013-11-13 00:00:00.0, 2013-11-15 00:00:00.0, 2013-11-15 00:00:00.0]
+- Table: ShoppingCartItem
+  - Column: ShoppingCartItemID
+    - Samples: [2, 4, 5]
+  - Column: ShoppingCartID
+    - Samples: [14951, 20621, 20621]
+  - Column: Quantity
+    - Samples: [3, 4, 7]
+  - Column: ProductID
+    - Samples: [862, 881, 874]
+  - Column: DateCreated
+    - Samples: [2013-11-09 17:54:07.0, 2013-11-09 17:54:07.0, 2013-11-09 17:54:07.0]
+  - Column: ModifiedDate
+    - Samples: [2013-11-09 17:54:07.0, 2013-11-09 17:54:07.0, 2013-11-09 17:54:07.0]
+- Table: SpecialOfferProduct
+  - Column: SpecialOfferID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: ProductID
+    - Samples: [680, 706, 707, 708, 709]
+  - Column: rowguid
+    - Samples: [BB30B868-D86C-4557-8DB2-4B2D0A83A0FB, B3C9A4B1-2AE6-4CBA-B552-1F206C9F4C1F, 27B711FE-0B77-4EA4-AD1A-7C239956BEF4, 46CBB78B-246E-4D69-9BD6-E521277C1078, CF102AA0-055F-4D2B-8B98-04B161758EA8]
+  - Column: ModifiedDate
+    - Samples: [2011-04-01 00:00:00.0, 2011-04-01 00:00:00.0, 2011-04-01 00:00:00.0, 2011-04-01 00:00:00.0, 2011-04-01 00:00:00.0]
+- Table: SalesOrderDetail
+  - Column: SalesOrderID
+    - Samples: [43659, 43659, 43659, 43659, 43659]
+  - Column: SalesOrderDetailID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: CarrierTrackingNumber
+    - Samples: [4911-403C-98, 4911-403C-98, 4911-403C-98, 4911-403C-98, 4911-403C-98]
+  - Column: OrderQty
+    - Samples: [1, 3, 1, 1, 1]
+  - Column: ProductID
+    - Samples: [776, 777, 778, 771, 772]
+  - Column: SpecialOfferID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: UnitPrice
+    - Samples: [2025.0, 2025.0, 2025.0, 2040.0, 2040.0]
+  - Column: UnitPriceDiscount
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: LineTotal
+    - Samples: [2025.0, 6075.0, 2025.0, 2040.0, 2040.0]
+  - Column: rowguid
+    - Samples: [B207C96D-D9E6-402B-8470-2CC176C42283, 7ABB600D-1E77-41BE-9FE5-B9142CFC08FA, 475CF8C6-49F6-486E-B0AD-AFC6A50CDD2F, 04C4DE91-5815-45D6-8670-F462719FBCE3, 5A74C7D2-E641-438E-A7AC-37BF23280301]
+  - Column: ModifiedDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+- Table: TransactionHistory
+  - Column: TransactionID
+    - Samples: [100000, 100001, 100002, 100003, 100004]
+  - Column: ProductID
+    - Samples: [784, 794, 797, 798, 799]
+  - Column: ReferenceOrderID
+    - Samples: [41590, 41591, 41592, 41593, 41594]
+  - Column: ReferenceOrderLineID
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: TransactionDate
+    - Samples: [2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0]
+  - Column: TransactionType
+    - Samples: [W, W, W, W, W]
+  - Column: Quantity
+    - Samples: [2, 1, 1, 1, 1]
+  - Column: ActualCost
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: ModifiedDate
+    - Samples: [2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0, 2013-07-31 00:00:00.0]
+- Table: Vendor
+  - Column: BusinessEntityID
+    - Samples: [1492, 1494, 1496, 1498, 1500]
+  - Column: AccountNumber
+    - Samples: [AUSTRALI0001, ALLENSON0001, ADVANCED0001, TRIKES0001, MORGANB0001]
+  - Column: Name
+    - Samples: [Australia Bike Retailer, Allenson Cycles, Advanced Bicycles, Trikes, Inc., Morgan Bike Accessories]
+  - Column: CreditRating
+    - Samples: [1, 2, 1, 2, 1]
+  - Column: PreferredVendorStatus
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: ActiveFlag
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: PurchasingWebServiceURL
+    - Samples: [None, None, None, None, None]
+  - Column: ModifiedDate
+    - Samples: [2011-12-23 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2012-02-03 00:00:00.0, 2012-02-02 00:00:00.0]
+- Table: ProductVendor
+  - Column: ProductID
+    - Samples: [1, 2, 4, 317, 317]
+  - Column: BusinessEntityID
+    - Samples: [1580, 1688, 1650, 1578, 1678]
+  - Column: AverageLeadTime
+    - Samples: [17, 19, 17, 19, 17]
+  - Column: StandardPrice
+    - Samples: [47.87, 39.92, 54.31, 28.17, 25.77]
+  - Column: LastReceiptCost
+    - Samples: [50.2635, 41.916, 57.0255, 29.5785, 27.0585]
+  - Column: LastReceiptDate
+    - Samples: [2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-25 00:00:00.0]
+  - Column: MinOrderQty
+    - Samples: [1, 1, 1, 100, 100]
+  - Column: MaxOrderQty
+    - Samples: [5, 5, 5, 1000, 1000]
+  - Column: OnOrderQty
+    - Samples: [3, 3, None, 300, None]
+  - Column: UnitMeasureCode
+    - Samples: [CS, CTN, CTN, EA, EA]
+  - Column: ModifiedDate
+    - Samples: [2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-29 00:00:00.0, 2011-08-25 00:00:00.0]
+- Table: PurchaseOrderHeader
+  - Column: PurchaseOrderID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: RevisionNumber
+    - Samples: [4, 4, 4, 4, 4]
+  - Column: Status
+    - Samples: [4, 1, 4, 3, 4]
+  - Column: EmployeeID
+    - Samples: [258, 254, 257, 261, 251]
+  - Column: VendorID
+    - Samples: [1580, 1496, 1494, 1650, 1654]
+  - Column: ShipMethodID
+    - Samples: [3, 5, 2, 5, 4]
+  - Column: OrderDate
+    - Samples: [2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-16 00:00:00.0, 2011-04-30 00:00:00.0]
+  - Column: ShipDate
+    - Samples: [2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-05-09 00:00:00.0]
+  - Column: SubTotal
+    - Samples: [201.04, 272.1015, 8847.3, 171.0765, 20397.3]
+  - Column: TaxAmt
+    - Samples: [16.0832, 21.7681, 707.784, 13.6861, 1631.784]
+  - Column: Freight
+    - Samples: [5.026, 6.8025, 221.1825, 4.2769, 509.9325]
+  - Column: TotalDue
+    - Samples: [222.1492, 300.6721, 9776.2665, 189.0395, 22539.0165]
+  - Column: ModifiedDate
+    - Samples: [2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-04-25 00:00:00.0, 2011-05-09 00:00:00.0]
+- Table: PurchaseOrderDetail
+  - Column: PurchaseOrderID
+    - Samples: [1, 2, 2, 3, 4]
+  - Column: PurchaseOrderDetailID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: DueDate
+    - Samples: [2011-04-30 00:00:00.0, 2011-04-30 00:00:00.0, 2011-04-30 00:00:00.0, 2011-04-30 00:00:00.0, 2011-04-30 00:00:00.0]
+  - Column: OrderQty
+    - Samples: [4, 3, 3, 550, 3]
+  - Column: ProductID
+    - Samples: [1, 359, 360, 530, 4]
+  - Column: UnitPrice
+    - Samples: [50.0, 45.0, 46.0, 16.0, 57.0]
+  - Column: LineTotal
+    - Samples: [201.0, 135.0, 137.0, 8847.0, 171.0]
+  - Column: ReceivedQty
+    - Samples: [3.0, 3.0, 3.0, 550.0, 2.0]
+  - Column: RejectedQty
+    - Samples: [0.0, 0.0, 0.0, 0.0, 1.0]
+  - Column: StockedQty
+    - Samples: [3.0, 3.0, 3.0, 550.0, 1.0]
+  - Column: ModifiedDate
+    - Samples: [2011-04-23 00:00:00.0, 2011-04-23 00:00:00.0, 2011-04-23 00:00:00.0, 2011-04-23 00:00:00.0, 2011-04-23 00:00:00.0]
+- Table: WorkOrder
+  - Column: WorkOrderID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: ProductID
+    - Samples: [722, 725, 726, 729, 730]
+  - Column: OrderQty
+    - Samples: [8, 15, 9, 16, 14]
+  - Column: StockedQty
+    - Samples: [8, 15, 9, 16, 14]
+  - Column: ScrappedQty
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: StartDate
+    - Samples: [2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0]
+  - Column: DueDate
+    - Samples: [2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0]
+  - Column: ScrapReasonID
+    - Samples: [None, None, None, None, None]
+  - Column: ModifiedDate
+    - Samples: [2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0, 2011-06-13 00:00:00.0]
+- Table: WorkOrderRouting
+  - Column: WorkOrderID
+    - Samples: [13, 13, 13, 13, 13]
+  - Column: ProductID
+    - Samples: [747, 747, 747, 747, 747]
+  - Column: OperationSequence
+    - Samples: [1, 2, 3, 4, 6]
+  - Column: LocationID
+    - Samples: [10, 20, 30, 40, 50]
+  - Column: ScheduledStartDate
+    - Samples: [2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0]
+  - Column: ScheduledEndDate
+    - Samples: [2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0, 2011-06-14 00:00:00.0]
+  - Column: ActualStartDate
+    - Samples: [2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0, 2011-06-03 00:00:00.0]
+  - Column: ActualEndDate
+    - Samples: [2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0]
+  - Column: ActualResourceHrs
+    - Samples: [4.1, 3.5, 1.0, 2.0, 3.0]
+  - Column: PlannedCost
+    - Samples: [92.25, 87.5, 14.5, 31.5, 36.75]
+  - Column: ActualCost
+    - Samples: [92.25, 87.5, 14.5, 31.5, 36.75]
+  - Column: ModifiedDate
+    - Samples: [2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0, 2011-06-19 00:00:00.0]
+- Table: Customer
+  - Column: CustomerID
+  - Column: PersonID
+  - Column: StoreID
+  - Column: TerritoryID
+  - Column: AccountNumber
+  - Column: rowguid
+  - Column: ModifiedDate
+- Table: ProductListPriceHistory
+  - Column: ProductID
+    - Samples: [707, 707, 707, 708, 708]
+  - Column: StartDate
+    - Samples: [2011-05-31 00:00:00.0, 2012-05-30 00:00:00.0, 2013-05-30 00:00:00.0, 2011-05-31 00:00:00.0, 2012-05-30 00:00:00.0]
+  - Column: EndDate
+    - Samples: [2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0, None, 2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0]
+  - Column: ListPrice
+    - Samples: [33.6442, 33.6442, 34.99, 33.6442, 33.6442]
+  - Column: ModifiedDate
+    - Samples: [2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0, 2013-05-09 00:00:00.0, 2012-05-29 00:00:00.0, 2013-05-29 00:00:00.0]
+- Table: Address
+  - Column: AddressID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: AddressLine1
+    - Samples: [1970 Napa Ct., 9833 Mt. Dias Blv., 7484 Roundtree Drive, 9539 Glenside Dr, 1226 Shoe St.]
+  - Column: AddressLine2
+    - Samples: [None, None, None, None, None]
+  - Column: City
+    - Samples: [Bothell, Bothell, Bothell, Bothell, Bothell]
+  - Column: StateProvinceID
+    - Samples: [79, 79, 79, 79, 79]
+  - Column: PostalCode
+    - Samples: [98011, 98011, 98011, 98011, 98011]
+  - Column: SpatialLocation
+    - Samples: [0x00000000010100000067A89189898A5EC0AE8BFC28BCE44740, 0x000000000101000000BC262A0A03905EC0D6FA851AE6D74740, 0x000000000101000000DA930C7893915EC018E304C4ADE14740, 0x00000000010100000011A5C28A7C955EC0813A0D5F9FDE4740, 0x000000000101000000C460EA3FD8855EC061C64D8ABBD94740]
+  - Column: rowguid
+    - Samples: [9AADCB0D-36CF-483F-84D8-585C2D4EC6E9, 32A54B9E-E034-4BFB-B573-A71CDE60D8C0, 4C506923-6D1B-452C-A07C-BAA6F5B142A4, E5946C78-4BCC-477F-9FA1-CC09DE16A880, FBAFF937-4A97-4AF0-81FD-B849900E9BB0]
+  - Column: ModifiedDate
+    - Samples: [2007-12-04 00:00:00.0, 2008-11-30 00:00:00.0, 2013-03-07 00:00:00.0, 2009-02-03 00:00:00.0, 2008-12-19 00:00:00.0]
+- Table: AddressType
+  - Column: AddressTypeID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Billing, Home, Main Office, Primary, Shipping]
+  - Column: rowguid
+    - Samples: [B84F78B1-4EFE-4A0E-8CB7-70E9F112F886, 41BC2FF6-F0FC-475F-8EB9-CEC0805AA0F2, 8EEEC28C-07A2-4FB9-AD0A-42D4A0BBC575, 24CB3088-4345-47C4-86C5-17B535133D1E, B29DA3F8-19A3-47DA-9DAA-15C84F4A83A5]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: BillOfMaterials
+  - Column: BillOfMaterialsID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: ProductAssemblyID
+    - Samples: [807, 782, None, None, None]
+  - Column: ComponentID
+    - Samples: [1, 995, 989, 785, 775]
+  - Column: StartDate
+    - Samples: [2010-03-04 00:00:00.0, 2010-03-04 00:00:00.0, 2010-03-04 00:00:00.0, 2010-03-04 00:00:00.0, 2010-03-04 00:00:00.0]
+  - Column: EndDate
+    - Samples: [None, None, None, None, None]
+  - Column: UnitMeasureCode
+    - Samples: [EA, EA, EA, EA, EA]
+  - Column: BOMLevel
+    - Samples: [2, 1, 0, 0, 0]
+  - Column: PerAssemblyQty
+    - Samples: [1.0, 1.0, 1.0, 1.0, 1.0]
+  - Column: ModifiedDate
+    - Samples: [2010-02-18 00:00:00.0, 2010-02-18 00:00:00.0, 2010-02-18 00:00:00.0, 2010-02-18 00:00:00.0, 2010-02-18 00:00:00.0]
+- Table: BusinessEntity
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: rowguid
+    - Samples: [0C7D8F81-D7B1-4CF0-9C0A-4CD8B6B50087, 6648747F-7843-4002-B317-65389684C398, 568204DA-93D7-42F4-8A7A-4446A144277D, 0EFF57B9-4F4F-41A6-8867-658C199A5FC0, B82F88D1-FF79-4FD9-8C54-9D24C140F647]
+  - Column: ModifiedDate
+    - Samples: [2017-12-13 13:20:24.0, 2017-12-13 13:20:24.0, 2017-12-13 13:20:24.0, 2017-12-13 13:20:24.0, 2017-12-13 13:20:24.0]
+- Table: ContactType
+  - Column: ContactTypeID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Accounting Manager, Assistant Sales Agent, Assistant Sales Representative, Coordinator Foreign Markets, Export Administrator]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: CurrencyRate
+  - Column: CurrencyRateID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: CurrencyRateDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+  - Column: FromCurrencyCode
+    - Samples: [USD, USD, USD, USD, USD]
+  - Column: ToCurrencyCode
+    - Samples: [ARS, AUD, BRL, CAD, CNY]
+  - Column: AverageRate
+    - Samples: [1.0, 1.5491, 1.9379, 1.4641, 8.2781]
+  - Column: EndOfDayRate
+    - Samples: [1.0002, 1.55, 1.9419, 1.4683, 8.2784]
+  - Column: ModifiedDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+- Table: Department
+  - Column: DepartmentID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Engineering, Tool Design, Sales, Marketing, Purchasing]
+  - Column: GroupName
+    - Samples: [Research and Development, Research and Development, Sales and Marketing, Sales and Marketing, Inventory Management]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: EmployeeDepartmentHistory
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 4]
+  - Column: DepartmentID
+    - Samples: [16, 1, 1, 1, 2]
+  - Column: ShiftID
+    - Samples: [1, 1, 1, 1, 1]
+  - Column: StartDate
+    - Samples: [2009-01-14, 2008-01-31, 2007-11-11, 2007-12-05, 2010-05-31]
+  - Column: EndDate
+    - Samples: [None, None, None, 2010-05-30, None]
+  - Column: ModifiedDate
+    - Samples: [2009-01-13 00:00:00.0, 2008-01-30 00:00:00.0, 2007-11-10 00:00:00.0, 2010-05-28 00:00:00.0, 2010-05-30 00:00:00.0]
+- Table: EmployeePayHistory
+  - Column: BusinessEntityID
+    - Samples: [1, 2, 3, 4, 4]
+  - Column: RateChangeDate
+    - Samples: [2009-01-14 00:00:00.0, 2008-01-31 00:00:00.0, 2007-11-11 00:00:00.0, 2007-12-05 00:00:00.0, 2010-05-31 00:00:00.0]
+  - Column: Rate
+    - Samples: [125.5, 63.4615, 43.2692, 8.62, 23.72]
+  - Column: PayFrequency
+    - Samples: [2, 2, 2, 2, 2]
+  - Column: ModifiedDate
+    - Samples: [2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2014-06-30 00:00:00.0, 2007-11-21 00:00:00.0, 2010-05-16 00:00:00.0]
+- Table: JobCandidate
+  - Column: JobCandidateID
+    - Samples: [2, 3, 4, 5, 6]
+  - Column: BusinessEntityID
+    - Samples: [None, None, 274, None, None]
+  - Column: Resume
+    - Samples: [<ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad..., <ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad..., <ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad..., <ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad..., <ns:Resume xmlns:ns=http://schemas.microsoft.com/sqlserver/2004/07/ad... (truncated)]
+  - Column: ModifiedDate
+    - Samples: [2007-06-23 00:00:00.0, 2007-06-23 00:00:00.0, 2013-12-22 18:32:21.0, 2007-06-23 00:00:00.0, 2007-06-23 00:00:00.0]
+- Table: Location
+  - Column: LocationID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: Name
+    - Samples: [Tool Crib, Sheet Metal Racks, Paint Shop, Paint Storage, Metal Storage]
+  - Column: CostRate
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: Availability
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: ModifiedDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+- Table: PhoneNumberType
+  - Column: PhoneNumberTypeID
+    - Samples: [1, 2, 3]
+  - Column: Name
+    - Samples: [Cell, Home, Work]
+  - Column: ModifiedDate
+    - Samples: [2017-12-13 13:19:22.0, 2017-12-13 13:19:22.0, 2017-12-13 13:19:22.0]
+- Table: Product
+  - Column: ProductID
+    - Samples: [1, 2, 3, 4, 316]
+  - Column: Name
+    - Samples: [Adjustable Race, Bearing Ball, BB Ball Bearing, Headset Ball Bearings, Blade]
+  - Column: ProductNumber
+    - Samples: [AR-5381, BA-8327, BE-2349, BE-2908, BL-2036]
+  - Column: MakeFlag
+    - Samples: [0, 0, 1, 0, 1]
+  - Column: FinishedGoodsFlag
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: Color
+    - Samples: [None, None, None, None, None]
+  - Column: SafetyStockLevel
+    - Samples: [1000, 1000, 800, 800, 800]
+  - Column: ReorderPoint
+    - Samples: [750, 750, 600, 600, 600]
+  - Column: StandardCost
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: ListPrice
+    - Samples: [0.0, 0.0, 0.0, 0.0, 0.0]
+  - Column: Size
+    - Samples: [None, None, None, None, None]
+  - Column: SizeUnitMeasureCode
+    - Samples: [None, None, None, None, None]
+  - Column: WeightUnitMeasureCode
+    - Samples: [None, None, None, None, None]
+  - Column: Weight
+    - Samples: [None, None, None, None, None]
+  - Column: DaysToManufacture
+    - Samples: [0, 0, 1, 0, 1]
+  - Column: ProductLine
+    - Samples: [None, None, None, None, None]
+  - Column: Class
+    - Samples: [None, None, None, None, None]
+  - Column: Style
+    - Samples: [None, None, None, None, None]
+  - Column: ProductSubcategoryID
+    - Samples: [None, None, None, None, None]
+  - Column: ProductModelID
+    - Samples: [None, None, None, None, None]
+  - Column: SellStartDate
+    - Samples: [2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0, 2008-04-30 00:00:00.0]
+  - Column: SellEndDate
+    - Samples: [None, None, None, None, None]
+  - Column: DiscontinuedDate
+    - Samples: [None, None, None, None, None]
+  - Column: rowguid
+    - Samples: [694215B7-08F7-4C0D-ACB1-D734BA44C0C8, 58AE3C20-4F3A-4749-A7D4-D568806CC537, 9C21AED2-5BFA-4F18-BCB8-F11638DC2E4E, ECFED6CB-51FF-49B5-B06C-7D8AC834DB8B, E73E9750-603B-4131-89F5-3DD15ED5FF80]
+  - Column: ModifiedDate
+    - Samples: [2014-02-08 10:01:36.0, 2014-02-08 10:01:36.0, 2014-02-08 10:01:36.0, 2014-02-08 10:01:36.0, 2014-02-08 10:01:36.0]
+- Table: Document
+  - Column: DocumentNode
+    - Samples: [/, /1/, /1/1/, /1/2/, /2/]
+  - Column: DocumentLevel
+    - Samples: [0, 1, 2, 2, 1]
+  - Column: Title
+    - Samples: [Documents, Overview, Introduction 1, Repair and Service Guidelines, Maintenance]
+  - Column: Owner
+    - Samples: [217, 217, 219, 220, 217]
+  - Column: FolderFlag
+    - Samples: [1, 1, 0, 0, 1]
+  - Column: FileName
+    - Samples: [Documents, Overview, Introduction 1.doc, Repair and Service Guidelines.doc, Maintenance]
+  - Column: FileExtension
+    - Samples: [, , .doc, .doc, ]
+  - Column: Revision
+    - Samples: [0, 0, 4, 0, 0]
+  - Column: ChangeNumber
+    - Samples: [0, 0, 28, 8, 0]
+  - Column: Status
+    - Samples: [2, 2, 2, 2, 2]
+  - Column: DocumentSummary
+    - Samples: [None, None, None, It is important that you maintain your bicycle and keep it in good rep..., None (truncated)]
+  - Column: Document
+    - Samples: [None, None, 0xD0CF11E0A1B11AE1000000000000000000000000000000003E000300FEFF09000600..., 0xD0CF11E0A1B11AE1000000000000000000000000000000003E000300FEFF09000600..., None (truncated)]
+  - Column: rowguid
+    - Samples: [27CF33AF-C338-4842-966C-75CA11AAA6A3, 26A266F1-1D23-40E2-AF48-6AB8D954FE37, 48265174-8451-4967-973A-639C2276CFAF, 7ED4DEF5-D5BB-4818-8748-5BB5F8315FA2, 5184D96A-EE8C-499A-9316-625496784DE6]
+  - Column: ModifiedDate
+    - Samples: [2017-12-13 13:58:03.0, 2017-12-13 13:58:03.0, 2013-05-30 00:00:00.0, 2008-03-31 00:00:00.0, 2017-12-13 13:58:04.0]
+- Table: StateProvince
+  - Column: StateProvinceID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: StateProvinceCode
+    - Samples: [AB, AK, AL, AR, AS]
+  - Column: CountryRegionCode
+    - Samples: [CA, US, US, US, AS]
+  - Column: IsOnlyStateProvinceFlag
+    - Samples: [0, 0, 0, 0, 1]
+  - Column: Name
+    - Samples: [Alberta, Alaska, Alabama, Arkansas, American Samoa]
+  - Column: TerritoryID
+    - Samples: [6, 1, 5, 3, 1]
+  - Column: rowguid
+    - Samples: [298C2880-AB1C-4982-A5AD-A36EB4BA0D34, 5B7B8462-A888-4E0B-A3E1-7278F8AF107E, 41B328BE-21AE-45D0-841D-6F8DD71CE626, 54656A80-06F2-4C70-BA10-247179FC246E, 255D15E1-9F6E-4CF8-9E5F-6B3858AD9B6A]
+  - Column: ModifiedDate
+    - Samples: [2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0, 2014-02-08 10:17:21.0]
+- Table: CreditCard
+  - Column: CreditCardID
+    - Samples: [1, 2, 3, 4, 5]
+  - Column: CardType
+    - Samples: [SuperiorCard, Distinguish, ColonialVoice, ColonialVoice, Vista]
+  - Column: CardNumber
+    - Samples: [33332664695310, 55552127249722, 77778344838353, 77774915718248, 11114404600042]
+  - Column: ExpMonth
+    - Samples: [11, 8, 7, 7, 4]
+  - Column: ExpYear
+    - Samples: [2006, 2005, 2005, 2006, 2005]
+  - Column: ModifiedDate
+    - Samples: [2013-07-29 00:00:00.0, 2013-12-05 00:00:00.0, 2014-01-14 00:00:00.0, 2013-05-20 00:00:00.0, 2013-02-01 00:00:00.0]
+- Table: SalesOrderHeader
+  - Column: SalesOrderID
+    - Samples: [43659, 43660, 43661, 43662, 43663]
+  - Column: RevisionNumber
+    - Samples: [8, 8, 8, 8, 8]
+  - Column: OrderDate
+    - Samples: [2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0, 2011-05-31 00:00:00.0]
+  - Column: DueDate
+    - Samples: [2011-06-12 00:00:00.0, 2011-06-12 00:00:00.0, 2011-06-12 00:00:00.0, 2011-06-12 00:00:00.0, 2011-06-12 00:00:00.0]
+  - Column: ShipDate
+    - Samples: [2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0]
+  - Column: Status
+    - Samples: [5, 5, 5, 5, 5]
+  - Column: OnlineOrderFlag
+    - Samples: [0, 0, 0, 0, 0]
+  - Column: SalesOrderNumber
+    - Samples: [SO43659, SO43660, SO43661, SO43662, SO43663]
+  - Column: PurchaseOrderNumber
+    - Samples: [PO522145787, PO18850127500, PO18473189620, PO18444174044, PO18009186470]
+  - Column: AccountNumber
+    - Samples: [10-4020-000676, 10-4020-000117, 10-4020-000442, 10-4020-000227, 10-4020-000510]
+  - Column: CustomerID
+    - Samples: [29825, 29672, 29734, 29994, 29565]
+  - Column: SalesPersonID
+    - Samples: [279, 279, 282, 282, 276]
+  - Column: TerritoryID
+    - Samples: [5, 5, 6, 6, 4]
+  - Column: BillToAddressID
+    - Samples: [985, 921, 517, 482, 1073]
+  - Column: ShipToAddressID
+    - Samples: [985, 921, 517, 482, 1073]
+  - Column: ShipMethodID
+    - Samples: [5, 5, 5, 5, 5]
+  - Column: CreditCardID
+    - Samples: [16281, 5618, 1346, 10456, 4322]
+  - Column: CreditCardApprovalCode
+    - Samples: [105041Vi84182, 115213Vi29411, 85274Vi6854, 125295Vi53935, 45303Vi22691]
+  - Column: CurrencyRateID
+    - Samples: [None, None, 4, 4, None]
+  - Column: SubTotal
+    - Samples: [20565.6206, 1294.2529, 32726.4786, 28832.5289, 419.4589]
+  - Column: TaxAmt
+    - Samples: [1971.5149, 124.2483, 3153.7696, 2775.1646, 40.2681]
+  - Column: Freight
+    - Samples: [616.0984, 38.8276, 985.553, 867.2389, 12.5838]
+  - Column: TotalDue
+    - Samples: [23153.2339, 1457.3288, 36865.8012, 32474.9324, 472.3108]
+  - Column: Comment
+    - Samples: [None, None, None, None, None]
+  - Column: rowguid
+    - Samples: [79B65321-39CA-4115-9CBA-8FE0903E12E6, 738DC42D-D03B-48A1-9822-F95A67EA7389, D91B9131-18A4-4A11-BC3A-90B6F53E9D74, 4A1ECFC0-CC3A-4740-B028-1C50BB48711C, 9B1E7A40-6AE0-4AD3-811C-A64951857C4B]
+  - Column: ModifiedDate
+    - Samples: [2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0, 2011-06-07 00:00:00.0],SELECT T1.Name, T1.ProductLine, T2.Rating, T1.ListPrice FROM Product AS T1 INNER JOIN ProductReview AS T2 ON T1.ProductID = T2.ProductID ORDER BY T2.Rating ASC LIMIT 1,To solve the given SQL problem, we need to find the product name, product line, rating, and selling price of the product with the lowest rating. Here's a step-by-step breakdown of the logical reasoning process to arrive at the solution:  1. **Understand the Problem Statement**: We need to identify the product with the lowest rating and retrieve its name, product line, rating, and selling price.  2. **Identify Relevant Tables and Columns**:    - We need information about products, which is likely stored in the `Product` table.    - We need ratings for these products, which are stored in the `ProductReview` table.    - The columns of interest are:      - From `Product`: `Name`, `ProductLine`, and `ListPrice`.      - From `ProductReview`: `Rating`.  3. **Determine the Relationship Between Tables**:    - The `Product` table and the `ProductReview` table can be related through the `ProductID` column, which is common to both tables.  4. **Formulate the SQL Query**:    - Start by selecting the necessary columns: `Name`, `ProductLine`, `Rating`, and `ListPrice`.    - Use an `INNER JOIN` to combine the `Product` and `ProductReview` tables based on the `ProductID`.    - The `INNER JOIN` ensures that we only consider products that have reviews.  5. **Order the Results by Rating**:    - To find the product with the lowest rating, order the results by the `Rating` column in ascending order (`ASC`).  6. **Limit the Result to the Lowest Rating**:    - Use `LIMIT 1` to return only the first row, which corresponds to the product with the lowest rating.  7. **Construct the Final SQL Query**:    - Combine all the above steps into a single SQL query:            SELECT T1.Name, T1.ProductLine, T2.Rating, T1.ListPrice      FROM Product AS T1      INNER JOIN ProductReview AS T2 ON T1.ProductID = T2.ProductID      ORDER BY T2.Rating ASC      LIMIT 1;        This query effectively retrieves the desired information about the product with the lowest rating by leveraging the relationship between the `Product` and `ProductReview` tables and sorting the results appropriately.,,
