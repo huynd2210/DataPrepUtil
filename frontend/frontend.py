@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 
+data = None
+
 # Stub for the bot response function
 def getResponse(user_input, model_name):
     # You can replace this with actual bot logic later
