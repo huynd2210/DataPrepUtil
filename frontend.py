@@ -34,7 +34,7 @@ def app():
         if uploaded_file.type == "text/csv":
             data = load_csv(uploaded_file)
             st.write("CSV Data", data)
-        elif uploaded_file.type == "application/sqlite" or uploaded_file.type == "application/x-sqlite3" or uploaded_file.type == "application/db":
+        elif uploaded_file.type in ["application/sqlite", "application/x-sqlite3", "application/db", "application/octet-stream"]:
             with open("temp.db", "wb") as temp_file:
                 temp_file.write(uploaded_file.getbuffer())
             db_path = "temp.db"
