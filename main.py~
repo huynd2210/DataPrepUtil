@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
     # student_model_name = "qwen2.5-coder:7b-instruct"
 
-    batchRange = (3201, 3300)
+    batchRange = (3401, 3600)
     # batchRange = (2601, 2700)
     distillWrapper(model_name="gpt-4o", dataset="bird", split="train", batchRange=batchRange)
 

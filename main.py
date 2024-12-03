@@ -106,9 +106,11 @@ if __name__ == '__main__':
 
     # student_model_name = "qwen2.5-coder:7b-instruct"
 
-    batchRange = (3301, 3400)
-    # batchRange = (2601, 2700)
-    distillWrapper(model_name="gpt-4o", dataset="bird", split="train", batchRange=batchRange)
+    batchList = [
+        (3601, 3700), (3701, 3800), (3801, 3900), (3901, 4000), (4001, 4100), (4101, 4200), (4201, 4300), (4301, 4400), (4401, 4500), (4501, 4600), (4601, 4700), (4701, 4800), (4801, 4900), (4901, 5000)
+    ]
+    for batchRange in batchList:
+        distillWrapper(model_name="gpt-4o", dataset="bird", split="train", batchRange=batchRange)
 
 
     # convertDistillationEntriesToAlpaca(
