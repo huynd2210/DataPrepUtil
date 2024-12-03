@@ -8,7 +8,6 @@ data = None
 # Stub for the bot response function
 def getResponse(user_input, model_name):
     # Use the askAI function to get the bot's response
-    db_path = ""  # You may need to specify the correct database path
     return askAI(model_name, db_path, user_input)
 
 # Function to load a CSV file
@@ -38,7 +37,8 @@ def app():
         elif uploaded_file.type == "application/sqlite" or uploaded_file.type == "application/x-sqlite3" or uploaded_file.type == "application/db":
             with open("temp.db", "wb") as temp_file:
                 temp_file.write(uploaded_file.getbuffer())
-            tables = load_db("temp.db")
+            db_path = "temp.db"
+            tables = load_db(db_path)
             st.write("SQLite Tables", tables)
         else:
             st.error("Unsupported file type. Please upload a CSV or SQLite/DB file.")
