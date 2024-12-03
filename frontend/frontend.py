@@ -6,7 +6,7 @@ from core.generation import askAI
 data = None
 
 # Stub for the bot response function
-def getResponse(user_input, model_name):
+def getResponse(user_input, model_name, db_path):
     # Use the askAI function to get the bot's response
     return askAI(model_name, db_path, user_input)
 
@@ -50,7 +50,7 @@ def app():
     # Chat interface with bot
     user_input = st.text_input("Ask the bot:")
     if user_input:
-        bot_response = getResponse(user_input, selected_model)
+        bot_response = getResponse(user_input, selected_model, db_path)
         st.write("Bot Response:", bot_response)
 
     # Table output (example placeholder table)
