@@ -3,7 +3,7 @@ import pandas as pd
 import sqlite3
 
 # Stub for the bot response function
-def getResponse(user_input):
+def getResponse(user_input, model_name):
     # You can replace this with actual bot logic later
     return "Bot's response to: " + user_input
 
@@ -39,10 +39,14 @@ def app():
         else:
             st.error("Unsupported file type. Please upload a CSV or SQLite/DB file.")
 
+    # Model selection
+        model_options = ["Model A", "Model B", "Model C"]
+        selected_model = st.selectbox("Select AI Model", model_options)
+
     # Chat interface with bot
     user_input = st.text_input("Ask the bot:")
     if user_input:
-        bot_response = getResponse(user_input)
+        bot_response = getResponse(user_input, selected_model)
         st.write("Bot Response:", bot_response)
 
     # Table output (example placeholder table)
