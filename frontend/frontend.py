@@ -1,13 +1,15 @@
 import streamlit as st
 import pandas as pd
 import sqlite3
+from core.generation import askAI
 
 data = None
 
 # Stub for the bot response function
 def getResponse(user_input, model_name):
-    # You can replace this with actual bot logic later
-    return "Bot's response to: " + user_input
+    # Use the askAI function to get the bot's response
+    db_path = ""  # You may need to specify the correct database path
+    return askAI(model_name, db_path, user_input)
 
 # Function to load a CSV file
 def load_csv(file):
