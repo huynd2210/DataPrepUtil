@@ -13,6 +13,15 @@ from models.SQLQuery import SQLQuery
 from models.SQLDataset import SQLDataset
 
 
+def askAI(model, db_path, request, promptTemplate=config["alpaca_inference_template"]):
+    schema = getDatabaseSchemaForPrompt(db_path)
+    prompt = Prompt(
+        modelName=model,
+        promptTemplate=promptTemplate,
+        request=request,
+        schema=schema
+    )
+    return prompt.deliver()
 # @suppress_prints
 def generateSQL(model_name, promptTemplate=config["prompt_template"], db_path="", **kwargs):
     # kwargs should include arguments for the prompt template
