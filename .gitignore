@@ -5,3 +5,4 @@ bird
 .py~
 .aider*
 .env
+.db

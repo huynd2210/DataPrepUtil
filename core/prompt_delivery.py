@@ -43,6 +43,7 @@ class Prompt:
             "gpt-4o-mini": self._deliverAPIPrompt,
             "NyanDoggo/Qwen2.5-Coder-3B-Instruct-Spider-Vanilla": self._deliverTransformersTokenizerPrompt,
             "NyanDoggo/Qwen2.5-Coder-3B-Instruct-Spider-Reasoning": self._deliverTransformersTokenizerPrompt,
+            "NyanDoggo/Qwen2.5-Coder-0.5B-Instruct-Spider-Reasoning": self._deliverTransformersTokenizerPrompt,
         }
 
         self.transformerModel = None

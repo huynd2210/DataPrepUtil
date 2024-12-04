@@ -121,7 +121,7 @@ class Prompt:
         # print(response)
         return response
 
-    def toOpenAIBatchRequestAPI(self) -> Request|None:
+    def toOpenAIBatchRequestAPI(self, custom_id) -> Request|None:
         if self.modelName != "gpt-4o":
             return None
         defaultSystemMessage = "You are a helpful assistant."
@@ -132,6 +132,6 @@ class Prompt:
 
         body = Body("gpt-4o", messages, 8000)
 
-        request = Request("request-1", "POST", "/v1/chat/completions", body)
+        request = Request(custom_id, "POST", "/v1/chat/completions", body)
 
         return request

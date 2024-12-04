@@ -107,7 +107,7 @@ if __name__ == '__main__':
     # student_model_name = "qwen2.5-coder:7b-instruct"
 
     batchList = [
-        (7701, 7800),
+        (8301, 8400),
         # (7001, 7200),
         # (7201, 7400),
         # (7401, 7600),
@@ -119,8 +119,8 @@ if __name__ == '__main__':
         # (8601, 8800),
 
     ]
-    for batchRange in batchList:
-        distillWrapper(model_name="gpt-4o", dataset="bird", split="train", batchRange=batchRange)
+    # for batchRange in batchList:
+    #     distillWrapper(model_name="gpt-4o", dataset="bird", split="train", batchRange=batchRange)
 
 
     # convertDistillationEntriesToAlpaca(
@@ -137,17 +137,17 @@ if __name__ == '__main__':
 
     # model_name = "llama3.1:8b-instruct-q4_0"
     #
-    # model_name = "NyanDoggo/Qwen2.5-Coder-3B-Instruct-Spider-Reasoning"
-    # split="test"
-    # datasetName = "spider"
-    # result = evaluateModel(model_name, datasetName, split=split, promptTemplate=config["alpaca_inference_template"])
-    # analyseEvaluation(result)
-    # print("----RESULT----")
-    # print(result)
-    # model_name = model_name.replace("/", "-")
-    # outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
-    # print(f"Output saved to {outputName}")
-    # result.to_csv(outputName)
+    model_name = "NyanDoggo/Qwen2.5-Coder-0.5B-Instruct-Spider-Reasoning"
+    split="test"
+    datasetName = "spider"
+    result = evaluateModel(model_name, datasetName, split=split, promptTemplate=config["alpaca_inference_template"])
+    analyseEvaluation(result)
+    print("----RESULT----")
+    print(result)
+    model_name = model_name.replace("/", "-")
+    outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
+    print(f"Output saved to {outputName}")
+    result.to_csv(outputName)
 
     # generatedSQL = """
     # SELECT COUNT(*)
