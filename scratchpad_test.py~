@@ -149,6 +149,8 @@ def testPromptDelivery():
     response = prompt.deliver()
     print(response)
 
+def t
+
 
 def buildSCPCommand(remoteHost, remotePath):
     cmd = f"scp -i private_key.pem -r {remoteHost}:{remotePath} ./"

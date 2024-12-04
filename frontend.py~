@@ -44,7 +44,7 @@ def app():
             st.error("Unsupported file type. Please upload a CSV or SQLite/DB file.")
 
     # Model selection
-        model_options = ["NyanDoggo/Qwen2.5-Coder-0.5B-Instruct-Spider-Reasoning", "qwen2.5-coder:0.5b-base-q2_K"]
+        model_options = ["NyanDoggo/Qwen2.5-Coder-3B-Instruct-Spider-Reasoning", "qwen2.5-coder:0.5b-base-q2_K"]
         selected_model = st.selectbox("Select AI Model", model_options)
 
     # Chat interface with bot
