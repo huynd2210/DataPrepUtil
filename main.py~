@@ -92,7 +92,8 @@ if __name__ == '__main__':
     # student_model_name = "qwen2.5-coder:7b-instruct"
 
     batchList = [
-        (8401, 8500),
+        (8901, 9000),
+        # (9001, 9100),
     ]
     for batchRange in batchList:
         distillWrapper(model_name="gpt-4o", dataset="bird", split="train", batchRange=batchRange)
