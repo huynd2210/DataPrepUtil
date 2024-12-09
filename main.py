@@ -112,7 +112,7 @@ if __name__ == '__main__':
 
     # model_name = "llama3.1:8b-instruct-q4_0"
     #
-    model_name = "NyanDoggo/Llama-3.2-3B-Instruct-Spider-Baseline"
+    model_name = "NyanDoggo/Meta-Llama-3.1-8B-Instruct-Spider-Baseline"
     split="test"
     datasetName = "spider"
     result = evaluateModel(model_name, datasetName, split=split, promptTemplate=config["alpaca_inference_template"])
