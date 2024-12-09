@@ -8,6 +8,7 @@ from DatasetFormat.AlpacaFormat import AlpacaFormat
 from core.data_handler import distillationToAlpaca, convertDistillationEntriesToAlpaca
 from core.distillation import distillKnowledge, distillUnverifiedEntries, redistillEntries, generateVanillaEntry
 from core.evaluation import evaluateModel
+from core.post_processing import reevaluateCSVResult
 from core.utils import merge_csv_files, load_json_to_class, loadToObjectsFromFile, config
 from models.DistillationEntry import DistillationEntry
 
@@ -112,7 +113,7 @@ if __name__ == '__main__':
 
     # model_name = "llama3.1:8b-instruct-q4_0"
     #
-    model_name = "NyanDoggo/Meta-Llama-3.1-8B-Instruct-Spider-Reasoning"
+    model_name = "NyanDoggo/gemma-2-9b-it-Spider-Baseline"
     split="test"
     datasetName = "spider"
     result = evaluateModel(model_name, datasetName, split=split, promptTemplate=config["alpaca_inference_template"])
@@ -123,6 +124,12 @@ if __name__ == '__main__':
     outputName = f"{model_name.replace(':', '-')}_{datasetName}_result.csv"
     print(f"Output saved to {outputName}")
     result.to_csv(outputName)
+
+    # reevaluateCSVResult(
+    #     file_path="NyanDoggo-Qwen2.5-Coder-0.5B-Instruct-Spider-Reasoning_spider_result.csv",
+    #     targetColumn="generated_sql",
+    #     retrievalModel="gemma2-9b-it"
+    # )
 
 
 

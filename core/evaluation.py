@@ -8,14 +8,18 @@ from core.generation import generateSQLEvaluationEntry
 from core.utils import isDataFrameEqual, objects_to_dataframe, loadToObjectsFromFile, config
 from models.SQLEvaluationEntry import SQLEvaluationEntry
 
-def evaluateSQL(predicted_sql,ground_truth, db_path):
+def evaluateSQL(predicted_sql, ground_truth, db_path):
     conn = sqlite3.connect(db_path)
     # Connect to the database
-    cursor = conn.cursor()
-    cursor.execute(predicted_sql)
-    predicted_res = cursor.fetchall()
-    cursor.execute(ground_truth)
-    ground_truth_res = cursor.fetchall()
+    try:
+        cursor = conn.cursor()
+        cursor.execute(predicted_sql)
+        predicted_res = cursor.fetchall()
+        cursor.execute(ground_truth)
+        ground_truth_res = cursor.fetchall()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
     return set(predicted_res) == set(ground_truth_res)
 
 def evaluateSQLGenerationEntry(evaluation_entry: SQLEvaluationEntry, conn=None, close_conn=True) -> SQLEvaluationEntry:

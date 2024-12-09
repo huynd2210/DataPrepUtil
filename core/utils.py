@@ -3,6 +3,7 @@ from dataclasses import fields
 from typing import Union
 
 import yaml
+
 with open('config.yml', 'r') as file:
     config = yaml.safe_load(file)
 
@@ -16,8 +17,6 @@ import functools
 import sys
 from io import StringIO
 from contextlib import contextmanager
-
-
 
 
 def objects_to_dataframe(objects):
@@ -282,6 +281,8 @@ def merge_csv_files(input_directory, output_file):
     merged_df.to_csv(output_file, index=False)
 
     print(f"Merged CSV saved to {output_file}")
+
+
 
 
 

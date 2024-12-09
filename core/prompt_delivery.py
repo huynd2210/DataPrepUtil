@@ -56,6 +56,8 @@ class Prompt:
             "NyanDoggo/gemma-2-9b-it-Spider-Reasoning": self._deliverTransformersTokenizerPrompt,
             "microsoft/Phi-3.5-mini-instruct": self._deliverTransformersTokenizerPrompt,
             "Qwen/Qwen2.5-Coder-0.5B-Instruct": self._deliverTransformersTokenizerPrompt,
+            "llama3-8b-8192": self._deliverGroqPrompt,
+            "gemma2-9b-it": self._deliverGroqPrompt,
         }
 
         self.transformerModel = None
@@ -112,6 +114,25 @@ class Prompt:
 
     def _deliverOllamaPrompt(self):
         return ollama.generate(model=self.modelName, prompt=self.messageContent)['response']
+    def _deliverGroqPrompt(self):
+        from groq import Groq
+
+        client = Groq(
+            api_key="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",
+        )
+
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": self.messageContent,
+                }
+            ],
+            model=self.modelName,
+            stream=False,
+        )
+
+        return chat_completion.choices[0].message.content
 
     def _deliverTransformersTokenizerPrompt(self):
         device = "cuda"  # the device to load the model onto
