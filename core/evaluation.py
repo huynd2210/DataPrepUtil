@@ -46,6 +46,7 @@ def evaluateSQLGenerationEntry(evaluation_entry: SQLEvaluationEntry, conn=None, 
     return evaluation_entry
 
 def evaluateModel(model_name: str, dataset="spider", split="train", promptTemplate=config["prompt_template"]):
+    print("Evaluating model: " + model_name)
     result = []
     if dataset == "spider":
         spider_instances = load_spider(split)
