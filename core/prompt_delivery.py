@@ -48,6 +48,8 @@ class Prompt:
             "NyanDoggo/Qwen2.5-Coder-0.5B-Instruct-Spider-Reasoning": self._deliverTransformersTokenizerPrompt,
             "NyanDoggo/Phi-3.5-mini-instruct-Spider-Baseline": self._deliverTransformersTokenizerPrompt,
             "NyanDoggo/Phi-3.5-mini-instruct-Spider-Reasoning": self._deliverTransformersTokenizerPrompt,
+            "NyanDoggo/Llama-3.2-3B-Instruct-Spider-Baseline": self._deliverTransformersTokenizerPrompt,
+            "NyanDoggo/Llama-3.2-3B-Instruct-Spider-Reasoning": self._deliverTransformersTokenizerPrompt,
             "microsoft/Phi-3.5-mini-instruct": self._deliverTransformersTokenizerPrompt,
             "Qwen/Qwen2.5-Coder-0.5B-Instruct": self._deliverTransformersTokenizerPrompt,
         }
