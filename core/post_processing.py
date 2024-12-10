@@ -4,7 +4,6 @@ from tqdm import tqdm
 from core.evaluation import evaluateSQL
 from core.prompt_delivery import Prompt
 from core.utils import cleanLLMResponse
-from icecream import ic
 
 def reevaluateCSVResult(file_path, targetColumn, retrievalModel):
     df = pd.read_csv(file_path)
