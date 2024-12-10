@@ -1,24 +1,29 @@
 import pandas as pd
+from tqdm import tqdm
 
 from core.evaluation import evaluateSQL
 from core.prompt_delivery import Prompt
 from core.utils import cleanLLMResponse
-
+from icecream import ic
 
 def reevaluateCSVResult(file_path, targetColumn, retrievalModel):
     df = pd.read_csv(file_path)
     isCorrectColumn = "isCorrect"
-    for index, row in df.iterrows():
+    for index, row in tqdm(df.iterrows()):
         if not row[isCorrectColumn]:
             value = row[targetColumn]
             print("Reevaluating: ", value)
             response = retrieveSQLFromResponse(retrievalModel, value)
             response = cleanLLMResponse(response)
-            row[targetColumn] = response
-            print("Reevaluated: ", row[targetColumn])
-            isCorrect = evaluateSQL(row["generated_sql"], row['gold_sql'], row['db_path'])
+            df.at[index, targetColumn] = response
+            print("Reevaluated: ", df.loc[index, targetColumn])
+            isCorrect = evaluateSQL(response, row['gold_sql'], row['db_path'])
             print("isCorrect: ", isCorrect)
-            row[isCorrectColumn] = isCorrect
+            df.at[index, isCorrectColumn] = isCorrect
+            # if not isCorrect:
+            #     ic(row, response)
+
+
     modified_file_path = file_path.replace(".csv", "_reevaluated.csv")
     df.to_csv(modified_file_path, index=False)
 

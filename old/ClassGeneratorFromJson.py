@@ -2,7 +2,7 @@ import json
 import warnings
 import msgspec.json
 
-from models.SpiderDataset import SQLDataset
+from models.SQLDataset import SQLDataset
 
 
 class ClassGenerator:
